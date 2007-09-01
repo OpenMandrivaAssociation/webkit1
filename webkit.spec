@@ -12,7 +12,7 @@ Name:		%name
 Version:	0
 Release:	%mkrel 0.%{rev}.1
 License:	BSD-like
-Group:		X11/Libraries
+Group:		System/Libraries
 Source0:	webkit-svn%{rev}.tar.gz
 URL:		http://www.webkit.org/
 BuildRequires:	autoconf
