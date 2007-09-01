@@ -10,7 +10,7 @@
 Summary:	WebKit embeddable web component 
 Name:		%name
 Version:	0
-Release:	%mkrel 0.%{rev}.2
+Release:	%mkrel 0.%{rev}.3
 License:	BSD-like
 Group:		System/Libraries
 Source0:	webkit-svn%{rev}.tar.gz
@@ -49,8 +49,8 @@ WebKit is an open source web browser engine.
 %package -n %qtdev
 Summary:	Development files for QtWebKit
 Group:		Development/KDE and Qt
-Provides:	WebKitQt-devel = %{version}-%{release}
-Provides:	libWebKitQt-devel = %{version}-%{release}
+Provides:	QtWebKit-devel = %{version}-%{release}
+Provides:	libQtWebKit-devel = %{version}-%{release}
 Requires:	%{qtn} = %{version}-%{release}
 
 %description -n %qtdev
@@ -65,10 +65,10 @@ The Gdk port of WebKit is intended to provide a browser component primarily for
 users of the portable Gtk+ UI toolkit on platforms like Linux.
 
 %package -n %gdkdev
-Summary:	Development files for GdkWebKit
+Summary:	Development files for WebKitGdk
 Group:		Development/GNOME and GTK+
-Provides:	GdkWebKit-devel = %{version}-%{release}
-Provides:	libGdkWebKit-devel = %{version}-%{release}
+Provides:	WebKitGdk-devel = %{version}-%{release}
+Provides:	libWebKitGdk-devel = %{version}-%{release}
 Requires:	%{gdk} = %{version}-%{release}
 Requires:	curl-devel >= 7.11.0
 Requires:	fontconfig-devel >= 1.0.0
