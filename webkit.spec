@@ -30,7 +30,7 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	libtool 
 BuildRequires:	libxslt-devel
 BuildRequires:	pkgconfig
-# For qmake
+BuildRequires:	gtk2-devel
 BuildRequires:	qt4-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	xft2-devel
