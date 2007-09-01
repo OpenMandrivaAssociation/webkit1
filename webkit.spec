@@ -127,6 +127,8 @@ make -C build-qt install INSTALL_ROOT=$RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT%{qt4lib}/WebKit
 install -m 755 build-qt/bin/QtLauncher $RPM_BUILD_ROOT%{qt4lib}/WebKit
 install -m 755 build-qt/WebKitTools/DumpRenderTree/DumpRenderTree.qtproj/DumpRenderTree $RPM_BUILD_ROOT%{qt4lib}/WebKit
+#FIXME find how to tell qmake to put it there
+mv $RPM_BUILD_ROOT%{qt4lib}/pkgconfig/QtWebKit.pc $RPM_BUILD_ROOT%{_libdir}/pkgconfig/QtWebKit.pc
 
 %clean
 rm -rf $RPM_BUILD_ROOT
