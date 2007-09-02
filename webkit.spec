@@ -32,6 +32,8 @@ BuildRequires:	libxslt-devel
 BuildRequires:	pkgconfig
 BuildRequires:	gtk2-devel
 BuildRequires:	qt4-devel
+BuildRequires:	qtxmllib
+BuildRequires:	qtnetworklib
 BuildRequires:	sqlite3-devel
 BuildRequires:	xft2-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root
