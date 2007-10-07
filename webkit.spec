@@ -1,16 +1,16 @@
 %define major	0
-%define rev	25144
+%define rev	26100
 
 %define name	webkit
 %define qtn	%mklibname QtWebKit %major
 %define qtdev	%mklibname QtWebKit -d
-%define gdk	%mklibname WebKitGdk %major
-%define gdkdev	%mklibname WebKitGdk -d
+%define gtk	%mklibname WebKitGtk %major
+%define gtkdev	%mklibname WebKitGtk -d
 
 Summary:	WebKit embeddable web component 
 Name:		%name
 Version:	0
-Release:	%mkrel 0.%{rev}.3
+Release:	%mkrel 0.%{rev}.1
 License:	BSD-like
 Group:		System/Libraries
 Source0:	webkit-svn%{rev}.tar.gz
@@ -58,36 +58,36 @@ Requires:	%{qtn} = %{version}-%{release}
 %description -n %qtdev
 Development files for QtWebKit
 
-%package -n %gdk
-Summary:	Gdk port of WebKit
+%package -n %gtk
+Summary:	Gtk port of WebKit
 Group:		System/Libraries
 
-%description -n %gdk
-The Gdk port of WebKit is intended to provide a browser component primarily for
+%description -n %gtk
+The Gtk port of WebKit is intended to provide a browser component primarily for
 users of the portable Gtk+ UI toolkit on platforms like Linux.
 
-%package -n %gdkdev
-Summary:	Development files for WebKitGdk
+%package -n %gtkdev
+Summary:	Development files for WebKitGtk
 Group:		Development/GNOME and GTK+
-Provides:	WebKitGdk-devel = %{version}-%{release}
-Provides:	libWebKitGdk-devel = %{version}-%{release}
-Requires:	%{gdk} = %{version}-%{release}
+Provides:	WebKitGtk-devel = %{version}-%{release}
+Provides:	libWebKitGtk-devel = %{version}-%{release}
+Requires:	%{gtk} = %{version}-%{release}
 Requires:	curl-devel >= 7.11.0
 Requires:	fontconfig-devel >= 1.0.0
 Requires:	librsvg-devel >= 2.2.0
 Requires:	libstdc++-devel
 Requires:	xft2-devel >= 2.0.0
 
-%description -n %gdkdev
-Development files for GdkWebKit
+%description -n %gtkdev
+Development files for GtkWebKit
 
 %prep
 %setup -q -n %name
 
 %build
 
-mkdir -p build-gdk
-cd build-gdk
+mkdir -p build-gtk
+cd build-gtk
 
 %{qt4bin}/qmake -r \
 	OUTPUT_DIR="$PWD" \
@@ -96,7 +96,7 @@ cd build-gdk
 	QMAKE_CFLAGS="%optflags" \
 	QMAKE_CXXFLAGS="%optflags" \
 	VERSION=%major \
-	CONFIG-=qt CONFIG+=gdk-port \
+	CONFIG-=qt CONFIG+=gtk-port \
 	WEBKIT_INC_DIR=%{_includedir}/WebKit \
 	WEBKIT_LIB_DIR=%{_libdir} \
 	../WebKit.pro
@@ -125,14 +125,14 @@ cd build-qt
 %install
 rm -rf $RPM_BUILD_ROOT
 
-make -C build-gdk install INSTALL_ROOT=$RPM_BUILD_ROOT
+make -C build-gtk install INSTALL_ROOT=$RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT%{_libdir}/WebKit
-install -m 755 build-gdk/WebKitTools/GdkLauncher/GdkLauncher $RPM_BUILD_ROOT%{_libdir}/WebKit
+install -m 755 build-gtk/WebKitTools/GtkLauncher/GtkLauncher $RPM_BUILD_ROOT%{_libdir}/WebKit
 
 make -C build-qt install INSTALL_ROOT=$RPM_BUILD_ROOT
 mkdir -p $RPM_BUILD_ROOT%{qt4lib}/WebKit
 install -m 755 build-qt/bin/QtLauncher $RPM_BUILD_ROOT%{qt4lib}/WebKit
-install -m 755 build-qt/WebKitTools/DumpRenderTree/DumpRenderTree.qtproj/DumpRenderTree $RPM_BUILD_ROOT%{qt4lib}/WebKit
+install -m 755 build-qt/bin/DumpRenderTree $RPM_BUILD_ROOT%{qt4lib}/WebKit
 #FIXME find how to tell qmake to put it there
 mv $RPM_BUILD_ROOT%{qt4lib}/pkgconfig/QtWebKit.pc $RPM_BUILD_ROOT%{_libdir}/pkgconfig/QtWebKit.pc
 
@@ -142,8 +142,8 @@ rm -rf $RPM_BUILD_ROOT
 %post -n %qtn -p /sbin/ldconfig
 %postun	-n %qtn -p /sbin/ldconfig
 
-%post -n %gdk -p /sbin/ldconfig
-%postun	-n %gdk -p /sbin/ldconfig
+%post -n %gtk -p /sbin/ldconfig
+%postun	-n %gtk -p /sbin/ldconfig
 
 %files -n %qtdev
 %defattr(644,root,root,755)
@@ -159,14 +159,14 @@ rm -rf $RPM_BUILD_ROOT
 %{qt4lib}/WebKit/QtLauncher
 %{qt4lib}/WebKit/DumpRenderTree
 
-%files -n %gdkdev
+%files -n %gtkdev
 %defattr(644,root,root,755)
-%{_libdir}/libWebKitGdk.so
-%{_libdir}/libWebKitGdk.prl
+%{_libdir}/libWebKitGtk.so
+%{_libdir}/libWebKitGtk.prl
 %{_includedir}/WebKit
-%{_libdir}/pkgconfig/WebKitGdk.pc
+%{_libdir}/pkgconfig/WebKitGtk.pc
 
-%files -n %gdk
+%files -n %gtk
 %defattr(644,root,root,755)
-%{_libdir}/libWebKitGdk.so.*
-%{_libdir}/WebKit/GdkLauncher
+%{_libdir}/libWebKitGtk.so.*
+%{_libdir}/WebKit/GtkLauncher
