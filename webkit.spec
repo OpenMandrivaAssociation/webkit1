@@ -61,6 +61,7 @@ Development files for QtWebKit
 %package -n %gtk
 Summary:	Gtk port of WebKit
 Group:		System/Libraries
+Obsoletes:	%mklibname WebKitGdk 0
 
 %description -n %gtk
 The Gtk port of WebKit is intended to provide a browser component primarily for
