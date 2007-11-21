@@ -10,7 +10,7 @@
 Summary:	WebKit embeddable web component 
 Name:		%name
 Version:	0
-Release:	%mkrel 0.%{rev}.1
+Release:	%mkrel 0.%{rev}.2
 License:	BSD-like
 Group:		System/Libraries
 Source0:	webkit-svn%{rev}.tar.gz
