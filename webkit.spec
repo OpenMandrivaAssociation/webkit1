@@ -7,7 +7,7 @@
 %define gtk	%mklibname WebKitGtk %major
 %define gtkdev	%mklibname WebKitGtk -d
 
-Summary:	WebKit embeddable web component 
+Summary:	Embeddable web component 
 Name:		%name
 Version:	0
 Release:	%mkrel 0.%{rev}.2
