@@ -1,5 +1,5 @@
 %define major	0
-%define rev	26100
+%define rev	28663
 
 %define name	webkit
 %define qtn	%mklibname QtWebKit %major
@@ -8,12 +8,12 @@
 %define gtkdev	%mklibname WebKitGtk -d
 
 Summary:	Embeddable web component 
-Name:		%name
+Name:		%{name}
 Version:	0
-Release:	%mkrel 0.%{rev}.2
+Release:	%mkrel 0.%{rev}.1
 License:	BSD-like
 Group:		System/Libraries
-Source0:	webkit-svn%{rev}.tar.gz
+Source0:	webkit-svn%{rev}.tar.lzma
 URL:		http://www.webkit.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -124,21 +124,21 @@ cd build-qt
 %make
  
 %install
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
-make -C build-gtk install INSTALL_ROOT=$RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT%{_libdir}/WebKit
-install -m 755 build-gtk/WebKitTools/GtkLauncher/GtkLauncher $RPM_BUILD_ROOT%{_libdir}/WebKit
+make -C build-gtk install INSTALL_ROOT=%{buildroot}
+mkdir -p %{buildroot}%{_libdir}/WebKit
+install -m 755 build-gtk/WebKitTools/GtkLauncher/GtkLauncher %{buildroot}%{_libdir}/WebKit
 
-make -C build-qt install INSTALL_ROOT=$RPM_BUILD_ROOT
-mkdir -p $RPM_BUILD_ROOT%{qt4lib}/WebKit
-install -m 755 build-qt/bin/QtLauncher $RPM_BUILD_ROOT%{qt4lib}/WebKit
-install -m 755 build-qt/bin/DumpRenderTree $RPM_BUILD_ROOT%{qt4lib}/WebKit
+make -C build-qt install INSTALL_ROOT=%{buildroot}
+mkdir -p %{buildroot}%{qt4lib}/WebKit
+install -m 755 build-qt/bin/QtLauncher %{buildroot}%{qt4lib}/WebKit
+install -m 755 build-qt/bin/DumpRenderTree %{buildroot}%{qt4lib}/WebKit
 #FIXME find how to tell qmake to put it there
-mv $RPM_BUILD_ROOT%{qt4lib}/pkgconfig/QtWebKit.pc $RPM_BUILD_ROOT%{_libdir}/pkgconfig/QtWebKit.pc
+mv %{buildroot}%{qt4lib}/pkgconfig/QtWebKit.pc %{buildroot}%{_libdir}/pkgconfig/QtWebKit.pc
 
 %clean
-rm -rf $RPM_BUILD_ROOT
+rm -rf %{buildroot}
 
 %post -n %qtn -p /sbin/ldconfig
 %postun	-n %qtn -p /sbin/ldconfig
