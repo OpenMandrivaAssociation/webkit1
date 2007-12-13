@@ -152,6 +152,7 @@ rm -rf %{buildroot}
 %{qt4lib}/libQtWebKit.prl
 %{qt4include}/*
 %{qt4dir}/mkspecs/features
+%{qt4plugins}/imageformats/libqtwebico.so
 %{_libdir}/pkgconfig/QtWebKit.pc
 
 %files -n %qtn
