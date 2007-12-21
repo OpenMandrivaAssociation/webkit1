@@ -36,6 +36,7 @@ BuildRequires:	qtxmllib
 BuildRequires:	qtnetworklib
 BuildRequires:	sqlite3-devel
 BuildRequires:	xft2-devel
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root
 
 %description
 WebKit is an open source web browser engine.
