@@ -1,5 +1,5 @@
 %define major	0
-%define rev	29866
+%define rev	30005
 
 %define name	webkit
 %define qtn	%mklibname QtWebKit %major
@@ -15,6 +15,11 @@ License:	BSD-like
 Group:		System/Libraries
 Source0:	webkit-svn%{rev}.tar.lzma
 URL:		http://www.webkit.org/
+# (tpg) http://bugs.webkit.org/show_bug.cgi?id=14750
+# this patch enables plugins support, hopefully it will be merged upstream quite soon
+# please check if there is a newer version aof this gainst latest upstream svn revision
+# if yes, update it then ;)
+Patch0:		webkit-Implement-plugin-support-in-GTK-backend.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
@@ -36,7 +41,7 @@ BuildRequires:	qtxmllib
 BuildRequires:	qtnetworklib
 BuildRequires:	sqlite3-devel
 BuildRequires:	xft2-devel
-BuildRoot:	%{tmpdir}/%{name}-%{version}-root
+BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
 %description
 WebKit is an open source web browser engine.
@@ -84,6 +89,7 @@ Development files for GtkWebKit
 
 %prep
 %setup -q -n %name
+%patch0 -p0
 
 %build
 
@@ -97,7 +103,7 @@ cd build-gtk
 	QMAKE_CFLAGS="%optflags" \
 	QMAKE_CXXFLAGS="%optflags" \
 	VERSION=%major \
-	CONFIG-=qt CONFIG+=gtk-port \
+	CONFIG-=qt CONFIG+=gtk-port CONFIG+=plugins \
 	WEBKIT_INC_DIR=%{_includedir}/WebKit \
 	WEBKIT_LIB_DIR=%{_libdir} \
 	../WebKit.pro
@@ -116,7 +122,7 @@ cd build-qt
 	QMAKE_CFLAGS="%optflags" \
 	QMAKE_CXXFLAGS="%optflags" \
 	VERSION=%major \
-	CONFIG+=qt-port \
+	CONFIG+=qt-port CONFIG-=plugins \
 	WEBKIT_INC_DIR=%{_includedir}/WebKit \
 	WEBKIT_LIB_DIR=%{_libdir} \
 	../WebKit.pro
