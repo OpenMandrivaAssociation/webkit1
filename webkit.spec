@@ -47,7 +47,7 @@ BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 WebKit is an open source web browser engine.
 
 %package -n %qtn
-Summary:	Open source web browser engine
+Summary:	Web browser engine
 Group:		System/Libraries
 
 %description -n %qtn
