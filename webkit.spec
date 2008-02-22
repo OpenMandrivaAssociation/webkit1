@@ -15,11 +15,6 @@ License:	BSD-like
 Group:		System/Libraries
 Source0:	webkit-svn%{rev}.tar.lzma
 URL:		http://www.webkit.org/
-# (tpg) http://bugs.webkit.org/show_bug.cgi?id=14750
-# this patch enables plugins support, hopefully it will be merged upstream quite soon
-# please check if there is a newer version aof this gainst latest upstream svn revision
-# if yes, update it then ;)
-Patch0:		webkit-Implement-plugin-support-in-GTK-backend.patch
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
@@ -89,7 +84,6 @@ Development files for GtkWebKit
 
 %prep
 %setup -q -n %name
-%patch0 -p0
 
 %build
 
