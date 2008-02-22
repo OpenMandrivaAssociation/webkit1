@@ -1,5 +1,5 @@
 %define major	0
-%define rev	30005
+%define rev	30465
 
 %define name	webkit
 %define qtn	%mklibname QtWebKit %major
