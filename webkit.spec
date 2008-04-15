@@ -1,7 +1,7 @@
 %define gtkmajor	1
 %define qtmajor		4
 
-%define rev	31157
+%define rev	31893
 
 %define name	webkit
 %define oname	WebKit
