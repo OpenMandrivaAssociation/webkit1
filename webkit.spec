@@ -10,6 +10,10 @@
 %define gtk	%mklibname WebKitGtk %gtkmajor
 %define gtkdev	%mklibname WebKitGtk -d
 
+# libnspr-devel doesn't provide this, so except it and do it manually
+# lower down - AdamW 2008/04
+%define _requires_exceptions devel(libnspr4)
+
 Summary:	Embeddable web component 
 Name:		%{name}
 Version:	0
@@ -89,6 +93,7 @@ Requires:	fontconfig-devel >= 1.0.0
 Requires:	librsvg-devel >= 2.2.0
 Requires:	libstdc++-devel
 Requires:	xft2-devel >= 2.0.0
+Requires:	libnspr-devel
 
 %description -n %gtkdev
 Development files for GtkWebKit
