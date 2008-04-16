@@ -42,6 +42,7 @@ BuildRequires:	qtxmllib
 BuildRequires:	qtnetworklib
 BuildRequires:	sqlite3-devel
 BuildRequires:	xft2-devel
+BuildRequires:	libnspr-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
 %description
