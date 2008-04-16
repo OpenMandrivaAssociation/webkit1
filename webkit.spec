@@ -23,7 +23,7 @@ Group:		System/Libraries
 Source0:	http://nightly.webkit.org/files/trunk/src/%{oname}-r%{rev}.tar.bz2
 # From https://bugs.webkit.org/show_bug.cgi?id=14750 , rediffed:
 # enables plugin support for webkitgtk - AdamW 2008/04
-Patch0:		webkit-31326-plugin.patch
+#Patch0:		webkit-31326-plugin.patch
 URL:		http://www.webkit.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -116,7 +116,7 @@ QtLauncher is an example application for QtWebKit.
 
 %prep
 %setup -q -n %{oname}-r%{rev}
-%patch0 -p0 -b .plugin
+#%patch0 -p0 -b .plugin
 
 %build
 mkdir -p build-gtk
