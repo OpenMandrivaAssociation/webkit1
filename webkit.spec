@@ -13,7 +13,7 @@
 Summary:	Embeddable web component 
 Name:		%{name}
 Version:	0
-Release:	%mkrel 0.%{rev}.1
+Release:	%mkrel 0.%{rev}.2
 License:	BSD-like
 Group:		System/Libraries
 Source0:	http://nightly.webkit.org/files/trunk/src/%{oname}-r%{rev}.tar.bz2
