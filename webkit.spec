@@ -17,13 +17,15 @@
 Summary:	Embeddable web component 
 Name:		%{name}
 Version:	0
-Release:	%mkrel 0.%{rev}.2
+Release:	%mkrel 0.%{rev}.3
 License:	BSD-like
 Group:		System/Libraries
+# Use the nightlies, don't grab SVN directly: the nightlies are
+# MASSIVELY smaller and easier to manage - AdamW 2008/04
 Source0:	http://nightly.webkit.org/files/trunk/src/%{oname}-r%{rev}.tar.bz2
-# From https://bugs.webkit.org/show_bug.cgi?id=14750 , rediffed:
+# From https://bugs.webkit.org/show_bug.cgi?id=14750 :
 # enables plugin support for webkitgtk - AdamW 2008/04
-#Patch0:		webkit-31326-plugin.patch
+Patch0:		webkit-31990-plugin.patch
 URL:		http://www.webkit.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -116,7 +118,7 @@ QtLauncher is an example application for QtWebKit.
 
 %prep
 %setup -q -n %{oname}-r%{rev}
-#%patch0 -p0 -b .plugin
+%patch0 -p0 -b .plugin
 
 %build
 mkdir -p build-gtk
