@@ -10,14 +10,10 @@
 %define gtk	%mklibname WebKitGtk %gtkmajor
 %define gtkdev	%mklibname WebKitGtk -d
 
-# libnspr-devel doesn't provide this, so except it and do it manually
-# lower down - AdamW 2008/04
-%define _requires_exceptions devel\(libnspr.*\)
-
 Summary:	Embeddable web component 
 Name:		%{name}
 Version:	0
-Release:	%mkrel 0.%{rev}.1
+Release:	%mkrel 0.%{rev}.2
 License:	BSD-like
 Group:		System/Libraries
 # Use the nightlies, don't grab SVN directly: the nightlies are
@@ -48,8 +44,6 @@ BuildRequires:	qtxmllib
 BuildRequires:	qtnetworklib
 BuildRequires:	sqlite3-devel
 BuildRequires:	xft2-devel
-BuildRequires:	libnspr-devel
-Requires:	libnspr-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
 %description
