@@ -1,7 +1,7 @@
 %define gtkmajor	1
 %define qtmajor		4
 
-%define rev	32416
+%define rev	32531
 
 %define name	webkit
 %define oname	WebKit
@@ -17,7 +17,7 @@
 Summary:	Embeddable web component 
 Name:		%{name}
 Version:	0
-Release:	%mkrel 0.%{rev}.4
+Release:	%mkrel 0.%{rev}.1
 License:	BSD-like
 Group:		System/Libraries
 # Use the nightlies, don't grab SVN directly: the nightlies are
@@ -25,10 +25,7 @@ Group:		System/Libraries
 Source0:	http://nightly.webkit.org/files/trunk/src/%{oname}-r%{rev}.tar.bz2
 # From https://bugs.webkit.org/show_bug.cgi?id=14750 :
 # enables plugin support for webkitgtk - AdamW 2008/04
-Patch0:		webkit-32430-plugin.patch
-# From upstream SVN (drop when updating snapshot): fixes a build
-# breakage with QT 4.3
-Patch1:		webkit-32416-qt43.patch
+Patch0:		webkit-32489-plugin.patch
 URL:		http://www.webkit.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -123,7 +120,6 @@ QtLauncher is an example application for QtWebKit.
 %prep
 %setup -q -n %{oname}-r%{rev}
 %patch0 -p0 -b .plugin
-%patch1 -p1 -b .qt43
 
 %build
 mkdir -p build-gtk
