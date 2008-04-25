@@ -119,7 +119,7 @@ QtLauncher is an example application for QtWebKit.
 mkdir -p build-gtk
 pushd build-gtk
 ../autogen.sh
-CONFIGURE_TOP=../ %configure2_5x --enable-svg --enable-svg-foreign-object --enable-svg-use-element --enable-svg-fonts --enable-svg-as-image --enable-icon-database
+CONFIGURE_TOP=../ %configure2_5x --enable-svg-experimental
 %make
 popd
 
