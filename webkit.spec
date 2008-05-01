@@ -1,7 +1,7 @@
 %define gtkmajor	1
 %define qtmajor		4
 
-%define rev	32531
+%define rev	32698
 
 %define name	webkit
 %define oname	WebKit
@@ -13,7 +13,7 @@
 Summary:	Embeddable web component 
 Name:		%{name}
 Version:	0
-Release:	%mkrel 0.%{rev}.2
+Release:	%mkrel 0.%{rev}.1
 License:	BSD-like
 Group:		System/Libraries
 # Use the nightlies, don't grab SVN directly: the nightlies are
@@ -21,7 +21,7 @@ Group:		System/Libraries
 Source0:	http://nightly.webkit.org/files/trunk/src/%{oname}-r%{rev}.tar.bz2
 # From https://bugs.webkit.org/show_bug.cgi?id=14750 :
 # enables plugin support for webkitgtk - AdamW 2008/04
-Patch0:		webkit-32489-plugin.patch
+Patch0:		webkit-32726-plugin.patch
 URL:		http://www.webkit.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
