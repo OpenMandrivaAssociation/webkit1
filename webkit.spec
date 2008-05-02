@@ -1,7 +1,7 @@
 %define gtkmajor	1
 %define qtmajor		4
 
-%define rev	32698
+%define rev	32778
 
 %define name	webkit
 %define oname	WebKit
@@ -19,12 +19,6 @@ Group:		System/Libraries
 # Use the nightlies, don't grab SVN directly: the nightlies are
 # MASSIVELY smaller and easier to manage - AdamW 2008/04
 Source0:	http://nightly.webkit.org/files/trunk/src/%{oname}-r%{rev}.tar.bz2
-# From https://bugs.webkit.org/show_bug.cgi?id=14750 :
-# enables plugin support for webkitgtk - AdamW 2008/04
-Patch0:		webkit-32726-plugin.patch
-# From upstream SVN: fixes a bug which breaks Qt 4.3 build. Drop when
-# bumping nightly - AdamW 2008/05
-Patch1:		webkit-32698-brace.patch
 URL:		http://www.webkit.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -116,8 +110,6 @@ QtLauncher is an example application for QtWebKit.
 
 %prep
 %setup -q -n %{oname}-r%{rev}
-%patch0 -p0 -b .plugin
-%patch1 -p1 -b .brace
 
 %build
 mkdir -p build-gtk
