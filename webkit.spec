@@ -88,7 +88,7 @@ GtkLauncher is an example application for WebKit GTK+.
 rm -rf %{buildroot}
 %makeinstall_std
 mkdir -p %{buildroot}%{_libdir}/%{name}
-install -m 755 build-gtk/Programs/GtkLauncher %{buildroot}%{_libdir}/%{name}
+install -m 755 Programs/GtkLauncher %{buildroot}%{_libdir}/%{name}
 
 %clean
 rm -rf %{buildroot}
