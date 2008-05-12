@@ -8,7 +8,7 @@
 Summary:	Web browser engine
 Name:		webkit
 Version:	0
-Release:	%mkrel 0.%{rev}.2
+Release:	%mkrel 0.%{rev}.3
 License:	BSD-like
 Group:		System/Libraries
 # Use the nightlies, don't grab SVN directly: the nightlies are
@@ -60,7 +60,6 @@ Requires:	fontconfig-devel >= 1.0.0
 Requires:	librsvg-devel >= 2.2.0
 Requires:	libstdc++-devel
 Requires:	xft2-devel >= 2.0.0
-Requires:	libnspr-devel
 Obsoletes:	%{mklibname WebKitGtk -d} <= 0-0.32877
 
 %description -n %{develname}
