@@ -9,7 +9,7 @@ Summary:	Web browser engine
 Name:		webkit
 Version:	0
 Release:	%mkrel 0.%{rev}.1
-License:	BSD-like
+License:	BSD and LGPLv2+
 Group:		System/Libraries
 # Use the nightlies, don't grab SVN directly: the nightlies are
 # MASSIVELY smaller and easier to manage - AdamW 2008/04
