@@ -8,7 +8,7 @@
 Summary:	Web browser engine
 Name:		webkit
 Version:	0
-Release:	%mkrel 0.%{rev}.1
+Release:	%mkrel 0.%{rev}.2
 License:	BSD and LGPLv2+
 Group:		System/Libraries
 # Use the nightlies, don't grab SVN directly: the nightlies are
@@ -43,6 +43,7 @@ Summary:	GTK+ port of WebKit web browser engine
 Group:		System/Libraries
 Obsoletes:	%{mklibname WebKitGdk 0} <= 0-0.30465
 Obsoletes:	%{mklibname WebKitGtk 1} <= 0-0.32877
+Provides: libwebkitgtk = %{version}-%{release}
 
 %description -n %{libname}
 The GTK+ port of WebKit is intended to provide a browser component
