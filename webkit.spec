@@ -1,5 +1,5 @@
 %define major	1
-%define rev	34503
+%define rev	34824
 
 %define oname		WebKit
 %define libname		%mklibname webkitgtk %major
@@ -8,7 +8,7 @@
 Summary:	Web browser engine
 Name:		webkit
 Version:	0
-Release:	%mkrel 0.%{rev}.2
+Release:	%mkrel 0.%{rev}.1
 License:	BSD and LGPLv2+
 Group:		System/Libraries
 # Use the nightlies, don't grab SVN directly: the nightlies are
