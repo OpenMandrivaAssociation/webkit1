@@ -76,6 +76,14 @@ Conflicts:	%mklibname WebKitGtk 0 <= 0-0.30465
 %description gtklauncher
 GtkLauncher is an example application for WebKit GTK+.
 
+%package jsc
+Summary:	JavaScriptCore shell for WebKit GTK+
+Group:		Development/GNOME and GTK+
+
+%description jsc
+jsc is a shell for JavaScriptCore, WebKit's JavaScript engine. It
+allows you to interact with the JavaScript engine directly.
+
 %prep
 %setup -q -n %{oname}-r%{rev}
 
@@ -114,4 +122,8 @@ rm -rf %{buildroot}
 %files gtklauncher
 %defattr(0755,root,root)
 %{_libdir}/%{name}/GtkLauncher
+
+%files jsc
+%defattr(0755,root,root)
+%{_bindir}/jsc
 
