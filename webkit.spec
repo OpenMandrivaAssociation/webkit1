@@ -1,6 +1,7 @@
 # build fails with some internal undefined reference problem without
 # this, looks hard to solve - AdamW 2008/07
 %define _disable_ld_no_undefined 1
+%define _disable_ld_as_needed 1
 
 %define major	1
 %define rev	35177
