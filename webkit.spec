@@ -1,10 +1,5 @@
-# build fails with some internal undefined reference problem without
-# this, looks hard to solve - AdamW 2008/07
-%define _disable_ld_no_undefined 1
-%define _disable_ld_as_needed 1
-
 %define major	1
-%define rev	35177
+%define rev	35203
 
 %define oname		WebKit
 %define libname		%mklibname webkitgtk %major
@@ -19,9 +14,6 @@ Group:		System/Libraries
 # Use the nightlies, don't grab SVN directly: the nightlies are
 # MASSIVELY smaller and easier to manage - AdamW 2008/04
 Source0:	http://nightly.webkit.org/files/trunk/src/%{oname}-r%{rev}.tar.bz2
-# icu-config fails to run unless ENABLE_RPATH env var is set, so
-# set it to NO when running icu-config... - AdamW 2008/07
-Patch0:		webkit-35177-icuconfig.patch
 URL:		http://www.webkit.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -94,7 +86,6 @@ allows you to interact with the JavaScript engine directly.
 
 %prep
 %setup -q -n %{oname}-r%{rev}
-%patch0 -p1 -b .icuconfig
 
 %build
 ./autogen.sh
