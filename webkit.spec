@@ -1,5 +1,5 @@
 %define major	1
-%define rev	35417
+%define rev	35718
 
 %define oname		WebKit
 %define libname		%mklibname webkitgtk %major
