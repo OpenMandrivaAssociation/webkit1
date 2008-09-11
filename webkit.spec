@@ -1,9 +1,18 @@
 %define major	1
-%define rev	36120
+%define rev	36309
 
 %define oname		WebKit
 %define libname		%mklibname webkitgtk %major
 %define develname	%mklibname webkitgtk -d
+
+%define pango	0
+%if %pango
+%define fontreq		pango-devel
+%define fontback	pango
+%else
+%define fontreq		fontconfig-devel >= 1.0.0
+%define fontback	freetype
+%endif
 
 Summary:	Web browser engine
 Name:		webkit
@@ -20,7 +29,7 @@ BuildRequires:	automake
 BuildRequires:	bison
 BuildRequires:	curl-devel >= 7.11.0
 BuildRequires:	flex
-BuildRequires:	fontconfig-devel >= 1.0.0
+BuildRequires:	%{fontreq}
 BuildRequires:	gperf
 BuildRequires:	libicu-devel
 BuildRequires:	libjpeg-devel
@@ -89,7 +98,7 @@ allows you to interact with the JavaScript engine directly.
 
 %build
 ./autogen.sh
-%configure2_5x --enable-svg-experimental
+%configure2_5x --enable-svg-experimental --with-font-backend=%{fontback}
 %make
 
 %install
