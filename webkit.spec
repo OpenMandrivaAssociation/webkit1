@@ -36,7 +36,7 @@ BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	librsvg-devel >= 2.2.0
 BuildRequires:	libstdc++-devel
-BuildRequires:	libtool 
+BuildRequires:	libtool
 BuildRequires:	libxslt-devel
 BuildRequires:	pkgconfig
 BuildRequires:	gtk2-devel
@@ -52,7 +52,9 @@ Summary:	GTK+ port of WebKit web browser engine
 Group:		System/Libraries
 Obsoletes:	%{mklibname WebKitGdk 0} <= 0-0.30465
 Obsoletes:	%{mklibname WebKitGtk 1} <= 0-0.32877
-Provides: libwebkitgtk = %{version}-%{release}
+Provides:	libwebkitgtk = %{version}-%{release}
+# Needed for Web Inspector feature to work
+Requires:	%{name}-webinspector = %{version}-%{release}
 
 %description -n %{libname}
 The GTK+ port of WebKit is intended to provide a browser component
@@ -78,7 +80,7 @@ primarily for users of the portable GTK+ UI toolkit on platforms like
 Linux. This package contains development headers.
 
 %package gtklauncher
-Summary:	GtkWebKit example application
+Summary:	WebKit GTK+ example application
 Group:		Development/GNOME and GTK+
 Conflicts:	%mklibname WebKitGtk 0 <= 0-0.30465
 
@@ -92,6 +94,16 @@ Group:		Development/GNOME and GTK+
 %description jsc
 jsc is a shell for JavaScriptCore, WebKit's JavaScript engine. It
 allows you to interact with the JavaScript engine directly.
+
+%package webinspector
+Summary:	Data files for WebKit GTK+'s Web Inspector
+Group:		System/Libraries
+
+%description webinspector
+WebKit GTK+ has a feature called the Web Inspector, which allows
+detailed analysis of any given page's page source, live DOM hierarchy
+and resources. This package contains the data files necessary for Web
+Inspector to work.
 
 %prep
 %setup -q -n %{oname}-r%{rev}
@@ -135,4 +147,8 @@ rm -rf %{buildroot}
 %files jsc
 %defattr(0755,root,root)
 %{_bindir}/jsc
+
+%files webinspector
+%defattr(0644,root,root)
+%{_datadir}/%{name}-1.0/webinspector
 
