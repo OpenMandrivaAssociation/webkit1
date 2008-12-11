@@ -26,6 +26,8 @@ Source0:	http://nightly.webkit.org/files/trunk/src/%{oname}-r%{rev}.tar.bz2
 # From upstream #25831: fix build with bison 2.4 (Bernhard
 # Rosenkraenzer) - AdamW 2008/12
 Patch0:		webkit-39090-bison_24.patch
+# Fix an underlinking issue in the unit tests (reported upstream as
+# 22811) - AdamW 2008/12
 Patch1:		webkit-39090-underlink.patch
 URL:		http://www.webkit.org/
 BuildRequires:	autoconf
@@ -124,6 +126,10 @@ rm -rf %{buildroot}
 %makeinstall_std
 mkdir -p %{buildroot}%{_libdir}/%{name}
 install -m 755 Programs/GtkLauncher %{buildroot}%{_libdir}/%{name}
+
+# only useful for testing, should not be installed system-wide.
+# reported upstream as 22812 - AdamW 2008/12
+rm -rf %{buildroot}%{_libdir}/libtestnetscapeplugin.*
 
 %clean
 rm -rf %{buildroot}
