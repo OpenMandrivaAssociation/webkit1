@@ -26,6 +26,7 @@ Source0:	http://nightly.webkit.org/files/trunk/src/%{oname}-r%{rev}.tar.bz2
 # From upstream #25831: fix build with bison 2.4 (Bernhard
 # Rosenkraenzer) - AdamW 2008/12
 Patch0:		webkit-39090-bison_24.patch
+Patch1:		webkit-39090-underlink.patch
 URL:		http://www.webkit.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -111,6 +112,7 @@ Inspector to work.
 %prep
 %setup -q -n %{oname}-r%{rev}
 %patch0 -p1 -b .bison24
+%patch1 -p1 -b .underlink
 
 %build
 ./autogen.sh
