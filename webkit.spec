@@ -1,5 +1,5 @@
 %define major	1
-%define rev	39090
+%define rev	39370
 
 %define oname		WebKit
 %define libname		%mklibname webkitgtk %major
@@ -29,8 +29,6 @@ Patch0:		webkit-39090-bison_24.patch
 # Fix an underlinking issue in the unit tests (reported upstream as
 # 22811) - AdamW 2008/12
 Patch1:		webkit-39090-underlink.patch
-# Upstream rev 39096 - fixes build - AdamW 2008/12
-Patch2:		webkit-39090-include.patch
 URL:		http://www.webkit.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -117,7 +115,6 @@ Inspector to work.
 %setup -q -n %{oname}-r%{rev}
 %patch0 -p1 -b .bison24
 %patch1 -p1 -b .underlink
-%patch2 -p1 -b .include
 
 %build
 ./autogen.sh
