@@ -23,9 +23,6 @@ Group:		System/Libraries
 # Use the nightlies, don't grab SVN directly: the nightlies are
 # MASSIVELY smaller and easier to manage - AdamW 2008/04
 Source0:	http://nightly.webkit.org/files/trunk/src/%{oname}-r%{rev}.tar.bz2
-# From upstream #25831: fix build with bison 2.4 (Bernhard
-# Rosenkraenzer) - AdamW 2008/12
-Patch0:		webkit-39090-bison_24.patch
 # Fix an underlinking issue in the unit tests (reported upstream as
 # 22811) - AdamW 2008/12
 Patch1:		webkit-39090-underlink.patch
@@ -48,6 +45,7 @@ BuildRequires:	pkgconfig
 BuildRequires:	gtk2-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	xft2-devel
+BuildRequires:	libgstreamer-plugins-base-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
 %description
@@ -113,12 +111,11 @@ Inspector to work.
 
 %prep
 %setup -q -n %{oname}-r%{rev}
-%patch0 -p1 -b .bison24
 %patch1 -p1 -b .underlink
 
 %build
 ./autogen.sh
-%configure2_5x --enable-svg-experimental --with-font-backend=%{fontback}
+%configure2_5x --enable-svg-experimental --with-font-backend=%{fontback} --enable-video
 %make
 
 %install
