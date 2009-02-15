@@ -1,5 +1,5 @@
 %define major	1
-%define rev	39872
+%define rev	40957
 
 %define oname		WebKit
 %define libname		%mklibname webkitgtk %major
@@ -39,6 +39,7 @@ BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	librsvg-devel >= 2.2.0
 BuildRequires:	libstdc++-devel
+BuildRequires:	libsoup-devel
 BuildRequires:	libtool
 BuildRequires:	libxslt-devel
 BuildRequires:	pkgconfig
