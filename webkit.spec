@@ -1,7 +1,11 @@
-%define major	1
-%define rev	40957
+%define major	2
+%define rev	0
 
+%if %rev
 %define oname		WebKit
+%else
+%define oname		webkit
+%endif
 %define libname		%mklibname webkitgtk %major
 %define develname	%mklibname webkitgtk -d
 
@@ -16,16 +20,21 @@
 
 Summary:	Web browser engine
 Name:		webkit
-Version:	1.0.2
+Version:	1.1.1
+%if %rev
 Release:	%mkrel 0.%{rev}.1
+%else
+Release:	%mkrel 1
+%endif
 License:	BSD and LGPLv2+
 Group:		System/Libraries
 # Use the nightlies, don't grab SVN directly: the nightlies are
 # MASSIVELY smaller and easier to manage - AdamW 2008/04
+%if %rev
 Source0:	http://nightly.webkit.org/files/trunk/src/%{oname}-r%{rev}.tar.bz2
-# Fix an underlinking issue in the unit tests (reported upstream as
-# 22811) - AdamW 2008/12
-Patch1:		webkit-39090-underlink.patch
+%else
+Source0:	http://cafe.minaslivre.org/webkit/%{oname}-%{version}.tar.gz
+%endif
 URL:		http://www.webkit.org/
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -111,11 +120,16 @@ and resources. This package contains the data files necessary for Web
 Inspector to work.
 
 %prep
+%if %rev
 %setup -q -n %{oname}-r%{rev}
-%patch1 -p1 -b .underlink
+%else
+%setup -q 
+%endif
 
 %build
+%if %rev
 ./autogen.sh
+%endif
 %configure2_5x --enable-svg-experimental --with-font-backend=%{fontback} --enable-video
 %make
 
