@@ -68,7 +68,7 @@ Obsoletes:	%{mklibname WebKitGdk 0} <= 0-0.30465
 Obsoletes:	%{mklibname WebKitGtk 1} <= 0-0.32877
 Provides:	libwebkitgtk = %{version}-%{release}
 # Needed for Web Inspector feature to work
-Requires:	%{name}-webinspector = %{version}-%{release}
+Suggests:	%{name}-webinspector
 
 %description -n %{libname}
 The GTK+ port of WebKit is intended to provide a browser component
