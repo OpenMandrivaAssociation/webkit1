@@ -27,7 +27,7 @@ Version:	1.1.1
 %if %rev
 Release:	%mkrel 0.%{rev}.1
 %else
-Release:	%mkrel 2
+Release:	%mkrel 3
 %endif
 License:	BSD and LGPLv2+
 Group:		System/Libraries
@@ -70,6 +70,10 @@ Summary:	GTK+ port of WebKit web browser engine
 Group:		System/Libraries
 Obsoletes:	%{mklibname WebKitGdk 0} <= 0-0.30465
 Obsoletes:	%{mklibname WebKitGtk 1} <= 0-0.32877
+Obsoletes:	%{mklibname webkitgtk 1} <= 1.1.1-3mdv
+Obsoletes:	%{mklibname webkitgtk 2} <= 1.1.1-3mdv
+# (fhimpe) This provides should probably be removed when major changes
+Provides:	%{mklibname webkitgtk 2} = %{version}-%{release}
 Provides:	libwebkitgtk = %{version}-%{release}
 # Needed for Web Inspector feature to work
 Suggests:	%{inspectorname}
