@@ -1,3 +1,5 @@
+# lib is called libwebkitgtk-%{libver}.so.%{major}
+%define libver  1.0 
 %define major	2
 %define rev	0
 
@@ -6,8 +8,9 @@
 %else
 %define oname		webkit
 %endif
-%define libname		%mklibname webkitgtk %major
-%define develname	%mklibname webkitgtk -d
+%define libname		%mklibname webkitgtk %{libver} %{major}
+%define develname	%mklibname webkitgtk %{libver} -d
+%define inspectorname	webkit%{libver}-webinspector
 
 %define pango	0
 %if %pango
@@ -24,7 +27,7 @@ Version:	1.1.1
 %if %rev
 Release:	%mkrel 0.%{rev}.1
 %else
-Release:	%mkrel 1
+Release:	%mkrel 1.99.1
 %endif
 License:	BSD and LGPLv2+
 Group:		System/Libraries
@@ -56,6 +59,7 @@ BuildRequires:	gtk2-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	xft2-devel
 BuildRequires:	libgstreamer-plugins-base-devel
+BuildRequires:	gnome-keyring-devel
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
 %description
@@ -68,7 +72,7 @@ Obsoletes:	%{mklibname WebKitGdk 0} <= 0-0.30465
 Obsoletes:	%{mklibname WebKitGtk 1} <= 0-0.32877
 Provides:	libwebkitgtk = %{version}-%{release}
 # Needed for Web Inspector feature to work
-Suggests:	%{name}-webinspector
+Suggests:	%{inspectorname}
 
 %description -n %{libname}
 The GTK+ port of WebKit is intended to provide a browser component
@@ -80,6 +84,7 @@ Summary:	Development files for WebKit GTK+ port
 Group:		Development/GNOME and GTK+
 Provides:	webkitgtk-devel = %{version}-%{release}
 Provides:	libwebkitgtk-devel = %{version}-%{release}
+Provides:	%{mklibname webkitgtk -d} = %{version}-%{release}
 Requires:	%{libname} = %{version}-%{release}
 Requires:	curl-devel >= 7.11.0
 Requires:	fontconfig-devel >= 1.0.0
@@ -87,6 +92,7 @@ Requires:	librsvg-devel >= 2.2.0
 Requires:	libstdc++-devel
 Requires:	xft2-devel >= 2.0.0
 Obsoletes:	%{mklibname WebKitGtk -d} <= 0-0.32877
+Obsoletes:	%{mklibname webkitgtk -d} < 1.1.1-2mdv
 
 %description -n %{develname}
 The GTK+ port of WebKit is intended to provide a browser component
@@ -109,11 +115,13 @@ Group:		Development/GNOME and GTK+
 jsc is a shell for JavaScriptCore, WebKit's JavaScript engine. It
 allows you to interact with the JavaScript engine directly.
 
-%package webinspector
+%package -n %{inspectorname}
 Summary:	Data files for WebKit GTK+'s Web Inspector
 Group:		System/Libraries
+Provides:	webkit-webinspector = %{version}-%{release}
+Obsoletes:	webkit-webinspector < 1.1.1-2mdv
 
-%description webinspector
+%description -n %{inspectorname}
 WebKit GTK+ has a feature called the Web Inspector, which allows
 detailed analysis of any given page's page source, live DOM hierarchy
 and resources. This package contains the data files necessary for Web
@@ -130,7 +138,14 @@ Inspector to work.
 %if %rev
 ./autogen.sh
 %endif
-%configure2_5x --enable-svg-experimental --with-font-backend=%{fontback} --enable-video
+%configure2_5x	--enable-svg-experimental \
+              	--with-font-backend=%{fontback} \
+		--enable-video \
+%ifarch %ix86
+		--enable-jit \
+%endif
+		--enable-gnomekeyring \
+
 %make
 
 %install
@@ -155,14 +170,14 @@ rm -rf %{buildroot}
 
 %files -n %{develname}
 %defattr(644,root,root,755)
-%{_libdir}/lib%{name}-1.0.so
-%{_libdir}/lib%{name}-1.0.la
-%{_includedir}/%{name}-1.0
-%{_libdir}/pkgconfig/%{name}-1.0.pc
+%{_libdir}/lib%{name}-%{libver}.so
+%{_libdir}/lib%{name}-%{libver}.la
+%{_includedir}/%{name}-%{libver}
+%{_libdir}/pkgconfig/%{name}-%{libver}.pc
 
 %files -n %{libname}
 %defattr(644,root,root,755)
-%{_libdir}/lib%{name}-1.0.so.%{major}*
+%{_libdir}/lib%{name}-%{libver}.so.%{major}*
 
 %files gtklauncher
 %defattr(0755,root,root)
@@ -172,7 +187,7 @@ rm -rf %{buildroot}
 %defattr(0755,root,root)
 %{_bindir}/jsc
 
-%files webinspector
+%files -n %{inspectorname}
 %defattr(0644,root,root)
-%{_datadir}/%{name}-1.0/webinspector
+%{_datadir}/%{name}-%{libver}/webinspector
 
