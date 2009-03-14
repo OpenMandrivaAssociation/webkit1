@@ -27,7 +27,7 @@ Version:	1.1.1
 %if %rev
 Release:	%mkrel 0.%{rev}.1
 %else
-Release:	%mkrel 1.99.1
+Release:	%mkrel 2
 %endif
 License:	BSD and LGPLv2+
 Group:		System/Libraries
