@@ -36,9 +36,9 @@ Group:		System/Libraries
 %if %rev
 Source0:	http://nightly.webkit.org/files/trunk/src/%{oname}-r%{rev}.tar.bz2
 %else
-Source0:	http://cafe.minaslivre.org/webkit/%{oname}-%{version}.tar.gz
+Source0:	http://www.webkitgtk.org/%{oname}-%{version}.tar.gz
 %endif
-URL:		http://www.webkit.org/
+URL:		http://www.webkitgtk.org
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
