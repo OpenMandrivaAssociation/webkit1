@@ -23,11 +23,11 @@
 
 Summary:	Web browser engine
 Name:		webkit
-Version:	1.1.1
+Version:	1.1.3
 %if %rev
 Release:	%mkrel 0.%{rev}.1
 %else
-Release:	%mkrel 3
+Release:	%mkrel 1
 %endif
 License:	BSD and LGPLv2+
 Group:		System/Libraries
