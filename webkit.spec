@@ -23,7 +23,7 @@
 
 Summary:	Web browser engine
 Name:		webkit
-Version:	1.1.3
+Version:	1.1.6
 %if %rev
 Release:	%mkrel 0.%{rev}.1
 %else
@@ -60,14 +60,27 @@ BuildRequires:	sqlite3-devel
 BuildRequires:	xft2-devel
 BuildRequires:	libgstreamer-plugins-base-devel
 BuildRequires:	gnome-keyring-devel
+BuildRequires:	enchant-devel
+Requires:	%{libname}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
 %description
 WebKit is an open source web browser engine.
 
+%package -n %{name}%{libver}
+Summary:        GTK+ port of WebKit web browser engine - shared files
+Group:          Development/GNOME and GTK+
+Requires:	%{libname}
+
+%description -n %{name}%{libver}
+WebKit is an open source web browser engine.
+This package contains the shared files used by %{name}%{libver}
+
 %package -n %{libname}
 Summary:	GTK+ port of WebKit web browser engine
 Group:		System/Libraries
+Requires:	%{name}
+Requires:	%{name}%{libver}
 Obsoletes:	%{mklibname WebKitGdk 0} <= 0-0.30465
 Obsoletes:	%{mklibname WebKitGtk 1} <= 0-0.32877
 Obsoletes:	%{mklibname webkitgtk 1} <= 1.1.1-3mdv
@@ -162,6 +175,8 @@ install -m 755 Programs/GtkLauncher %{buildroot}%{_libdir}/%{name}
 # reported upstream as 22812 - AdamW 2008/12
 rm -rf %{buildroot}%{_libdir}/libtestnetscapeplugin.*
 
+%find_lang %{name}
+
 %clean
 rm -rf %{buildroot}
 
@@ -171,6 +186,11 @@ rm -rf %{buildroot}
 %if %mdkversion < 200900
 %postun	-n %{libname} -p /sbin/ldconfig
 %endif
+
+%files -f %{name}.lang
+
+%files -n %{name}%{libver}
+%{_datadir}/webkit-1.0/resources/error.html
 
 %files -n %{develname}
 %defattr(644,root,root,755)
