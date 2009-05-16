@@ -158,9 +158,6 @@ Inspector to work.
 %configure2_5x	--enable-svg-experimental \
               	--with-font-backend=%{fontback} \
 		--enable-video \
-%ifarch %ix86
-		--enable-jit \
-%endif
 		--enable-gnomekeyring \
 
 %make
