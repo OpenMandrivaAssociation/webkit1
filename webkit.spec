@@ -23,11 +23,11 @@
 
 Summary:	Web browser engine
 Name:		webkit
-Version:	1.1.7
+Version:	1.1.8
 %if %rev
 Release:	%mkrel 1
 %else
-Release:	%mkrel 2
+Release:	%mkrel 1
 %endif
 License:	BSD and LGPLv2+
 Group:		System/Libraries
@@ -155,7 +155,7 @@ Inspector to work.
 %if %rev
 ./autogen.sh
 %endif
-%configure2_5x	--enable-svg-experimental \
+%configure2_5x	--enable-svg-filters \
               	--with-font-backend=%{fontback} \
 		--enable-video \
 		--enable-gnomekeyring \
