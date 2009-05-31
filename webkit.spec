@@ -187,7 +187,8 @@ rm -rf %{buildroot}
 %files -f %{name}.lang
 
 %files -n %{name}%{libver}
-%{_datadir}/webkit-1.0/resources/error.html
+%{_datadir}/webkit-1.0/resources
+%{_datadir}/webkit-1.0/images
 
 %files -n %{develname}
 %defattr(644,root,root,755)
