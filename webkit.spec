@@ -23,7 +23,7 @@
 
 Summary:	Web browser engine
 Name:		webkit
-Version:	1.1.8
+Version:	1.1.9
 %if %rev
 Release:	%mkrel 1
 %else
@@ -61,6 +61,7 @@ BuildRequires:	xft2-devel
 BuildRequires:	libgstreamer-plugins-base-devel
 BuildRequires:	gnome-keyring-devel
 BuildRequires:	enchant-devel
+BuildRequires:	gail-devel
 Requires:	%{libname}
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
