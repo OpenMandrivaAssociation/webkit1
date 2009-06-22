@@ -25,7 +25,7 @@ Summary:	Web browser engine
 Name:		webkit
 Version:	1.1.10
 %if %rev
-Release:	%mkrel 1
+Release:	%mkrel 2
 %else
 Release:	%mkrel 1
 %endif
@@ -211,6 +211,6 @@ rm -rf %{buildroot}
 %{_bindir}/jsc
 
 %files -n %{inspectorname}
-%defattr(0644,root,root)
+%defattr(0755,root,root)
 %{_datadir}/%{name}-%{libver}/webinspector
 
