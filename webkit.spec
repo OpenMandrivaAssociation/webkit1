@@ -25,7 +25,7 @@ Summary:	Web browser engine
 Name:		webkit
 Version:	1.1.12
 %if %rev
-Release:	%mkrel 1
+Release:	%mkrel 2
 %else
 Release:	%mkrel 2
 %endif
