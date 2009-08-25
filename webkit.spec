@@ -23,11 +23,11 @@
 
 Summary:	Web browser engine
 Name:		webkit
-Version:	1.1.12
+Version:	1.1.13
 %if %rev
-Release:	%mkrel 4
+Release:	%mkrel 1
 %else
-Release:	%mkrel 4
+Release:	%mkrel 1
 %endif
 License:	BSD and LGPLv2+
 Group:		System/Libraries
@@ -51,7 +51,7 @@ BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	librsvg-devel >= 2.2.0
 BuildRequires:	libstdc++-devel
-BuildRequires:	libsoup-devel >= 2.27.4
+BuildRequires:	libsoup-devel >= 2.27.91
 BuildRequires:	libtool
 BuildRequires:	libxslt-devel
 BuildRequires:	pkgconfig
