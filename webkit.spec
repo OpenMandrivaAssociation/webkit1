@@ -23,7 +23,7 @@
 
 Summary:	Web browser engine
 Name:		webkit
-Version:	1.1.15.1
+Version:	1.1.15.3
 %if %rev
 Release:	%mkrel 1
 %else
