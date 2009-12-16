@@ -157,10 +157,9 @@ Inspector to work.
 %if %rev
 ./autogen.sh
 %endif
-%configure2_5x	--enable-svg-filters \
-              	--with-font-backend=%{fontback} \
-		--enable-video \
-		--enable-gnomekeyring \
+%configure2_5x	\
+	--with-font-backend=%{fontback} \
+	--enable-video
 
 %make
 
