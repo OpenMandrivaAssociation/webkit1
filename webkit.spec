@@ -28,7 +28,7 @@ Version:	1.1.17
 %if %rev
 Release:	%mkrel 1
 %else
-Release:	%mkrel 2
+Release:	%mkrel 3
 %endif
 License:	BSD and LGPLv2+
 Group:		System/Libraries
@@ -104,7 +104,7 @@ Group:		Development/GNOME and GTK+
 Provides:	webkitgtk-devel = %{version}-%{release}
 Provides:	libwebkitgtk-devel = %{version}-%{release}
 Provides:	%{mklibname webkitgtk -d} = %{version}-%{release}
-Requires:	%{libname} = %{version}-%{release}
+Requires:	%{libname} = %{epoch}:%{version}-%{release}
 Requires:	curl-devel >= 7.11.0
 Requires:	fontconfig-devel >= 1.0.0
 Requires:	librsvg-devel >= 2.2.0
