@@ -1,3 +1,11 @@
+#
+# BEFORE UPDATING THIS PACKAGE, YOU _MUST_ DO THE FOLLOWING:
+# - DO A LOCAL BUILD
+# - INSTALL IT IN A TEST MACHINE
+# - CHECK THAT 'display_help http://google.com' STILL WORK (INCLUDING CLOSING IT)
+# - CHECK THAT MCC STILL RUNS
+#
+
 # lib is called libwebkitgtk-%{libver}.so.%{major}
 %define libver  1.0 
 %define major	2
