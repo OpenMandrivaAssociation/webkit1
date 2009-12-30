@@ -36,7 +36,7 @@ Version:	1.1.17
 %if %rev
 Release:	%mkrel 1
 %else
-Release:	%mkrel 3
+Release:	%mkrel 4
 %endif
 License:	BSD and LGPLv2+
 Group:		System/Libraries
@@ -68,7 +68,7 @@ BuildRequires:	gtk2-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	xft2-devel
 BuildRequires:	libgstreamer-plugins-base-devel
-BuildRequires:	gnome-keyring-devel
+BuildRequires:	libgnome-keyring-devel
 BuildRequires:	enchant-devel
 BuildRequires:	gail-devel
 Requires:	%{libname}
