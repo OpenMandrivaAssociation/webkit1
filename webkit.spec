@@ -32,11 +32,11 @@
 Summary:	Web browser engine
 Epoch:		1
 Name:		webkit
-Version:	1.1.17
+Version:	1.1.18
 %if %rev
-Release:	%mkrel 2
+Release:	%mkrel 1
 %else
-Release:	%mkrel 5
+Release:	%mkrel 1
 %endif
 License:	BSD and LGPLv2+
 Group:		System/Libraries
@@ -60,7 +60,7 @@ BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	librsvg-devel >= 2.2.0
 BuildRequires:	libstdc++-devel
-BuildRequires:	libsoup-devel >= 2.27.91
+BuildRequires:	libsoup-devel >= 2.29.5
 BuildRequires:	libtool
 BuildRequires:	libxslt-devel
 BuildRequires:	pkgconfig
