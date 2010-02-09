@@ -32,7 +32,7 @@
 Summary:	Web browser engine
 Epoch:		1
 Name:		webkit
-Version:	1.1.19
+Version:	1.1.21
 %if %rev
 Release:	%mkrel 1
 %else
@@ -47,6 +47,7 @@ Source0:	http://nightly.webkit.org/files/trunk/src/%{oname}-r%{rev}.tar.bz2
 %else
 Source0:	http://www.webkitgtk.org/%{oname}-%{version}.tar.gz
 %endif
+Patch: webkit-1.1.21-fix-linking.patch
 URL:		http://www.webkitgtk.org
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -60,7 +61,7 @@ BuildRequires:	libjpeg-devel
 BuildRequires:	libpng-devel
 BuildRequires:	librsvg-devel >= 2.2.0
 BuildRequires:	libstdc++-devel
-BuildRequires:	libsoup-devel >= 2.29.5
+BuildRequires:	libsoup-devel >= 2.29.90
 BuildRequires:	libtool
 BuildRequires:	libxslt-devel
 BuildRequires:	pkgconfig
@@ -160,11 +161,12 @@ Inspector to work.
 %else
 %setup -q 
 %endif
+%patch -p1
+#if %rev
+./autogen.sh
+#endif
 
 %build
-%if %rev
-./autogen.sh
-%endif
 %configure2_5x	\
 	--with-font-backend=%{fontback} \
 	--enable-video
