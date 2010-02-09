@@ -102,6 +102,7 @@ Provides:	%{mklibname webkitgtk 2} = %{version}-%{release}
 Provides:	libwebkitgtk = %{version}-%{release}
 # Needed for Web Inspector feature to work
 Suggests:	%{inspectorname}
+Conflicts:	gir-repository < 0.6.5-7mdv2010.1
 
 %description -n %{libname}
 The GTK+ port of WebKit is intended to provide a browser component
@@ -122,6 +123,7 @@ Requires:	libstdc++-devel
 Requires:	xft2-devel >= 2.0.0
 Obsoletes:	%{mklibname WebKitGtk -d} <= 0-0.32877
 Obsoletes:	%{mklibname webkitgtk -d} < 1.1.1-2mdv
+Conflicts:	gir-repository < 0.6.5-7mdv2010.1
 
 %description -n %{develname}
 The GTK+ port of WebKit is intended to provide a browser component
