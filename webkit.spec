@@ -162,9 +162,10 @@ Inspector to work.
 %setup -q 
 %endif
 %patch -p1
-#if %rev
+%if %rev
 ./autogen.sh
-#endif
+%endif
+autoreconf -fi
 
 %build
 %configure2_5x	\
