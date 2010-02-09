@@ -165,7 +165,7 @@ Inspector to work.
 %if %rev
 ./autogen.sh
 %endif
-autoreconf -fi
+automake
 
 %build
 %configure2_5x	\
