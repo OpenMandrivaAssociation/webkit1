@@ -36,7 +36,7 @@ Version:	1.1.21
 %if %rev
 Release:	%mkrel 1
 %else
-Release:	%mkrel 1
+Release:	%mkrel 2
 %endif
 License:	BSD and LGPLv2+
 Group:		System/Libraries
@@ -70,6 +70,7 @@ BuildRequires:	sqlite3-devel
 BuildRequires:	xft2-devel
 BuildRequires:	libgstreamer-plugins-base-devel
 BuildRequires:	libgnome-keyring-devel
+BuildRequires:	gobject-introspection-devel gir-repository
 BuildRequires:	enchant-devel
 BuildRequires:	gail-devel
 Requires:	%{libname}
@@ -170,7 +171,7 @@ automake
 %build
 %configure2_5x	\
 	--with-font-backend=%{fontback} \
-	--enable-video
+	--enable-video --enable-introspection
 
 %make
 
@@ -208,10 +209,14 @@ rm -rf %{buildroot}
 %{_libdir}/lib%{name}-%{libver}.la
 %{_includedir}/%{name}-%{libver}
 %{_libdir}/pkgconfig/%{name}-%{libver}.pc
+%_datadir/gir-1.0/JSCore-%{libver}.gir
+%_datadir/gir-1.0/WebKit-%{libver}.gir
 
 %files -n %{libname}
 %defattr(644,root,root,755)
 %{_libdir}/lib%{name}-%{libver}.so.%{major}*
+%_libdir/girepository-1.0/JSCore-%{libver}.typelib
+%_libdir/girepository-1.0/WebKit-%{libver}.typelib
 
 %files gtklauncher
 %defattr(0755,root,root)
