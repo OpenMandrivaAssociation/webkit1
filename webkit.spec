@@ -32,7 +32,7 @@
 Summary:	Web browser engine
 Epoch:		1
 Name:		webkit
-Version:	1.1.21
+Version:	1.1.22
 %if %rev
 Release:	%mkrel 1
 %else
