@@ -32,11 +32,11 @@
 Summary:	Web browser engine
 Epoch:		1
 Name:		webkit
-Version:	1.1.22
+Version:	1.1.23
 %if %rev
 Release:	%mkrel 1
 %else
-Release:	%mkrel 3
+Release:	%mkrel 1
 %endif
 License:	BSD and LGPLv2+
 Group:		System/Libraries
