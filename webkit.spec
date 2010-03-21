@@ -48,6 +48,7 @@ Source0:	http://nightly.webkit.org/files/trunk/src/%{oname}-r%{rev}.tar.bz2
 Source0:	http://www.webkitgtk.org/%{oname}-%{version}.tar.gz
 %endif
 Patch: webkit-1.1.21-fix-linking.patch
+Patch1: webkit-1.1.23-icu4.4.patch
 URL:		http://www.webkitgtk.org
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -165,6 +166,7 @@ Inspector to work.
 %setup -q 
 %endif
 %patch -p1
+%patch1 -p0
 %if %rev
 ./autogen.sh
 %endif
