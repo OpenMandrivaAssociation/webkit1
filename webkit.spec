@@ -34,7 +34,7 @@ Epoch:		1
 Name:		webkit
 Version:	1.2.0
 %if %rev
-Release:	%mkrel 1
+Release:	%mkrel 2
 %else
 Release:	%mkrel 1
 %endif
