@@ -34,9 +34,9 @@ Epoch:		1
 Name:		webkit
 Version:	1.2.0
 %if %rev
-Release:	%mkrel 2
-%else
 Release:	%mkrel 1
+%else
+Release:	%mkrel 2
 %endif
 License:	BSD and LGPLv2+
 Group:		System/Libraries
