@@ -36,7 +36,7 @@ Version:	1.2.0
 %if %rev
 Release:	%mkrel 1
 %else
-Release:	%mkrel 2
+Release:	%mkrel 3
 %endif
 License:	BSD and LGPLv2+
 Group:		System/Libraries
@@ -49,6 +49,8 @@ Source0:	http://www.webkitgtk.org/%{oname}-%{version}.tar.gz
 %endif
 Patch: webkit-1.1.21-fix-linking.patch
 Patch1: webkit-1.1.23-icu4.4.patch
+# (blino) needed for first-time wizard (display_help) to be able to close its window with javascript
+Patch2: webkit-1.2.0-allowScriptsToCloseWindows.patch
 URL:		http://www.webkitgtk.org
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -167,6 +169,7 @@ Inspector to work.
 %endif
 %patch -p1
 %patch1 -p0
+%patch2 -p1 -b .allowScriptsToCloseWindows
 %if %rev
 ./autogen.sh
 %endif
