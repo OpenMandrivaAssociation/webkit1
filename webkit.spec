@@ -29,14 +29,23 @@
 %define fontback	freetype
 %endif
 
+%if %mandriva_branch == Cooker
+# Cooker
+%define rel 2
+%else
+# Old distros
+%define subrel 1
+%define rel 0
+%endif
+
 Summary:	Web browser engine
 Epoch:		1
 Name:		webkit
 Version:	1.2.3
 %if %rev
-Release:	%mkrel 1
+Release:	%mkrel -c %rev %rel
 %else
-Release:	%mkrel 2
+Release:	%mkrel %rel
 %endif
 License:	BSD and LGPLv2+
 Group:		System/Libraries
