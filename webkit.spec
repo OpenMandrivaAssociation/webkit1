@@ -83,6 +83,10 @@ BuildRequires:	xft2-devel
 BuildRequires:	libgstreamer-plugins-base-devel
 BuildRequires:	libgnome-keyring-devel
 BuildRequires:	gobject-introspection-devel
+%if %mdvver <= 201010
+#gw for Soup-2.4.gir
+BuildRequires:	gir-repository
+%endif
 BuildRequires:	enchant-devel
 BuildRequires:	gail-devel
 Requires:	%{libname}
