@@ -178,7 +178,9 @@ Inspector to work.
 %endif
 %patch -p1
 %patch2 -p1 -b .allowScriptsToCloseWindows
+%if %mdvver >= 201100
 %patch3 -p0 -b .gir
+%endif
 %if %rev
 ./autogen.sh
 %endif
