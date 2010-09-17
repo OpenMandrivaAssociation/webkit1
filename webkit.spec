@@ -59,7 +59,7 @@ Source0:	http://www.webkitgtk.org/%{oname}-%{version}.tar.gz
 Patch: webkit-1.1.21-fix-linking.patch
 # (blino) needed for first-time wizard (display_help) to be able to close its window with javascript
 Patch2: webkit-1.2.3-allowScriptsToCloseWindows.patch
-Patch3: webkit-1.2.3-gir-1.1.patch
+Patch3: webkit-1.2.3-gir-1.2.patch
 URL:		http://www.webkitgtk.org
 BuildRequires:	autoconf
 BuildRequires:	automake
