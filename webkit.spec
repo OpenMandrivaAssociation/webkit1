@@ -31,7 +31,7 @@
 
 %if %mandriva_branch == Cooker
 # Cooker
-%define rel 3
+%define rel 1
 %else
 # Old distros
 %define subrel 1
@@ -41,7 +41,7 @@
 Summary:	Web browser engine
 Epoch:		1
 Name:		webkit
-Version:	1.2.3
+Version:	1.2.4
 %if %rev
 Release:	%mkrel -c %rev %rel
 %else
