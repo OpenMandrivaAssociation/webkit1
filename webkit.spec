@@ -76,6 +76,7 @@ BuildRequires:	libstdc++-devel
 BuildRequires:	libsoup-devel >= 2.29.90
 BuildRequires:	libtool
 BuildRequires:	libxslt-devel
+BuildRequires:	libxt-devel
 BuildRequires:	pkgconfig
 BuildRequires:	gtk2-devel
 BuildRequires:	sqlite3-devel
