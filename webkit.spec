@@ -41,7 +41,7 @@
 Summary:	Web browser engine
 Epoch:		1
 Name:		webkit
-Version:	1.2.6
+Version:	1.2.7
 %if %rev
 Release:	%mkrel -c %rev %rel
 %else
@@ -84,7 +84,7 @@ BuildRequires:	xft2-devel
 BuildRequires:	libgstreamer-plugins-base-devel
 BuildRequires:	libgnome-keyring-devel
 BuildRequires:	gobject-introspection-devel
-%if %mdvver <= 201010
+%if %mdvver <= 201020
 #gw for Soup-2.4.gir
 BuildRequires:	gir-repository
 %endif
