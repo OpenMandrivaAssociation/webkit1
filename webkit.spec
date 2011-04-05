@@ -31,7 +31,7 @@
 
 %if %mandriva_branch == Cooker
 # Cooker
-%define rel 2
+%define rel 3
 %else
 # Old distros
 %define subrel 1
