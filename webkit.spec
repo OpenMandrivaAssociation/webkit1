@@ -56,7 +56,8 @@ Source0:	http://nightly.webkit.org/files/trunk/src/%{oname}-r%{rev}.tar.bz2
 %else
 Source0:	http://www.webkitgtk.org/%{oname}-%{version}.tar.gz
 %endif
-Patch: webkit-1.1.21-fix-linking.patch
+Patch0: webkit-1.1.21-fix-linking.patch
+Patch1: webkit-gtk-1.2.5-tests-build.patch
 # (blino) needed for first-time wizard (display_help) to be able to close its window with javascript
 Patch2: webkit-1.2.3-allowScriptsToCloseWindows.patch
 Patch3: webkit-1.2.3-gir-1.2.patch
@@ -181,7 +182,8 @@ Inspector to work.
 %else
 %setup -q 
 %endif
-%patch -p1
+%patch0 -p1 -b .link
+%patch1 -p1 -b .check
 %patch2 -p1 -b .allowScriptsToCloseWindows
 %if %mdvver >= 201100
 %patch3 -p0 -b .gir
