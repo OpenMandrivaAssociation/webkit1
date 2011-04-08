@@ -197,8 +197,7 @@ automake
 %configure2_5x	\
 	--with-font-backend=%{fontback} \
 	--enable-video --enable-introspection
-
-%make
+make
 
 %install
 rm -rf %{buildroot}
