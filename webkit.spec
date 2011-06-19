@@ -62,6 +62,7 @@ BuildRequires:	libxt-devel
 BuildRequires:	pkgconfig
 BuildRequires:	gtk+2-devel
 BuildRequires:	gtk+3-devel
+BuildRequires:	libgail-3.0-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	xft2-devel
 BuildRequires:	libgstreamer-plugins-base-devel
