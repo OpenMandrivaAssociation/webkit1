@@ -8,17 +8,17 @@
 
 # lib is called libwebkitgtk-%{libver}.so.%{major}
 %define libver  1.0 
-%define major	2
-%define rev	0
-
-%if %rev
-%define oname		WebKit
-%else
+%define major	0
 %define oname		webkit
-%endif
 %define libname		%mklibname webkitgtk %{libver} %{major}
 %define develname	%mklibname webkitgtk %{libver} -d
 %define inspectorname	webkit%{libver}-webinspector
+
+%define lib3ver  3.0
+%define major3   0
+%define lib3name	%mklibname webkitgtk %{lib3ver} %{major3}
+%define develname3	%mklibname webkitgtk %{lib3ver} -d
+%define inspector3name	webkit%{lib3ver}-webinspector
 
 %define pango	0
 %if %pango
@@ -29,38 +29,19 @@
 %define fontback	freetype
 %endif
 
-%if %mandriva_branch == Cooker
-# Cooker
 %define rel 4
-%else
-# Old distros
-%define subrel 1
-%define rel 0
-%endif
 
 Summary:	Web browser engine
 Epoch:		1
 Name:		webkit
-Version:	1.2.7
-%if %rev
-Release:	%mkrel -c %rev %rel
-%else
+Version:	1.4.1
 Release:	%mkrel %rel
-%endif
 License:	BSD and LGPLv2+
 Group:		System/Libraries
-# Use the nightlies, don't grab SVN directly: the nightlies are
-# MASSIVELY smaller and easier to manage - AdamW 2008/04
-%if %rev
-Source0:	http://nightly.webkit.org/files/trunk/src/%{oname}-r%{rev}.tar.bz2
-%else
 Source0:	http://www.webkitgtk.org/%{oname}-%{version}.tar.gz
-%endif
-Patch0: webkit-1.1.21-fix-linking.patch
-Patch1: webkit-gtk-1.2.5-tests-build.patch
+Patch0:		webkit-1.3.13-link.patch
 # (blino) needed for first-time wizard (display_help) to be able to close its window with javascript
-Patch2: webkit-1.2.3-allowScriptsToCloseWindows.patch
-Patch3: webkit-1.2.3-gir-1.2.patch
+Patch2: webkit-1.4.1-allowScriptsToCloseWindows.patch
 URL:		http://www.webkitgtk.org
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -79,16 +60,13 @@ BuildRequires:	libtool
 BuildRequires:	libxslt-devel
 BuildRequires:	libxt-devel
 BuildRequires:	pkgconfig
-BuildRequires:	gtk2-devel
+BuildRequires:	gtk+2-devel
+BuildRequires:	gtk+3-devel
 BuildRequires:	sqlite3-devel
 BuildRequires:	xft2-devel
 BuildRequires:	libgstreamer-plugins-base-devel
 BuildRequires:	libgnome-keyring-devel
 BuildRequires:	gobject-introspection-devel
-%if %mdvver <= 201020
-#gw for Soup-2.4.gir
-BuildRequires:	gir-repository
-%endif
 BuildRequires:	enchant-devel
 BuildRequires:	gail-devel
 Requires:	%{libname}
@@ -176,61 +154,130 @@ detailed analysis of any given page's page source, live DOM hierarchy
 and resources. This package contains the data files necessary for Web
 Inspector to work.
 
+%package -n %{name}3
+Summary:        Web browser engine
+Group:          System/Libraries
+Requires:       %{lib3name}
+
+%description -n %{name}3
+WebKit is an open source web browser engine.
+
+%package -n %{name}%{lib3ver}
+Summary:        GTK+3 port of WebKit web browser engine - shared files
+Group:          Development/GNOME and GTK+
+Requires:       %{lib3name}
+
+%description -n %{name}%{lib3ver}
+WebKit is an open source web browser engine.
+This package contains the shared files used by %{name}%{lib3ver}
+
+%package -n %{lib3name}
+Summary:        GTK+3 port of WebKit web browser engine
+Group:          System/Libraries
+Requires:       %{name}3
+Requires:       %{name}%{lib3ver}
+Provides:       libwebkitgtk3 = %{version}-%{release}
+# Needed for Web Inspector feature to work
+Suggests:       %{inspector3name}
+
+%description -n %{lib3name}
+The GTK+3 port of WebKit is intended to provide a browser component
+primarily for users of the portable GTK+3 UI toolkit on platforms like
+Linux.
+
+%package -n %{develname3}
+Summary:        Development files for WebKit GTK+3 port
+Group:          Development/GNOME and GTK+
+Provides:       webkitgtk3-devel = %{version}-%{release}
+Provides:       libwebkitgtk3-devel = %{version}-%{release}
+Requires:       %{lib3name} = %{epoch}:%{version}-%{release}
+
+%description -n %{develname3}
+The GTK+ port of WebKit is intended to provide a browser component
+primarily for users of the portable GTK+ UI toolkit on platforms like
+Linux. This package contains development headers.
+
+%package -n webkit3-gtklauncher
+Summary:        WebKit GTK+3 example application
+Group:          Development/GNOME and GTK+
+
+%description -n webkit3-gtklauncher
+GtkLauncher is an example application for WebKit GTK+3.
+
+%package -n webkit3-jsc
+Summary:        JavaScriptCore shell for WebKit GTK+3
+Group:          Development/GNOME and GTK+
+
+%description -n webkit3-jsc
+jsc is a shell for JavaScriptCore, WebKit's JavaScript engine. It
+allows you to interact with the JavaScript engine directly.
+
+%package -n %{inspector3name}
+Summary:        Data files for WebKit GTK+'s Web Inspector
+Group:          System/Libraries
+Provides:       webkit3-webinspector = %{version}-%{release}
+
+%description -n %{inspector3name}
+WebKit GTK+3 has a feature called the Web Inspector, which allows
+detailed analysis of any given page's page source, live DOM hierarchy
+and resources. This package contains the data files necessary for Web
+Inspector to work.
+
 %prep
-%if %rev
-%setup -q -n %{oname}-r%{rev}
-%else
-%setup -q 
-%endif
-%patch0 -p1 -b .link
-%patch1 -p1 -b .check
+%setup -q
+%patch0 -p0 -b.link
 %patch2 -p1 -b .allowScriptsToCloseWindows
-%if %mdvver >= 201100
-%patch3 -p0 -b .gir
-%endif
-%if %rev
-./autogen.sh
-%endif
-automake
 
 %build
-%configure2_5x	\
+mkdir -p gtk2
+pushd gtk2
+CONFIGURE_TOP=.. %configure2_5x	--with-gtk=2.0 \
 	--with-font-backend=%{fontback} \
 	--enable-video --enable-introspection
-make
+%make
+popd
+
+mkdir -p gtk3
+pushd gtk3
+CONFIGURE_TOP=.. %configure2_5x  --with-gtk=3.0 \
+	--with-font-backend=%{fontback} \
+	--enable-video --enable-introspection
+%make
+popd
 
 %install
 rm -rf %{buildroot}
-%makeinstall_std
+%makeinstall_std -C gtk2
+%makeinstall_std -C gtk3
 mkdir -p %{buildroot}%{_libdir}/%{name}
-install -m 755 Programs/GtkLauncher %{buildroot}%{_libdir}/%{name}
+install -m 755 gtk2/Programs/GtkLauncher %{buildroot}%{_libdir}/%{name}
+
+mkdir -p %{buildroot}%{_libdir}/%{name}3
+install -m 755 gtk3/Programs/GtkLauncher %{buildroot}%{_libdir}/%{name}3
 
 # only useful for testing, should not be installed system-wide.
 # reported upstream as 22812 - AdamW 2008/12
 rm -rf %{buildroot}%{_libdir}/libtestnetscapeplugin.*
 
-%find_lang %{name}
+%find_lang %{name}-2.0
+
+%find_lang %{name}-3.0
 
 %clean
 rm -rf %{buildroot}
 
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-%if %mdkversion < 200900
-%postun	-n %{libname} -p /sbin/ldconfig
-%endif
-
-%files -f %{name}.lang
+%files -f %{name}-2.0.lang
 
 %files -n %{name}%{libver}
+%{_datadir}/glib-2.0/schemas/org.webkitgtk-1.0.gschema.xml
+%dir %{_datadir}/webkitgtk-1.0
+%{_datadir}/webkitgtk-1.0/images
 %{_datadir}/webkit-1.0/resources
-%{_datadir}/webkit-1.0/images
 
 %files -n %{develname}
 %defattr(644,root,root,755)
-%{_libdir}/lib%{name}-%{libver}.so
-%{_libdir}/lib%{name}-%{libver}.la
+%{_libdir}/lib%{name}gtk-%{libver}.so
+%{_libdir}/lib%{name}gtk-%{libver}.la
 %{_includedir}/%{name}-%{libver}
 %{_libdir}/pkgconfig/%{name}-%{libver}.pc
 %_datadir/gir-1.0/JSCore-%{libver}.gir
@@ -238,7 +285,7 @@ rm -rf %{buildroot}
 
 %files -n %{libname}
 %defattr(644,root,root,755)
-%{_libdir}/lib%{name}-%{libver}.so.%{major}*
+%{_libdir}/lib%{name}gtk-%{libver}.so.%{major}*
 %_libdir/girepository-1.0/JSCore-%{libver}.typelib
 %_libdir/girepository-1.0/WebKit-%{libver}.typelib
 
@@ -248,9 +295,43 @@ rm -rf %{buildroot}
 
 %files jsc
 %defattr(0755,root,root)
-%{_bindir}/jsc
+%{_bindir}/jsc-1
 
 %files -n %{inspectorname}
 %defattr(0755,root,root)
-%{_datadir}/%{name}-%{libver}/webinspector
+%{_datadir}/%{name}gtk-%{libver}/webinspector
 
+%files -n %{name}3 -f %{name}-3.0.lang
+
+%files -n %{name}%{lib3ver}
+%{_datadir}/glib-2.0/schemas/org.webkitgtk-3.0.gschema.xml
+%dir %{_datadir}/webkitgtk-3.0
+%{_datadir}/webkitgtk-3.0/images
+%{_datadir}/webkit-3.0/resources
+
+%files -n %{develname3}
+%defattr(644,root,root,755)
+%{_libdir}/lib%{name}gtk-%{lib3ver}.so
+%{_libdir}/lib%{name}gtk-%{lib3ver}.la
+%{_includedir}/%{name}-%{lib3ver}
+%{_libdir}/pkgconfig/%{name}gtk-%{lib3ver}.pc
+%_datadir/gir-1.0/JSCore-%{lib3ver}.gir
+%_datadir/gir-1.0/WebKit-%{lib3ver}.gir
+
+%files -n %{lib3name}
+%defattr(644,root,root,755)
+%{_libdir}/lib%{name}gtk-%{lib3ver}.so.%{major3}*
+%_libdir/girepository-1.0/JSCore-%{lib3ver}.typelib
+%_libdir/girepository-1.0/WebKit-%{lib3ver}.typelib
+
+%files -n %{name}3-gtklauncher
+%defattr(0755,root,root)
+%{_libdir}/%{name}3/GtkLauncher
+
+%files -n %{name}3-jsc
+%defattr(0755,root,root)
+%{_bindir}/jsc-3
+
+%files -n %{inspector3name}
+%defattr(0755,root,root)
+%{_datadir}/%{name}gtk-%{lib3ver}/webinspector
