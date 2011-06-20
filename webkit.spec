@@ -29,7 +29,7 @@
 %define fontback	freetype
 %endif
 
-%define rel 4
+%define rel 5
 
 Summary:	Web browser engine
 Epoch:		1
@@ -274,6 +274,10 @@ rm -rf %{buildroot}
 %dir %{_datadir}/webkitgtk-1.0
 %{_datadir}/webkitgtk-1.0/images
 %{_datadir}/webkit-1.0/resources
+%_libdir/girepository-1.0/JSCore-%{libver}.typelib
+%_libdir/girepository-1.0/WebKit-%{libver}.typelib
+%_libdir/girepository-1.0/JSCore-%{lib3ver}.typelib
+%_libdir/girepository-1.0/WebKit-%{lib3ver}.typelib
 
 %files -n %{develname}
 %defattr(644,root,root,755)
@@ -287,8 +291,6 @@ rm -rf %{buildroot}
 %files -n %{libname}
 %defattr(644,root,root,755)
 %{_libdir}/lib%{name}gtk-%{libver}.so.%{major}*
-%_libdir/girepository-1.0/JSCore-%{libver}.typelib
-%_libdir/girepository-1.0/WebKit-%{libver}.typelib
 
 %files gtklauncher
 %defattr(0755,root,root)
@@ -322,8 +324,6 @@ rm -rf %{buildroot}
 %files -n %{lib3name}
 %defattr(644,root,root,755)
 %{_libdir}/lib%{name}gtk-%{lib3ver}.so.%{major3}*
-%_libdir/girepository-1.0/JSCore-%{lib3ver}.typelib
-%_libdir/girepository-1.0/WebKit-%{lib3ver}.typelib
 
 %files -n %{name}3-gtklauncher
 %defattr(0755,root,root)
