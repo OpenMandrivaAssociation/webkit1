@@ -80,6 +80,7 @@ WebKit is an open source web browser engine.
 Summary:        GTK+ port of WebKit web browser engine - shared files
 Group:          Development/GNOME and GTK+
 Requires:	%{libname}
+Conflicts:	%{libname} < 1.4.1-5
 
 %description -n %{name}%{libver}
 WebKit is an open source web browser engine.
@@ -167,6 +168,7 @@ WebKit is an open source web browser engine.
 Summary:        GTK+3 port of WebKit web browser engine - shared files
 Group:          Development/GNOME and GTK+
 Requires:       %{lib3name}
+Conflicts:	%{lib3name} < 1.4.1-5
 
 %description -n %{name}%{lib3ver}
 WebKit is an open source web browser engine.
@@ -276,8 +278,6 @@ rm -rf %{buildroot}
 %{_datadir}/webkit-1.0/resources
 %_libdir/girepository-1.0/JSCore-%{libver}.typelib
 %_libdir/girepository-1.0/WebKit-%{libver}.typelib
-%_libdir/girepository-1.0/JSCore-%{lib3ver}.typelib
-%_libdir/girepository-1.0/WebKit-%{lib3ver}.typelib
 
 %files -n %{develname}
 %defattr(644,root,root,755)
@@ -311,6 +311,8 @@ rm -rf %{buildroot}
 %dir %{_datadir}/webkitgtk-3.0
 %{_datadir}/webkitgtk-3.0/images
 %{_datadir}/webkit-3.0/resources
+%_libdir/girepository-1.0/JSCore-%{lib3ver}.typelib
+%_libdir/girepository-1.0/WebKit-%{lib3ver}.typelib
 
 %files -n %{develname3}
 %defattr(644,root,root,755)
