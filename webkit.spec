@@ -29,7 +29,7 @@
 %define fontback	freetype
 %endif
 
-%define rel 6
+%define rel 7
 
 Summary:	Web browser engine
 Epoch:		1
