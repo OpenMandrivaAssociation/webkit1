@@ -29,19 +29,20 @@
 %define fontback	freetype
 %endif
 
-%define rel 7
+%define rel 0
+%define subrel 1
 
 Summary:	Web browser engine
 Epoch:		1
 Name:		webkit
-Version:	1.4.1
+Version:	1.4.2
 Release:	%mkrel %rel
 License:	BSD and LGPLv2+
 Group:		System/Libraries
 Source0:	http://www.webkitgtk.org/%{oname}-%{version}.tar.gz
-Patch0:		webkit-1.3.13-link.patch
 # (blino) needed for first-time wizard (display_help) to be able to close its window with javascript
-Patch2: webkit-1.4.1-allowScriptsToCloseWindows.patch
+Patch0:		webkit-1.4.2-link.patch
+Patch1:		webkit-1.4.1-allowScriptsToCloseWindows.patch
 URL:		http://www.webkitgtk.org
 BuildRequires:	autoconf
 BuildRequires:	automake
@@ -231,14 +232,15 @@ Inspector to work.
 
 %prep
 %setup -q
-%patch0 -p0 -b.link
-%patch2 -p1 -b .allowScriptsToCloseWindows
+%patch0 -p1 -b .link
+%patch1 -p1 -b .allowScriptsToCloseWindows
 
 %build
 mkdir -p gtk2
 pushd gtk2
 CONFIGURE_TOP=.. %configure2_5x	--with-gtk=2.0 \
 	--with-font-backend=%{fontback} \
+	--with-gnu-ld \
 	--enable-video --enable-introspection
 %make
 popd
@@ -247,6 +249,7 @@ mkdir -p gtk3
 pushd gtk3
 CONFIGURE_TOP=.. %configure2_5x  --with-gtk=3.0 \
 	--with-font-backend=%{fontback} \
+	--with-gnu-ld \
 	--enable-video --enable-introspection
 %make
 popd
