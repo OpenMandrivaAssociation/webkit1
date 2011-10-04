@@ -29,7 +29,7 @@
 %define fontback	freetype
 %endif
 
-%define rel 0
+%define rel 1
 %define subrel 1
 
 Summary:	Web browser engine
