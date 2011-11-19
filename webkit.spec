@@ -32,42 +32,40 @@
 Summary:	Web browser engine
 Epoch:		1
 Name:		webkit
-Version:	1.4.2
-Release:	2
+Version:	1.6.1
+Release:	1
 License:	BSD and LGPLv2+
 Group:		System/Libraries
 URL:		http://www.webkitgtk.org
 Source0:	http://www.webkitgtk.org/%{oname}-%{version}.tar.gz
 # (blino) needed for first-time wizard (display_help) to be able to close its window with javascript
-Patch0:		webkit-1.4.2-link.patch
-Patch1:		webkit-1.4.1-allowScriptsToCloseWindows.patch
-BuildRequires:	autoconf
-BuildRequires:	automake
+Patch0:		webkit-1.6.1-link.patch
+Patch1:		webkit-1.6.1-allowScriptsToCloseWindows.patch
+
 BuildRequires:	bison
-BuildRequires:	curl-devel >= 7.11.0
 BuildRequires:	flex
-BuildRequires:	%{fontreq}
 BuildRequires:	gperf
-BuildRequires:	libicu-devel
-BuildRequires:	libjpeg-devel
-BuildRequires:	libpng-devel
-BuildRequires:	librsvg-devel >= 2.2.0
-BuildRequires:	libstdc++-devel
-BuildRequires:	libsoup-devel >= 2.29.90
 BuildRequires:	libtool
-BuildRequires:	libxslt-devel
-BuildRequires:	libxt-devel
-BuildRequires:	pkgconfig
-BuildRequires:	gtk+2-devel
-BuildRequires:	gtk+3-devel
-BuildRequires:	libgail-3.0-devel
-BuildRequires:	sqlite3-devel
-BuildRequires:	xft2-devel
-BuildRequires:	libgstreamer-plugins-base-devel
-BuildRequires:	libgnome-keyring-devel
-BuildRequires:	gobject-introspection-devel
-BuildRequires:	enchant-devel
-BuildRequires:	gail-devel
+BuildRequires:	%{fontreq}
+BuildRequires:	icu-devel
+BuildRequires:	jpeg-devel
+BuildRequires:	libstdc++-devel
+BuildRequires:	pkgconfig(enchant)
+BuildRequires:	pkgconfig(gail)
+BuildRequires:	pkgconfig(gail-3.0)
+BuildRequires:	pkgconfig(gnome-keyring-1)
+BuildRequires:	pkgconfig(gobject-introspection-1.0)
+BuildRequires:	pkgconfig(gstreamer-plugins-base-0.10)
+BuildRequires:	pkgconfig(gtk+-2.0)
+BuildRequires:	pkgconfig(gtk+-3.0)
+BuildRequires:	pkgconfig(libcurl) >= 7.11.0
+BuildRequires:	pkgconfig(libpng)
+BuildRequires:	pkgconfig(librsvg-2.0) >= 2.2.0
+BuildRequires:	pkgconfig(libsoup-2.4) >= 2.29.90
+BuildRequires:	pkgconfig(libxslt)
+BuildRequires:	pkgconfig(sqlite3)
+BuildRequires:	pkgconfig(xft)
+BuildRequires:	pkgconfig(xt)
 Requires:	%{libname} = %{epoch}:%{version}-%{release}
 
 %description
@@ -215,25 +213,30 @@ Inspector to work.
 
 %prep
 %setup -q
-%patch0 -p1 -b .link
-%patch1 -p1 -b .allowScriptsToCloseWindows
+%apply_patches
 
 %build
 mkdir -p gtk2
 pushd gtk2
-CONFIGURE_TOP=.. %configure2_5x	--with-gtk=2.0 \
+CONFIGURE_TOP=.. %configure2_5x	\
+	--with-gtk=2.0 \
 	--with-font-backend=%{fontback} \
 	--with-gnu-ld \
-	--enable-video --enable-introspection
+	--enable-video \
+	--enable-introspection
+
 %make
 popd
 
 mkdir -p gtk3
 pushd gtk3
-CONFIGURE_TOP=.. %configure2_5x  --with-gtk=3.0 \
+CONFIGURE_TOP=.. %configure2_5x \
+	--with-gtk=3.0 \
 	--with-font-backend=%{fontback} \
 	--with-gnu-ld \
-	--enable-video --enable-introspection
+	--enable-video \
+	--enable-introspection
+
 %make
 popd
 
