@@ -29,21 +29,18 @@
 %define fontback	freetype
 %endif
 
-%define rel 1
-%define subrel 1
-
 Summary:	Web browser engine
 Epoch:		1
 Name:		webkit
 Version:	1.4.2
-Release:	%mkrel %rel
+Release:	2
 License:	BSD and LGPLv2+
 Group:		System/Libraries
+URL:		http://www.webkitgtk.org
 Source0:	http://www.webkitgtk.org/%{oname}-%{version}.tar.gz
 # (blino) needed for first-time wizard (display_help) to be able to close its window with javascript
 Patch0:		webkit-1.4.2-link.patch
 Patch1:		webkit-1.4.1-allowScriptsToCloseWindows.patch
-URL:		http://www.webkitgtk.org
 BuildRequires:	autoconf
 BuildRequires:	automake
 BuildRequires:	bison
@@ -71,8 +68,7 @@ BuildRequires:	libgnome-keyring-devel
 BuildRequires:	gobject-introspection-devel
 BuildRequires:	enchant-devel
 BuildRequires:	gail-devel
-Requires:	%{libname}
-BuildRoot:	%{_tmppath}/%{name}-%{version}-root
+Requires:	%{libname} = %{epoch}:%{version}-%{release}
 
 %description
 WebKit is an open source web browser engine.
@@ -80,7 +76,7 @@ WebKit is an open source web browser engine.
 %package -n %{name}%{libver}
 Summary:        GTK+ port of WebKit web browser engine - shared files
 Group:          Development/GNOME and GTK+
-Requires:	%{libname}
+Requires:	%{libname} = %{epoch}:%{version}-%{release}
 Conflicts:	%{libname} < 1:1.4.1-5
 Conflicts:	%{name} < 1:1.4.1-6
 Conflicts:	%{_lib}webkitgtk1.0_2 < 1:1.4.1
@@ -92,14 +88,9 @@ This package contains the shared files used by %{name}%{libver}
 %package -n %{libname}
 Summary:	GTK+ port of WebKit web browser engine
 Group:		System/Libraries
-Requires:	%{name}
-Requires:	%{name}%{libver}
-Obsoletes:	%{mklibname WebKitGdk 0} <= 0-0.30465
-Obsoletes:	%{mklibname WebKitGtk 1} <= 0-0.32877
+#Requires:	%{name}%{libver}
 Obsoletes:	%{mklibname webkitgtk 1} <= 1.1.1-3mdv
 Obsoletes:	%{mklibname webkitgtk 2} <= 1.1.1-3mdv
-# (fhimpe) This provides should probably be removed when major changes
-Provides:	%{mklibname webkitgtk 2} = %{version}-%{release}
 Provides:	libwebkitgtk = %{version}-%{release}
 # Needed for Web Inspector feature to work
 Suggests:	%{inspectorname}
@@ -117,12 +108,6 @@ Provides:	webkitgtk-devel = %{version}-%{release}
 Provides:	libwebkitgtk-devel = %{version}-%{release}
 Provides:	%{mklibname webkitgtk -d} = %{version}-%{release}
 Requires:	%{libname} = %{epoch}:%{version}-%{release}
-Requires:	curl-devel >= 7.11.0
-Requires:	fontconfig-devel >= 1.0.0
-Requires:	librsvg-devel >= 2.2.0
-Requires:	libstdc++-devel
-Requires:	xft2-devel >= 2.0.0
-Obsoletes:	%{mklibname WebKitGtk -d} <= 0-0.32877
 Obsoletes:	%{mklibname webkitgtk -d} < 1.1.1-2mdv
 Conflicts:	gir-repository < 0.6.5-7mdv2010.1
 
@@ -134,7 +119,6 @@ Linux. This package contains development headers.
 %package gtklauncher
 Summary:	WebKit GTK+ example application
 Group:		Development/GNOME and GTK+
-Conflicts:	%mklibname WebKitGtk 0 <= 0-0.30465
 
 %description gtklauncher
 GtkLauncher is an example application for WebKit GTK+.
@@ -162,7 +146,7 @@ Inspector to work.
 %package -n %{name}3
 Summary:        Web browser engine
 Group:          System/Libraries
-Requires:       %{lib3name}
+Requires:       %{lib3name} =  %{epoch}:%{version}-%{release}
 
 %description -n %{name}3
 WebKit is an open source web browser engine.
@@ -170,7 +154,7 @@ WebKit is an open source web browser engine.
 %package -n %{name}%{lib3ver}
 Summary:        GTK+3 port of WebKit web browser engine - shared files
 Group:          Development/GNOME and GTK+
-Requires:       %{lib3name}
+Requires:       %{lib3name} =  %{epoch}:%{version}-%{release}
 Conflicts:	%{lib3name} < 1:1.4.1-5
 Conflicts:	%{name} < 1:1.4.1-6
 
@@ -181,8 +165,7 @@ This package contains the shared files used by %{name}%{lib3ver}
 %package -n %{lib3name}
 Summary:        GTK+3 port of WebKit web browser engine
 Group:          System/Libraries
-Requires:       %{name}3
-Requires:       %{name}%{lib3ver}
+#Requires:       %{name}%{lib3ver}
 Provides:       libwebkitgtk3 = %{version}-%{release}
 # Needed for Web Inspector feature to work
 Suggests:       %{inspector3name}
@@ -269,11 +252,8 @@ install -m 755 gtk3/Programs/GtkLauncher %{buildroot}%{_libdir}/%{name}3
 rm -rf %{buildroot}%{_libdir}/libtestnetscapeplugin.*
 
 %find_lang %{name}-2.0
-
 %find_lang %{name}-3.0
-
-%clean
-rm -rf %{buildroot}
+find %{buildroot} -name *.la | xargs rm
 
 %files -f %{name}-2.0.lang
 
@@ -286,28 +266,22 @@ rm -rf %{buildroot}
 %_libdir/girepository-1.0/WebKit-%{libver}.typelib
 
 %files -n %{develname}
-%defattr(644,root,root,755)
 %{_libdir}/lib%{name}gtk-%{libver}.so
-%{_libdir}/lib%{name}gtk-%{libver}.la
 %{_includedir}/%{name}-%{libver}
 %{_libdir}/pkgconfig/%{name}-%{libver}.pc
 %_datadir/gir-1.0/JSCore-%{libver}.gir
 %_datadir/gir-1.0/WebKit-%{libver}.gir
 
 %files -n %{libname}
-%defattr(644,root,root,755)
 %{_libdir}/lib%{name}gtk-%{libver}.so.%{major}*
 
 %files gtklauncher
-%defattr(0755,root,root)
 %{_libdir}/%{name}/GtkLauncher
 
 %files jsc
-%defattr(0755,root,root)
 %{_bindir}/jsc-1
 
 %files -n %{inspectorname}
-%defattr(0755,root,root)
 %{_datadir}/%{name}gtk-%{libver}/webinspector
 
 %files -n %{name}3 -f %{name}-3.0.lang
@@ -321,26 +295,21 @@ rm -rf %{buildroot}
 %_libdir/girepository-1.0/WebKit-%{lib3ver}.typelib
 
 %files -n %{develname3}
-%defattr(644,root,root,755)
 %{_libdir}/lib%{name}gtk-%{lib3ver}.so
-%{_libdir}/lib%{name}gtk-%{lib3ver}.la
 %{_includedir}/%{name}-%{lib3ver}
 %{_libdir}/pkgconfig/%{name}gtk-%{lib3ver}.pc
 %_datadir/gir-1.0/JSCore-%{lib3ver}.gir
 %_datadir/gir-1.0/WebKit-%{lib3ver}.gir
 
 %files -n %{lib3name}
-%defattr(644,root,root,755)
 %{_libdir}/lib%{name}gtk-%{lib3ver}.so.%{major3}*
 
 %files -n %{name}3-gtklauncher
-%defattr(0755,root,root)
 %{_libdir}/%{name}3/GtkLauncher
 
 %files -n %{name}3-jsc
-%defattr(0755,root,root)
 %{_bindir}/jsc-3
 
 %files -n %{inspector3name}
-%defattr(0755,root,root)
 %{_datadir}/%{name}gtk-%{lib3ver}/webinspector
+
