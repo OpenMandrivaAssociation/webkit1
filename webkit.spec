@@ -28,10 +28,10 @@
 
 %define pango	0
 %if %pango
-%define fontreq		pango-devel
+%define fontreq		pkgconfig(pango)
 %define fontback	pango
 %else
-%define fontreq		fontconfig-devel >= 1.0.0
+%define fontreq		pkgconfig(fontconfig) >= 1.0.0
 %define fontback	freetype
 %endif
 
@@ -47,6 +47,8 @@ Source0:	http://www.webkitgtk.org/%{oname}-%{version}.tar.gz
 # (blino) needed for first-time wizard (display_help) to be able to close its window with javascript
 Patch0:		webkit-1.6.1-link.patch
 Patch1:		webkit-1.6.1-allowScriptsToCloseWindows.patch
+# to fix build errors with glib2.0 > 2.31.0
+Patch2:		webkit-1.6.1_typefdef_dups.patch
 
 BuildRequires:	bison
 BuildRequires:	flex
@@ -102,6 +104,17 @@ Suggests:	%{inspectorname}
 Conflicts:	gir-repository < 0.6.5-7mdv2010.1
 
 %description -n %{libname}
+The GTK+ port of WebKit is intended to provide a browser component
+primarily for users of the portable GTK+ UI toolkit on platforms like
+Linux.
+
+%package -n %{libjavascriptcoregtk}
+Summary:	GTK+ port of WebKit web browser engine
+Group:		System/Libraries
+Requires:	%{libname} = %{epoch}:%{version}
+Obsoletes:	%{_lib}javascriptcoregtk1.0 < %{epoch}:%{version}-%{release}
+
+%description -n %{libjavascriptcoregtk}
 The GTK+ port of WebKit is intended to provide a browser component
 primarily for users of the portable GTK+ UI toolkit on platforms like
 Linux.
@@ -172,6 +185,17 @@ Provides:	libwebkitgtk3 = %{version}-%{release}
 Suggests:	%{inspector3name}
 
 %description -n %{lib3name}
+The GTK+3 port of WebKit is intended to provide a browser component
+primarily for users of the portable GTK+3 UI toolkit on platforms like
+Linux.
+
+%package -n %{libjavascriptcoregtk3}
+Summary:	GTK+3 port of WebKit web browser engine
+Group:		System/Libraries
+Requires:	%{lib3name} = %{epoch}:%{version}
+Obsoletes:	%{_lib}javascriptcoregtk3.0 < %{epoch}:%{version}-%{release}
+
+%description -n %{libjavascriptcoregtk3}
 The GTK+3 port of WebKit is intended to provide a browser component
 primarily for users of the portable GTK+3 UI toolkit on platforms like
 Linux.
