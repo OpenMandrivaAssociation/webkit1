@@ -332,8 +332,10 @@ find %{buildroot} -name *.la | xargs rm
 
 %files -n %{develname}
 %{_libdir}/lib%{name}gtk-%{libver}.so
+%{_libdir}/libjavascriptcoregtk-%{libver}.so
 %{_includedir}/%{name}-%{libver}
 %{_libdir}/pkgconfig/%{name}-%{libver}.pc
+%{_libdir}/pkgconfig/javascriptcoregtk-%{libver}.pc
 %{_datadir}/gir-1.0/JSCore-%{libver}.gir
 %{_datadir}/gir-1.0/WebKit-%{libver}.gir
 
@@ -369,8 +371,10 @@ find %{buildroot} -name *.la | xargs rm
 
 %files -n %{develname3}
 %{_libdir}/lib%{name}gtk-%{lib3ver}.so
+%{_libdir}/libjavascriptcoregtk-%{lib3ver}.so
 %{_includedir}/%{name}-%{lib3ver}
 %{_libdir}/pkgconfig/%{name}gtk-%{lib3ver}.pc
+%{_libdir}/pkgconfig/javascriptcoregtk-%{lib3ver}.pc
 %{_datadir}/gir-1.0/JSCore-%{lib3ver}.gir
 %{_datadir}/gir-1.0/WebKit-%{lib3ver}.gir
 
