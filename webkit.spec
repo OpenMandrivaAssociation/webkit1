@@ -328,7 +328,7 @@ find %{buildroot} -name *.la | xargs rm
 %{_datadir}/glib-2.0/schemas/org.webkitgtk-1.0.gschema.xml
 %dir %{_datadir}/webkitgtk-1.0
 %{_datadir}/webkitgtk-1.0/images
-%{_datadir}/webkit-1.0/resources
+%{_datadir}/webkitgtk-1.0/resources
 
 %files -n %{develname}
 %{_libdir}/lib%{name}gtk-%{libver}.so
@@ -365,7 +365,7 @@ find %{buildroot} -name *.la | xargs rm
 %{_datadir}/glib-2.0/schemas/org.webkitgtk-3.0.gschema.xml
 %dir %{_datadir}/webkitgtk-3.0
 %{_datadir}/webkitgtk-3.0/images
-%{_datadir}/webkit-3.0/resources
+%{_datadir}/webkitgtk-3.0/resources
 
 %files -n %{develname3}
 %{_libdir}/lib%{name}gtk-%{lib3ver}.so
