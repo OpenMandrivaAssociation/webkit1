@@ -38,17 +38,17 @@
 Summary:	Web browser engine
 Epoch:		1
 Name:		webkit
-Version:	1.6.1
+Version:	1.6.3
 Release:	1
 License:	BSD and LGPLv2+
 Group:		System/Libraries
 URL:		http://www.webkitgtk.org
-Source0:	http://www.webkitgtk.org/%{oname}-%{version}.tar.gz
+Source0:	http://www.webkitgtk.org/%{oname}-%{version}.tar.xz
 # (blino) needed for first-time wizard (display_help) to be able to close its window with javascript
 Patch0:		webkit-1.6.1-link.patch
 Patch1:		webkit-1.6.1-allowScriptsToCloseWindows.patch
 # to fix build errors with glib2.0 > 2.31.0
-Patch2:		webkit-1.6.1_typefdef_dups.patch
+Patch2:		webkit-1.6.3_typefdef_dups.patch
 
 BuildRequires:	bison
 BuildRequires:	flex
