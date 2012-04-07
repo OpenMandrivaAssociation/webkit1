@@ -39,7 +39,7 @@ Summary:	Web browser engine
 Epoch:		1
 Name:		webkit
 Version:	1.6.3
-Release:	1
+Release:	2
 License:	BSD and LGPLv2+
 Group:		System/Libraries
 URL:		http://www.webkitgtk.org
@@ -55,7 +55,7 @@ BuildRequires:	flex
 BuildRequires:	gperf
 BuildRequires:	libtool
 BuildRequires:	%{fontreq}
-BuildRequires:	icu-devel
+BuildRequires:	icu-devel >= 49
 BuildRequires:	jpeg-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	pkgconfig(enchant)
