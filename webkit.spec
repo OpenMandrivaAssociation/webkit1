@@ -273,6 +273,8 @@ GObject Introspection interface description for WebKit.
 %apply_patches
 
 %build
+export CFLAGS="`echo %{optflags} | sed -e 's/gdwarf-4//' -e 's/-fvar-tracking-assignments//' -e 's/-frecord-gcc-switches//'`"
+export CXXFLAGS="$CFLAGS"
 mkdir -p gtk2
 pushd gtk2
 CONFIGURE_TOP=.. %configure2_5x	\
