@@ -282,7 +282,7 @@ CONFIGURE_TOP=.. %configure2_5x	\
 	--enable-video \
 	--enable-introspection
 
-%make
+make
 popd
 
 mkdir -p gtk3
@@ -294,7 +294,7 @@ CONFIGURE_TOP=.. %configure2_5x \
 	--enable-video \
 	--enable-introspection
 
-%make
+make
 popd
 
 %install
