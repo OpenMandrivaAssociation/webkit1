@@ -45,7 +45,7 @@ Group:		System/Libraries
 URL:		http://www.webkitgtk.org
 Source0:	http://www.webkitgtk.org/%{oname}-%{version}.tar.xz
 # (blino) needed for first-time wizard (display_help) to be able to close its window with javascript
-Patch0:		webkit-1.6.1-link.patch
+Patch0:		webkit-1.7.90-link.patch
 Patch1:		webkit-1.6.1-allowScriptsToCloseWindows.patch
 # to fix build errors with glib2.0 > 2.31.0
 Patch2:		webkit-1.6.3_typefdef_dups.patch
