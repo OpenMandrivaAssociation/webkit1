@@ -51,7 +51,7 @@ Patch1:		webkit-1.6.1-allowScriptsToCloseWindows.patch
 Patch2:		webkit-1.6.3_typefdef_dups.patch
 # suse patches
 Patch3:		webkit-gir-fixup.patch
-Patch4:		webkit-ld-optimization.patch
+###atch4:		webkit-ld-optimization.patch
 
 BuildRequires:	bison
 BuildRequires:	flex
@@ -277,8 +277,8 @@ GObject Introspection interface description for WebKit.
 
 %build
 # MD patch4 should solve this problem
-#export CFLAGS="`echo %{optflags} | sed -e 's/-gdwarf-4//' -e 's/-fvar-tracking-assignments//' -e 's/-frecord-gcc-switches//'`"
-#export CXXFLAGS="$CFLAGS"
+export CFLAGS="`echo %{optflags} | sed -e 's/-gdwarf-4//' -e 's/-fvar-tracking-assignments//' -e 's/-frecord-gcc-switches//'`"
+export CXXFLAGS="$CFLAGS"
 mkdir -p gtk2
 pushd gtk2
 CONFIGURE_TOP=.. %configure2_5x	\
