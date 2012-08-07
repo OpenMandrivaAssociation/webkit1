@@ -38,8 +38,8 @@
 Summary:	Web browser engine
 Name:		webkit
 Epoch:		1
-Version:	1.8.1
-Release:	2
+Version:	1.8.2
+Release:	1
 License:	BSD and LGPLv2+
 Group:		System/Libraries
 URL:		http://www.webkitgtk.org
