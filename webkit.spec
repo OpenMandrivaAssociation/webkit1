@@ -39,7 +39,7 @@ Summary:	Web browser engine
 Name:		webkit
 Epoch:		1
 Version:	1.10.0
-Release:	4
+Release:	5
 License:	BSD and LGPLv2+
 Group:		System/Libraries
 URL:		http://www.webkitgtk.org
