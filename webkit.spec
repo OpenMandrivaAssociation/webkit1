@@ -11,7 +11,7 @@
 %define major   0
 %define oname		webkitgtk
 %define libname		%mklibname webkitgtk %{libver} %{major}
-%define develname	%mklibname webkitgtk %{libver} -d
+%define devname	%mklibname webkitgtk %{libver} -d
 %define inspectorname	webkit%{libver}-webinspector
 %define girname		%mklibname %{name}-gir %{libver}
 %define girjscore	%mklibname jscore-gir %{libver}
@@ -20,7 +20,7 @@
 %define lib3ver  3.0
 %define major3   0
 %define lib3name	%mklibname webkitgtk %{lib3ver} %{major3}
-%define develname3	%mklibname webkitgtk %{lib3ver} -d
+%define devname3	%mklibname webkitgtk %{lib3ver} -d
 %define inspector3name	webkit%{lib3ver}-webinspector
 %define girname3	%mklibname %{name}-gir %{lib3ver}
 %define girjscore3	%mklibname jscore-gir %{lib3ver}
@@ -42,7 +42,7 @@ Version:	1.10.0
 Release:	5
 License:	BSD and LGPLv2+
 Group:		System/Libraries
-URL:		http://www.webkitgtk.org
+Url:		http://www.webkitgtk.org
 Source0:	http://www.webkitgtk.org/releases/%{oname}-%{version}.tar.xz
 # (blino) needed for first-time wizard (display_help) to be able to close its window with javascript
 Patch0:		webkit-1.9.92-link.patch
@@ -117,7 +117,7 @@ The GTK+ port of WebKit is intended to provide a browser component
 primarily for users of the portable GTK+ UI toolkit on platforms like
 Linux.
 
-%package -n %{develname}
+%package -n %{devname}
 Summary:	Development files for WebKit GTK+ port
 Group:		Development/GNOME and GTK+
 Provides:	webkitgtk-devel = %{version}-%{release}
@@ -128,7 +128,7 @@ Requires:	%{libjavascriptcoregtk} = %{EVRD}
 Requires:	%{girjscore} = %{EVRD}
 Requires:	%{girname} = %{EVRD}
 
-%description -n %{develname}
+%description -n %{devname}
 The GTK+ port of WebKit is intended to provide a browser component
 primarily for users of the portable GTK+ UI toolkit on platforms like
 Linux. This package contains development headers.
@@ -192,7 +192,7 @@ The GTK+3 port of WebKit is intended to provide a browser component
 primarily for users of the portable GTK+3 UI toolkit on platforms like
 Linux.
 
-%package -n %{develname3}
+%package -n %{devname3}
 Summary:	Development files for WebKit GTK+3 port
 Group:		Development/GNOME and GTK+
 Provides:	webkitgtk3-devel = %{version}-%{release}
@@ -202,7 +202,7 @@ Requires:	%{libjavascriptcoregtk3} = %{EVRD}
 Requires:	%{girjscore3} = %{EVRD}
 Requires:	%{girname3} = %{EVRD}
 
-%description -n %{develname3}
+%description -n %{devname3}
 The GTK+ port of WebKit is intended to provide a browser component
 primarily for users of the portable GTK+ UI toolkit on platforms like
 Linux. This package contains development headers.
@@ -266,15 +266,20 @@ Conflicts:	%{lib3name} < %{epoch}:1.5.2-2
 GObject Introspection interface description for WebKit.
 
 %prep
-%setup -q -n %{oname}-%{version}
+%setup -qn %{oname}-%{version}
 %apply_patches
 
 %build
 export CFLAGS="`echo %{optflags} | sed -e 's/-gdwarf-4//' -e 's/-fvar-tracking-assignments//' -e 's/-frecord-gcc-switches//'`"
 export CXXFLAGS="$CFLAGS"
-mkdir -p gtk2
+
+mkdir -p ../gtk2 ../gtk3
+cp -a ./* ../gtk2/
+mv ../gtk2 ../gtk3 .
+cp -a gtk2/* gtk3/
 pushd gtk2
-CONFIGURE_TOP=.. %configure2_5x	\
+%configure2_5x \
+	--enable-dependency-tracking \
 	--with-gtk=2.0 \
 	--with-gstreamer=0.10 \
 	--disable-webkit2 \
@@ -286,9 +291,9 @@ CONFIGURE_TOP=.. %configure2_5x	\
 make V=1
 popd
 
-mkdir -p gtk3
 pushd gtk3
-CONFIGURE_TOP=.. %configure2_5x \
+%configure2_5x \
+	--enable-dependency-tracking \
 	--with-gtk=3.0 \
 	--with-gstreamer=1.0 \
 	--disable-webkit2 \
@@ -301,7 +306,6 @@ make V=1
 popd
 
 %install
-rm -rf %{buildroot}
 %makeinstall_std -C gtk2
 %makeinstall_std -C gtk3
 mkdir -p %{buildroot}%{_libdir}/%{name}
@@ -322,7 +326,7 @@ rm -rf %{buildroot}%{_libdir}/libtestnetscapeplugin.*
 %{_datadir}/webkitgtk-1.0/images
 %{_datadir}/webkitgtk-1.0/resources
 
-%files -n %{develname}
+%files -n %{devname}
 %{_libdir}/lib%{name}gtk-%{libver}.so
 %{_libdir}/libjavascriptcoregtk-%{libver}.so
 %{_includedir}/%{name}gtk-%{libver}
@@ -357,7 +361,7 @@ rm -rf %{buildroot}%{_libdir}/libtestnetscapeplugin.*
 %{_datadir}/webkitgtk-3.0/images
 %{_datadir}/webkitgtk-3.0/resources
 
-%files -n %{develname3}
+%files -n %{devname3}
 %{_libdir}/lib%{name}gtk-%{lib3ver}.so
 %{_libdir}/libjavascriptcoregtk-%{lib3ver}.so
 %{_includedir}/%{name}gtk-%{lib3ver}
