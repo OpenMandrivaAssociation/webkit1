@@ -1,3 +1,4 @@
----
-sources:
+removed_sources:
   webkitgtk-1.10.0.tar.xz: 5e022110cef5ff87a4c55ff0358dedd596502a84
+sources:
+  webkitgtk-1.10.2.tar.xz: 733ca23157eb8dd072d57becf325799c00bde630
