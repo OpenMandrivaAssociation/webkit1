@@ -38,14 +38,14 @@
 Summary:	Web browser engine
 Name:		webkit
 Epoch:		1
-Version:	1.10.0
-Release:	5
+Version:	1.10.2
+Release:	1
 License:	BSD and LGPLv2+
 Group:		System/Libraries
 Url:		http://www.webkitgtk.org
 Source0:	http://www.webkitgtk.org/releases/%{oname}-%{version}.tar.xz
 # (blino) needed for first-time wizard (display_help) to be able to close its window with javascript
-Patch0:		webkit-1.9.92-link.patch
+Patch0:		webkit-1.10.2-link.patch
 Patch1:		webkit-1.6.1-allowScriptsToCloseWindows.patch
 Patch2:		webkit-1.7.90-fix-documentation-build.patch
 # suse patches
