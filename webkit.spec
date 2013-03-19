@@ -272,8 +272,9 @@ GObject Introspection interface description for WebKit.
 %build
 # Use linker flags to reduce memory consumption on low-mem architectures
 %ifarch %{arm}
-%define lowmemflags -Wl,--no-keep-memory
+%define lowmemflags -Wl,--no-keep-memory -Wl,--reduce-memory-overheads
 export CFLAGS="`echo %{optflags} %lowmemflags | sed -e 's/-gdwarf-4//' -e 's/-fvar-tracking-assignments//' -e 's/-frecord-gcc-switches//'`"
+export LDFLAGS="%{ldflags} -fuse-ld=bfd"
 %else
 export CFLAGS="`echo %{optflags} | sed -e 's/-gdwarf-4//' -e 's/-fvar-tracking-assignments//' -e 's/-frecord-gcc-switches//'`"
 %endif
