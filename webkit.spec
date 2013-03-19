@@ -54,6 +54,7 @@ Patch3:		webkit-gir-fixup.patch
 BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	gperf
+BuildRequires:	gtk-doc
 BuildRequires:	libtool
 BuildRequires:	%{fontreq}
 BuildRequires:	icu-devel >= 49
@@ -274,7 +275,10 @@ GObject Introspection interface description for WebKit.
 %ifarch %{arm}
 %define lowmemflags -Wl,--no-keep-memory -Wl,--reduce-memory-overheads
 export CFLAGS="`echo %{optflags} %lowmemflags | sed -e 's/-gdwarf-4//' -e 's/-fvar-tracking-assignments//' -e 's/-frecord-gcc-switches//'`"
-export LDFLAGS="%{ldflags} -fuse-ld=bfd"
+mkdir -p bfd
+ln -s %{_bindir}/ld.bfd bfd/ld
+export PATH=$PWD/bfd:$PATH
+%global ldflags %{ldflags} -fuse-ld=bfd
 %else
 export CFLAGS="`echo %{optflags} | sed -e 's/-gdwarf-4//' -e 's/-fvar-tracking-assignments//' -e 's/-frecord-gcc-switches//'`"
 %endif
@@ -295,7 +299,7 @@ pushd gtk2
 	--enable-video \
 	--enable-introspection
 
-make V=1
+make V=1 -j4
 popd
 
 pushd gtk3
@@ -309,7 +313,7 @@ pushd gtk3
 	--enable-video \
 	--enable-introspection
 
-make V=1
+make V=1 -j4
 popd
 
 %install
