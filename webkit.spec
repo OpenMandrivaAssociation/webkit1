@@ -5,6 +5,11 @@
 # - CHECK THAT 'display_help http://google.com' STILL WORK (INCLUDING CLOSING IT)
 # - CHECK THAT MCC STILL RUNS
 #
+%define debug_package %{nil}
+# *** ERROR: same build ID in nonidentical files!
+#        /usr/bin/jsc-3
+#   and  /usr/bin/jsc-1
+
 
 # lib is called libwebkitgtk-%{libver}.so.%{major}
 %define libver  1.0
