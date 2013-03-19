@@ -350,6 +350,7 @@ rm -rf %{buildroot}%{_libdir}/libtestnetscapeplugin.*
 %{_libdir}/pkgconfig/javascriptcoregtk-%{libver}.pc
 %{_datadir}/gir-1.0/JSCore-%{libver}.gir
 %{_datadir}/gir-1.0/WebKit-%{libver}.gir
+%{_datadir}/gtk-doc/html/webkitgtk/*
 
 %files -n %{libname}
 %{_libdir}/lib%{name}gtk-%{libver}.so.%{major}*
