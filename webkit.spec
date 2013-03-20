@@ -274,6 +274,8 @@ GObject Introspection interface description for WebKit.
 %prep
 %setup -qn %{oname}-%{version}
 %apply_patches
+# Don't force -O2
+sed -i 's/-O2//g' "${S}"/configure.ac
 
 %build
 # Use linker flags to reduce memory consumption on low-mem architectures
