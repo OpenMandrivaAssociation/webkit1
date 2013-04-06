@@ -43,7 +43,7 @@
 Summary:	Web browser engine
 Name:		webkit
 Epoch:		1
-Version:	1.10.2
+Version:	2.0.0
 Release:	1
 License:	BSD and LGPLv2+
 Group:		System/Libraries
@@ -52,7 +52,6 @@ Source0:	http://www.webkitgtk.org/releases/%{oname}-%{version}.tar.xz
 # (blino) needed for first-time wizard (display_help) to be able to close its window with javascript
 Patch0:		webkit-1.10.2-link.patch
 Patch1:		webkit-1.6.1-allowScriptsToCloseWindows.patch
-Patch2:		webkit-1.7.90-fix-documentation-build.patch
 # suse patches
 Patch3:		webkit-gir-fixup.patch
 
@@ -72,7 +71,9 @@ BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(geoclue)
 BuildRequires:	pkgconfig(gnome-keyring-1)
 BuildRequires:	pkgconfig(gobject-introspection-1.0)
-BuildRequires:	pkgconfig(gstreamer-plugins-base-0.10)
+#no longer needed since 2.0.0
+#hope this commit does not broke some rpm's
+#BuildRequires:	pkgconfig(gstreamer-plugins-base-0.10)
 BuildRequires:	pkgconfig(gstreamer-plugins-base-1.0)
 BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gtk+-2.0)
@@ -85,6 +86,8 @@ BuildRequires:	pkgconfig(libxslt)
 BuildRequires:	pkgconfig(sqlite3)
 BuildRequires:	pkgconfig(xft)
 BuildRequires:	pkgconfig(xt)
+BuildRequires:	pkgconfig(libwebp)
+BuildRequires:	pkgconfig(libsecret-1)
 
 %description
 WebKit is an open source web browser engine.
@@ -299,7 +302,6 @@ pushd gtk2
 %configure2_5x \
 	--enable-dependency-tracking \
 	--with-gtk=2.0 \
-	--with-gstreamer=0.10 \
 	--disable-webkit2 \
 	--with-font-backend=%{fontback} \
 	--enable-jit \
@@ -313,7 +315,6 @@ pushd gtk3
 %configure2_5x \
 	--enable-dependency-tracking \
 	--with-gtk=3.0 \
-	--with-gstreamer=1.0 \
 	--disable-webkit2 \
 	--with-font-backend=%{fontback} \
 	--enable-jit \
@@ -336,10 +337,10 @@ install -m 755 gtk3/Programs/GtkLauncher %{buildroot}%{_libdir}/%{name}3
 # reported upstream as 22812 - AdamW 2008/12
 rm -rf %{buildroot}%{_libdir}/libtestnetscapeplugin.*
 
-%find_lang %{oname}-2.0
-%find_lang %{oname}-3.0
+%find_lang WebKitGTK-2.0
+%find_lang WebKitGTK-3.0
 
-%files -n %{name}%{libver} -f %{oname}-2.0.lang
+%files -n %{name}%{libver} -f WebKitGTK-2.0.lang
 %dir %{_datadir}/webkitgtk-1.0
 %{_datadir}/webkitgtk-1.0/images
 %{_datadir}/webkitgtk-1.0/resources
@@ -375,7 +376,7 @@ rm -rf %{buildroot}%{_libdir}/libtestnetscapeplugin.*
 %files -n %{inspectorname}
 %{_datadir}/%{name}gtk-%{libver}/webinspector
 
-%files -n %{name}%{lib3ver} -f %{oname}-3.0.lang
+%files -n %{name}%{lib3ver} -f WebKitGTK-3.0.lang
 %dir %{_datadir}/webkitgtk-3.0
 %{_datadir}/webkitgtk-3.0/images
 %{_datadir}/webkitgtk-3.0/resources
