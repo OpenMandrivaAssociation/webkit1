@@ -43,7 +43,7 @@
 Summary:	Web browser engine
 Name:		webkit
 Epoch:		1
-Version:	2.0.3
+Version:	2.0.4
 Release:	1
 License:	BSD and LGPLv2+
 Group:		System/Libraries
@@ -52,8 +52,17 @@ Source0:	http://www.webkitgtk.org/releases/%{oname}-%{version}.tar.xz
 # (blino) needed for first-time wizard (display_help) to be able to close its window with javascript
 Patch0:		webkit-1.10.2-link.patch
 Patch1:		webkit-1.6.1-allowScriptsToCloseWindows.patch
+# fedora
+Patch2: 	webkit-1.3.10-nspluginwrapper.patch
 # suse patches
 Patch3:		webkit-gir-fixup.patch
+# workarounds for non-JIT arches
+# https://bugs.webkit.org/show_bug.cgi?id=104270
+Patch4:         webkit-1.11.2-yarr.patch
+# https://bugs.webkit.org/show_bug.cgi?id=103128
+Patch5:         webkit-1.11.2-Double2Ints.patch
+Patch6:         webkit-1.11.90-double2intsPPC32.patch
+# add support for nspluginwrapper.
 
 BuildRequires:	bison
 BuildRequires:	flex
@@ -281,7 +290,18 @@ GObject Introspection interface description for WebKit.
 sed -i 's/-O2//g' configure.ac
 
 %build
+# Use linker flags to reduce memory consumption on low-mem architectures
+%ifarch %{arm}
+%define lowmemflags -Wl,--no-keep-memory -Wl,--reduce-memory-overheads
+export CFLAGS="`echo %{optflags} %lowmemflags | sed -e 's/-gdwarf-4//' -e 's/-fvar-tracking-assignments//' -e 's/-frecord-gcc-switches//'`"
+mkdir -p bfd
+ln -s %{_bindir}/ld.bfd bfd/ld
+export PATH=$PWD/bfd:$PATH
+%global ldflags %{ldflags} -fuse-ld=bfd
+%else
 export CFLAGS="`echo %{optflags} | sed -e 's/-gdwarf-4//' -e 's/-fvar-tracking-assignments//' -e 's/-frecord-gcc-switches//'`"
+%endif
+
 export CXXFLAGS="$CFLAGS"
 
 mkdir -p ../gtk2 ../gtk3
