@@ -297,6 +297,8 @@ export CFLAGS="`echo %{optflags} %lowmemflags | sed -e 's/-gdwarf-4//' -e 's/-fv
 mkdir -p bfd
 ln -s %{_bindir}/ld.bfd bfd/ld
 export PATH=$PWD/bfd:$PATH
+export CC="%{__cc} -fuse-ld=bfd"
+export CXX="%{__cxx} -fuse-ld=bfd"
 %global ldflags %{ldflags} -fuse-ld=bfd
 %else
 export CFLAGS="`echo %{optflags} | sed -e 's/-gdwarf-4//' -e 's/-fvar-tracking-assignments//' -e 's/-frecord-gcc-switches//'`"
