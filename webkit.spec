@@ -44,7 +44,7 @@ Summary:	Web browser engine
 Name:		webkit
 Epoch:		1
 Version:	2.0.4
-Release:	5
+Release:	6
 License:	BSD and LGPLv2+
 Group:		System/Libraries
 Url:		http://www.webkitgtk.org
@@ -105,6 +105,7 @@ WebKit is an open source web browser engine.
 Summary:	GTK+ port of WebKit web browser engine - shared files
 Group:		Development/GNOME and GTK+
 Requires:	%{libname} = %{EVRD}
+Provides:	webkitgtk = %{version}-%{release}
 Conflicts:	%{libname} < 1:1.4.1-5
 Conflicts:	%{name} < 1:1.4.1-6
 Conflicts:	%{_lib}webkitgtk1.0_2 < 1:1.4.1
@@ -181,6 +182,7 @@ Inspector to work.
 Summary:	GTK+3 port of WebKit web browser engine - shared files
 Group:		Development/GNOME and GTK+
 Requires:	%{lib3name} = %{EVRD}
+Provides:	webkitgtk3 = %{version}-%{release}
 Conflicts:	%{lib3name} < 1:1.4.1-5
 Conflicts:	%{name} < 1:1.4.1-6
 %rename %{name}3
