@@ -32,13 +32,12 @@
 %define libgirname3	%mklibname %{name}-gir %{lib3ver}
 %define libgirname2	%mklibname %{name}2-gir %{lib3ver}
 %define libgitjscore3	%mklibname javascriptcore-gir %{lib3ver}
-%define libgirname2extension %mklibname %{name}2webextension %{lib3ver}
-
+%define libgirname2extension %mklibname %{name}2webextension-gir %{lib3ver}
 
 Summary:	Web browser engine
 Name:		webkit
 Epoch:		1
-Version:	2.4.0
+Version:	2.4.3
 Release:	1
 License:	BSD and LGPLv2+
 Group:		System/Libraries
@@ -50,6 +49,7 @@ Patch2:		webkit-2.1.90-allowScriptsToCloseWindows.patch
 Patch3:		webkitgtk-2.1.92-gtk-includes.patch
 Patch4:         webkit-1.1.14-nspluginwrapper.patch
 Patch5:		webkitgtk-aarch64.patch
+Patch6:		webkitgtk-2.4.3-fix-JavaScriptCore-sharedlib-name.patch
 
 BuildRequires:	bison
 BuildRequires:	flex
@@ -66,10 +66,7 @@ BuildRequires:	pkgconfig(gl)
 BuildRequires:	pkgconfig(geoclue)
 BuildRequires:	pkgconfig(gnome-keyring-1)
 BuildRequires:	pkgconfig(gobject-introspection-1.0)
-#no longer needed since 2.0.0
-#hope this commit does not broke some rpm's
-#BuildRequires:	pkgconfig(gstreamer-plugins-base-0.10)
-BuildRequires:	pkgconfig(gstreamer-plugins-base-1.0)
+BuildRequires:	pkgconfig(gstreamer-plugins-base-1.0) >= 1.2.4
 BuildRequires:	pkgconfig(glib-2.0)
 BuildRequires:	pkgconfig(gtk+-2.0)
 BuildRequires:	pkgconfig(gtk+-3.0)
