@@ -345,7 +345,6 @@ mv .gtk2 gtk2
 mv .gtk3 gtk3
 
 %build
-%global optflags %{optflags} -g1 -fno-var-tracking-assignments -fno-record-gcc-switches
 # Use linker flags to reduce memory consumption on low-mem architectures
 %ifarch %{arm}
 %global optflags %{optflags} -Wl,--no-keep-memory -Wl,--reduce-memory-overheads
