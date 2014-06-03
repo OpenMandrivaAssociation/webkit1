@@ -1,0 +1,80 @@
+--- webkitgtk-2.1.90/Source/WebKit/gtk/webkit/webkitwebsettings.cpp.0002	2013-08-04 00:10:40.000000000 +0800
++++ webkitgtk-2.1.90/Source/WebKit/gtk/webkit/webkitwebsettings.cpp	2013-08-28 08:03:11.661948648 +0800
+@@ -99,6 +99,7 @@
+     PROP_ENABLE_FRAME_FLATTENING,
+     PROP_USER_AGENT,
+     PROP_JAVASCRIPT_CAN_OPEN_WINDOWS_AUTOMATICALLY,
++    PROP_ALLOW_SCRIPTS_TO_CLOSE_WINDOWS,
+     PROP_JAVASCRIPT_CAN_ACCESS_CLIPBOARD,
+     PROP_ENABLE_OFFLINE_WEB_APPLICATION_CACHE,
+     PROP_EDITING_BEHAVIOR,
+@@ -580,6 +581,20 @@
+                                                          flags));
+ 
+     /**
++     * WebKitWebSettings: allow-scripts-to-close-windows:
++     *
++     * Whether JavaScript can close windows automatically without user intervention.
++     *
++     */
++    g_object_class_install_property(gobject_class,
++				    PROP_ALLOW_SCRIPTS_TO_CLOSE_WINDOWS,
++				    g_param_spec_boolean("allow-scripts-to-close-windows",
++							 _("JavaScript can close windows automatically"),
++							 _("Whether JavaScript can close windows automatically"),
++							 FALSE,
++							 flags));
++
++    /**
+     * WebKitWebSettings:javascript-can-access-clipboard:
+     *
+     * Whether JavaScript can access Clipboard.
+@@ -1148,6 +1163,9 @@
+     case PROP_JAVASCRIPT_CAN_OPEN_WINDOWS_AUTOMATICALLY:
+         priv->javascriptCanOpenWindowsAutomatically = g_value_get_boolean(value);
+         break;
++    case PROP_ALLOW_SCRIPTS_TO_CLOSE_WINDOWS:
++        priv->allowScriptsToCloseWindows = g_value_get_boolean(value);
++        break;
+     case PROP_JAVASCRIPT_CAN_ACCESS_CLIPBOARD:
+         priv->javascriptCanAccessClipboard = g_value_get_boolean(value);
+         break;
+@@ -1337,6 +1355,9 @@
+     case PROP_JAVASCRIPT_CAN_OPEN_WINDOWS_AUTOMATICALLY:
+         g_value_set_boolean(value, priv->javascriptCanOpenWindowsAutomatically);
+         break;
++    case PROP_ALLOW_SCRIPTS_TO_CLOSE_WINDOWS:
++        g_value_set_boolean(value, priv->allowScriptsToCloseWindows);
++        break;
+     case PROP_JAVASCRIPT_CAN_ACCESS_CLIPBOARD:
+         g_value_set_boolean(value, priv->javascriptCanAccessClipboard);
+         break;
+--- webkitgtk-2.1.90/Source/WebKit/gtk/webkit/webkitwebsettingsprivate.h.0002	2013-08-04 00:10:40.000000000 +0800
++++ webkitgtk-2.1.90/Source/WebKit/gtk/webkit/webkitwebsettingsprivate.h	2013-08-28 08:03:11.661948648 +0800
+@@ -63,6 +63,7 @@
+     gboolean enableFrameFlattening;
+     CString userAgent;
+     gboolean javascriptCanOpenWindowsAutomatically;
++    gboolean allowScriptsToCloseWindows;
+     gboolean javascriptCanAccessClipboard;
+     gboolean enableOfflineWebApplicationCache;
+     WebKitEditingBehavior editingBehavior;
+--- webkitgtk-2.1.90/Source/WebKit/gtk/webkit/webkitwebview.cpp.0002	2013-08-27 14:27:07.000000000 +0800
++++ webkitgtk-2.1.90/Source/WebKit/gtk/webkit/webkitwebview.cpp	2013-08-28 08:06:48.638220233 +0800
+@@ -3526,6 +3526,7 @@
+     coreSettings.setSpatialNavigationEnabled(settingsPrivate->enableSpatialNavigation);
+     coreSettings.setFrameFlatteningEnabled(settingsPrivate->enableFrameFlattening);
+     coreSettings.setJavaScriptCanOpenWindowsAutomatically(settingsPrivate->javascriptCanOpenWindowsAutomatically);
++    coreSettings.setAllowScriptsToCloseWindows(settingsPrivate->allowScriptsToCloseWindows);
+     coreSettings.setJavaScriptCanAccessClipboard(settingsPrivate->javascriptCanAccessClipboard);
+     coreSettings.setOfflineWebApplicationCacheEnabled(settingsPrivate->enableOfflineWebApplicationCache);
+     coreSettings.setEditingBehaviorType(static_cast<WebCore::EditingBehaviorType>(settingsPrivate->editingBehavior));
+@@ -3668,6 +3669,8 @@
+         settings.setFrameFlatteningEnabled(g_value_get_boolean(&value));
+     else if (name == g_intern_string("javascript-can-open-windows-automatically"))
+         settings.setJavaScriptCanOpenWindowsAutomatically(g_value_get_boolean(&value));
++    else if (name == g_intern_string("allow-scripts-to-close-windows"))
++	settings.setAllowScriptsToCloseWindows(g_value_get_boolean(&value));
+     else if (name == g_intern_string("javascript-can-access-clipboard"))
+         settings.setJavaScriptCanAccessClipboard(g_value_get_boolean(&value));
+     else if (name == g_intern_string("enable-offline-web-application-cache"))
