@@ -82,6 +82,7 @@ BuildRequires:	pkgconfig(xft)
 BuildRequires:	pkgconfig(xt)
 BuildRequires:	pkgconfig(libwebp)
 BuildRequires:	pkgconfig(libsecret-1)
+BuildRequires:	rubygems
 
 %description
 WebKit is an open source web browser engine.
@@ -359,7 +360,7 @@ export CXX="%{__cxx} -fuse-ld=bfd"
 %endif
 
 pushd gtk2
-%configure2_5x \
+%configure \
 	--with-gtk=2.0 \
 	--disable-webkit2 \
 	--enable-jit \
@@ -370,7 +371,7 @@ pushd gtk2
 popd
 
 pushd gtk3
-%configure2_5x \
+%configure \
 	--with-gtk=3.0 \
 	--enable-webkit2 \
 	--enable-jit \
