@@ -348,6 +348,9 @@ mv .gtk2 gtk2
 mv .gtk3 gtk3
 
 %build
+# clang doesnt seem to build this
+export CC=gcc
+export CXX=g++
 # Use linker flags to reduce memory consumption on low-mem architectures
 %ifarch %{arm}
 %global optflags %{optflags} -Wl,--no-keep-memory -Wl,--reduce-memory-overheads
