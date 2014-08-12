@@ -37,19 +37,19 @@
 Summary:	Web browser engine
 Name:		webkit
 Epoch:		1
-Version:	2.4.3
-Release:	3
+Version:	2.4.4
+Release:	1
 License:	BSD and LGPLv2+
 Group:		System/Libraries
 Url:		http://www.webkitgtk.org
 Source0:	http://www.webkitgtk.org/releases/%{oname}-%{version}.tar.xz
-Patch0:		webkit-2.3.90-link.patch
-# (blino) needed for first-time wizard (display_help) to be able to close its window with javascript
-Patch2:		webkit-2.1.90-allowScriptsToCloseWindows.patch
-Patch3:		webkitgtk-2.1.92-gtk-includes.patch
-Patch4:         webkit-1.1.14-nspluginwrapper.patch
-Patch5:		webkitgtk-aarch64.patch
-Patch6:		webkitgtk-2.4.3-fix-JavaScriptCore-sharedlib-name.patch
+# add support for nspluginwrapper.
+Patch0:         webkit-1.3.10-nspluginwrapper.patch
+# https://bugs.webkit.org/show_bug.cgi?id=103128
+Patch4:         webkit-2.1.90-double2intsPPC32.patch
+Patch5:         webkitgtk-aarch64.patch
+Patch6:         webkitgtk-2.4.1-cloop_fix.patch
+Patch7:		webkitgtk-2.4.1-ppc64_align.patch
 
 BuildRequires:	bison
 BuildRequires:	flex
@@ -341,6 +341,8 @@ GObject Introspection interface description for WebKit2.
 %apply_patches
 autoreconf  -fiv
 
+#for i in $(find . -name *.py);do 2to3 -w $i;done
+
 mkdir -p .gtk{2,3}/DerivedSources/{webkit{,2},WebCore,ANGLE,WebKit2,webkitdom,InjectedBundle,Platform} 
 cp -a * .gtk2
 cp -a * .gtk3
@@ -348,6 +350,7 @@ mv .gtk2 gtk2
 mv .gtk3 gtk3
 
 %build
+export ac_cv_path_PYTHON=/usr/bin/python2
 # clang doesnt seem to build this
 export CC=gcc
 export CXX=g++
@@ -361,12 +364,20 @@ export CC="gcc -fuse-ld=bfd"
 export CXX="g++ -fuse-ld=bfd"
 %global ldflags %{ldflags} -fuse-ld=bfd
 %endif
+%ifarch aarch64
+%global optflags %{optflags} -DENABLE_YARR_JIT=0
+%endif
 
 pushd gtk2
 %configure \
 	--with-gtk=2.0 \
 	--disable-webkit2 \
+%ifarch %{ix86} x86_64 %arm
 	--enable-jit \
+%endif
+%ifarch aarch64
+	--disable-jit \
+%endif
 	--enable-gamepad \
 	--enable-accelerated-compositing \
 	--enable-introspection
@@ -377,7 +388,12 @@ pushd gtk3
 %configure \
 	--with-gtk=3.0 \
 	--enable-webkit2 \
+%ifarch %{ix86} x86_64 %arm
 	--enable-jit \
+%endif
+%ifarch aarch64
+	--disable-jit \
+%endif
 	--enable-gamepad \
 	--enable-accelerated-compositing \
 	--enable-introspection
