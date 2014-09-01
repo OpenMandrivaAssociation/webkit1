@@ -37,7 +37,7 @@
 Summary:	Web browser engine
 Name:		webkit
 Epoch:		1
-Version:	2.4.4
+Version:	2.4.5
 Release:	1
 License:	BSD and LGPLv2+
 Group:		System/Libraries
@@ -50,6 +50,7 @@ Patch4:         webkit-2.1.90-double2intsPPC32.patch
 Patch5:         webkitgtk-aarch64.patch
 Patch6:         webkitgtk-2.4.1-cloop_fix.patch
 Patch7:		webkitgtk-2.4.1-ppc64_align.patch
+Patch8:		webkitgtk-2.4.3-fix-JavaScriptCore-sharedlib-name.patch
 
 BuildRequires:	bison
 BuildRequires:	flex

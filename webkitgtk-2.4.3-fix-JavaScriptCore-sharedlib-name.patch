@@ -1,0 +1,11 @@
+--- webkitgtk-2.4.3/Source/JavaScriptCore/JavaScriptCore.gir.in.jscoreshlib~	2014-06-03 00:39:20.856583849 +0200
++++ webkitgtk-2.4.3/Source/JavaScriptCore/JavaScriptCore.gir.in	2014-06-03 00:40:26.259165128 +0200
+@@ -3,7 +3,7 @@
+             xmlns="http://www.gtk.org/introspection/core/1.0"
+             xmlns:c="http://www.gtk.org/introspection/c/1.0">
+   <namespace name="JavaScriptCore" version="@WEBKITGTK_API_VERSION@" 
+-             shared-library="javascriptcoregtk-@WEBKITGTK_API_VERSION@"
++             shared-library="libjavascriptcoregtk-@WEBKITGTK_API_VERSION@.so.@WEBKITGTK_API_MINOR_VERSION@"
+              c:identifier-prefixes="JS"
+              c:symbol-prefixes="JS">
+     <record name="GlobalContext" c:type="JSGlobalContextRef" foreign="1"/>
