@@ -37,7 +37,7 @@
 Summary:	Web browser engine
 Name:		webkit
 Epoch:		1
-Version:	2.4.5
+Version:	2.4.6
 Release:	1
 License:	BSD and LGPLv2+
 Group:		System/Libraries
