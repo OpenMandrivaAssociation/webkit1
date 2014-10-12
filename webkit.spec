@@ -351,13 +351,17 @@ mv .gtk2 gtk2
 mv .gtk3 gtk3
 
 %build
+# Use linker flags to reduce memory consumption
+%global optflags %{optflags} -Wl,--no-keep-memory -Wl,--reduce-memory-overheads
+
 export ac_cv_path_PYTHON=/usr/bin/python2
 # clang doesnt seem to build this
 export CC=gcc
 export CXX=g++
-# Use linker flags to reduce memory consumption on low-mem architectures
+
 %ifarch %{arm}
-%global optflags %{optflags} -Wl,--no-keep-memory -Wl,--reduce-memory-overheads
+# Use linker flags to reduce memory consumption on low-mem architectures
+%global optflags %(echo %{optflags} | sed 's/-g /-g1 /')
 mkdir -p bfd
 ln -s %{_bindir}/ld.bfd bfd/ld
 export PATH=$PWD/bfd:$PATH
