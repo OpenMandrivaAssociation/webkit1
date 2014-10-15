@@ -341,7 +341,6 @@ GObject Introspection interface description for WebKit2.
 %setup -qn %{oname}-%{version}
 %apply_patches
 autoreconf  -fiv
-
 #for i in $(find . -name *.py);do 2to3 -w $i;done
 
 mkdir -p .gtk{2,3}/DerivedSources/{webkit{,2},WebCore,ANGLE,WebKit2,webkitdom,InjectedBundle,Platform} 
@@ -351,14 +350,10 @@ mv .gtk2 gtk2
 mv .gtk3 gtk3
 
 %build
-# Use linker flags to reduce memory consumption
-%global optflags %{optflags} -Wl,--no-keep-memory -Wl,--reduce-memory-overheads
-
 export ac_cv_path_PYTHON=/usr/bin/python2
 # clang doesnt seem to build this
 export CC=gcc
 export CXX=g++
-
 %ifarch %{arm}
 # Use linker flags to reduce memory consumption on low-mem architectures
 %global optflags %(echo %{optflags} | sed 's/-g /-g1 /')
@@ -367,7 +362,8 @@ ln -s %{_bindir}/ld.bfd bfd/ld
 export PATH=$PWD/bfd:$PATH
 export CC="gcc -fuse-ld=bfd"
 export CXX="g++ -fuse-ld=bfd"
-%global ldflags %{ldflags} -fuse-ld=bfd
+# Use linker flags to reduce memory consumption
+%global ldflags %{ldflags} -fuse-ld=bfd -Wl,--no-keep-memory -Wl,--reduce-memory-overheads
 %endif
 %ifarch aarch64
 %global optflags %{optflags} -DENABLE_YARR_JIT=0
