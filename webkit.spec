@@ -6,6 +6,8 @@
 # - CHECK THAT MCC STILL RUNS
 #
 
+%define _enable_debug_packages %{nil}
+%define debug_package %{nil}
 
 # lib is called libwebkitgtk-%{libver}.so.%{major}
 %define libver  1.0
@@ -357,7 +359,7 @@ export CC=gcc
 export CXX=g++
 %ifarch %{arm}
 # Use linker flags to reduce memory consumption on low-mem architectures
-%global optflags %(echo %{optflags} | sed 's/-g /-g1 /')
+%global optflags %(echo %{optflags} | sed 's/-g /-g0 /' -e 's/-gdwarf-4//')
 mkdir -p bfd
 ln -s %{_bindir}/ld.bfd bfd/ld
 export PATH=$PWD/bfd:$PATH
