@@ -40,8 +40,8 @@ Summary:	Web browser engine
 Name:		webkit
 Epoch:		1
 # 2.6+ is packaged in webkit2 as it is parallel installable with earlier versions but removes webkit1 api
-Version:	2.4.6
-Release:	3
+Version:	2.4.8
+Release:	1
 License:	BSD and LGPLv2+
 Group:		System/Libraries
 Url:		http://www.webkitgtk.org
