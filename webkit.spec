@@ -54,6 +54,7 @@ Patch5:         webkitgtk-aarch64.patch
 Patch6:         webkitgtk-2.4.1-cloop_fix.patch
 Patch7:		webkitgtk-2.4.1-ppc64_align.patch
 Patch8:		webkitgtk-2.4.3-fix-JavaScriptCore-sharedlib-name.patch
+Patch9:		webkitgtk-2.4.8-gcc5.patch
 
 BuildRequires:	bison
 BuildRequires:	flex
