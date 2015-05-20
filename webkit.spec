@@ -40,8 +40,8 @@ Summary:	Web browser engine
 Name:		webkit
 Epoch:		1
 # 2.6+ is packaged in webkit2 as it is parallel installable with earlier versions but removes webkit1 api
-Version:	2.4.8
-Release:	2
+Version:	2.4.9
+Release:	1
 License:	BSD and LGPLv2+
 Group:		System/Libraries
 Url:		http://www.webkitgtk.org
@@ -54,7 +54,6 @@ Patch5:         webkitgtk-aarch64.patch
 Patch6:         webkitgtk-2.4.1-cloop_fix.patch
 Patch7:		webkitgtk-2.4.1-ppc64_align.patch
 Patch8:		webkitgtk-2.4.3-fix-JavaScriptCore-sharedlib-name.patch
-Patch9:		webkitgtk-2.4.8-gcc5.patch
 
 BuildRequires:	bison
 BuildRequires:	flex
