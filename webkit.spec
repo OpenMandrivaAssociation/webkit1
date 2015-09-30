@@ -59,6 +59,8 @@ Patch8:		webkitgtk-2.4.3-fix-JavaScriptCore-sharedlib-name.patch
 Patch9:		webkitgtk-2.4.8-user-agent.patch
 # http://trac.webkit.org/changeset/169665
 Patch10:	webkitgtk-2.4.9-sql_initialize_string.patch
+# https://bugs.webkit.org/show_bug.cgi?id=94488
+Patch11:	missing-dirs-webkit-bug-161808.patch
 
 BuildRequires:	bison
 BuildRequires:	flex

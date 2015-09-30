@@ -1,0 +1,103 @@
+Index: webkitgtk-2.4.9/Source/WebKit/gtk/GNUmakefile.am
+===================================================================
+--- webkitgtk-2.4.9/Source/WebKit/gtk/GNUmakefile.am	(revision 161807)
++++ webkitgtk-2.4.9/Source/WebKit/gtk/GNUmakefile.am	(revision 161808)
+@@ -350,5 +350,8 @@
+ 	@true
+ 
+-stamp-webkitmarshal.cpp: $(WEBKIT_MARSHAL_LIST)
++$(GENSOURCES_WEBKIT):
++	$(AM_V_at)mkdir -p $@
++
++stamp-webkitmarshal.cpp: $(WEBKIT_MARSHAL_LIST) $(GENSOURCES_WEBKIT)
+ 	$(AM_V_GEN) echo "extern \"C\" {" > $(GENSOURCES_WEBKIT)/webkitmarshal.cpp && \
+ 	$(GLIB_GENMARSHAL) --prefix=webkit_marshal $(WEBKIT_MARSHAL_LIST) --body >> $(GENSOURCES_WEBKIT)/webkitmarshal.cpp && \
+@@ -356,5 +359,5 @@
+ 	echo timestamp > $(@F)
+ 
+-stamp-webkitmarshal.h: $(WEBKIT_MARSHAL_LIST)
++stamp-webkitmarshal.h: $(WEBKIT_MARSHAL_LIST) $(GENSOURCES_WEBKIT)
+ 	$(AM_V_GEN)$(GLIB_GENMARSHAL) --prefix=webkit_marshal $(WEBKIT_MARSHAL_LIST) --header > $(GENSOURCES_WEBKIT)/webkitmarshal.h && \
+ 	echo timestamp > $(@F)
+@@ -371,5 +374,5 @@
+ 	&& echo timestamp > $(@F)
+ 
+-$(GENSOURCES_WEBKIT)/webkitenumtypes.cpp: $(webkitgtk_h_api) $(WebKit)/GNUmakefile.am
++$(GENSOURCES_WEBKIT)/webkitenumtypes.cpp: $(webkitgtk_h_api) $(WebKit)/GNUmakefile.am $(GENSOURCES_WEBKIT)
+ 	$(AM_V_GEN)glib-mkenums --template $(srcdir)/Source/WebKit/gtk/webkit/webkitenumtypes.cpp.template $(webkitgtk_h_api) | \
+ 		sed 's,web_kit,webkit,' \
+Index: webkitgtk-2.4.9/Source/WebCore/GNUmakefile.am
+===================================================================
+--- webkitgtk-2.4.9/Source/WebCore/GNUmakefile.am	(revision 161807)
++++ webkitgtk-2.4.9/Source/WebCore/GNUmakefile.am	(revision 161808)
+@@ -388,9 +388,12 @@
+ endif  # END ENABLE_WEB_AUDIO
+ 
++DerivedSources/ANGLE:
++	$(AM_V_at)mkdir -p $@
++
+ # ANGLE tokenizer & parser
+-DerivedSources/ANGLE/glslang.cpp: Source/ThirdParty/ANGLE/src/compiler/glslang.l DerivedSources/ANGLE/glslang_tab.cpp
++DerivedSources/ANGLE/glslang.cpp: Source/ThirdParty/ANGLE/src/compiler/glslang.l DerivedSources/ANGLE/glslang_tab.cpp DerivedSources/ANGLE
+ 	$(AM_V_GEN)$(FLEX) --noline --nounistd --outfile="$@" "$<"
+ 
+-DerivedSources/ANGLE/glslang_tab.cpp: Source/ThirdParty/ANGLE/src/compiler/glslang.y
++DerivedSources/ANGLE/glslang_tab.cpp: Source/ThirdParty/ANGLE/src/compiler/glslang.y DerivedSources/ANGLE
+ 	$(AM_V_GEN)$(BISON) --no-lines --defines="DerivedSources/ANGLE/glslang_tab.h" --skeleton=yacc.c --output="$@" $<
+ DerivedSources/ANGLE/glslang_tab.h: DerivedSources/ANGLE/glslang_tab.cpp
+Index: webkitgtk-2.4.9/Source/WebCore/bindings/gobject/GNUmakefile.am
+===================================================================
+--- webkitgtk-2.4.9/Source/WebCore/bindings/gobject/GNUmakefile.am	(revision 161807)
++++ webkitgtk-2.4.9/Source/WebCore/bindings/gobject/GNUmakefile.am	(revision 161808)
+@@ -475,8 +475,10 @@
+ gdom_class_list := $(subst WebKitDOM,, $(filter-out %Private, $(basename $(notdir $(webkitgtk_gdom_built_sources)))))
+ gdom_class_list += Custom EventTarget Object Deprecated
+-DerivedSources/webkitdom/webkitdom.h: $(WebCore)/bindings/scripts/gobject-generate-headers.pl $(WebCore)/bindings/gobject/GNUmakefile.am
++DerivedSources/webkitdom:
++	$(AM_V_at)mkdir -p $@
++DerivedSources/webkitdom/webkitdom.h: $(WebCore)/bindings/scripts/gobject-generate-headers.pl $(WebCore)/bindings/gobject/GNUmakefile.am DerivedSources/webkitdom
+ 	$(AM_V_GEN)echo $(gdom_class_list) | $(PERL) $< gdom > $@
+ 
+-DerivedSources/webkitdom/webkitdomdefines.h: $(WebCore)/bindings/scripts/gobject-generate-headers.pl $(WebCore)/bindings/gobject/GNUmakefile.am
++DerivedSources/webkitdom/webkitdomdefines.h: $(WebCore)/bindings/scripts/gobject-generate-headers.pl $(WebCore)/bindings/gobject/GNUmakefile.am DerivedSources/webkitdom
+ 	$(AM_V_GEN)echo $(gdom_class_list) | $(PERL) $< defines > $@
+ 
+@@ -519,14 +521,14 @@
+ # include/webkit-x.y/webkitdom directory, but do not want to name the WebCore/bindings/gobject directory
+ # "webkitdom", as that's a bit presumptuous for a GTK binding.
+-$(top_builddir)/DerivedSources/webkitdom/WebKitDOMObject.h: $(WebCore)/bindings/gobject/WebKitDOMObject.h
+-	$(AM_V_GEN)cp -f $< $@
+-
+-$(top_builddir)/DerivedSources/webkitdom/WebKitDOMEventTarget.h: $(WebCore)/bindings/gobject/WebKitDOMEventTarget.h
+-	$(AM_V_GEN)cp -f $< $@
+-
+-$(top_builddir)/DerivedSources/webkitdom/WebKitDOMEventTargetPrivate.h: $(WebCore)/bindings/gobject/WebKitDOMEventTargetPrivate.h
+-	$(AM_V_GEN)cp -f $< $@
+-
+-$(top_builddir)/DerivedSources/webkitdom/WebKitDOMCustom.h: $(WebCore)/bindings/gobject/WebKitDOMCustom.h
++$(top_builddir)/DerivedSources/webkitdom/WebKitDOMObject.h: $(WebCore)/bindings/gobject/WebKitDOMObject.h $(top_builddir)/DerivedSources/webkitdom
++	$(AM_V_GEN)cp -f $< $@
++
++$(top_builddir)/DerivedSources/webkitdom/WebKitDOMEventTarget.h: $(WebCore)/bindings/gobject/WebKitDOMEventTarget.h $(top_builddir)/DerivedSources/webkitdom
++	$(AM_V_GEN)cp -f $< $@
++
++$(top_builddir)/DerivedSources/webkitdom/WebKitDOMEventTargetPrivate.h: $(WebCore)/bindings/gobject/WebKitDOMEventTargetPrivate.h $(top_builddir)/DerivedSources/webkitdom
++	$(AM_V_GEN)cp -f $< $@
++
++$(top_builddir)/DerivedSources/webkitdom/WebKitDOMCustom.h: $(WebCore)/bindings/gobject/WebKitDOMCustom.h $(top_builddir)/DerivedSources/webkitdom
+ 	$(AM_V_GEN)cp -f $< $@
+ 
+Index: webkitgtk-2.4.9/Tools/WebKitTestRunner/GNUmakefile.am
+===================================================================
+--- webkitgtk-2.4.9/Tools/WebKitTestRunner/GNUmakefile.am	(revision 161807)
++++ webkitgtk-2.4.9/Tools/WebKitTestRunner/GNUmakefile.am	(revision 161808)
+@@ -157,5 +157,8 @@
+ 	Source/WebCore/bindings/scripts/generate-bindings.pl
+ 
+-DerivedSources/InjectedBundle/JS%.cpp: Tools/WebKitTestRunner/InjectedBundle/Bindings/%.idl $(code_generation_dependencies)
++$(top_builddir)/DerivedSources/InjectedBundle:
++	$(AM_V_at)mkdir -p $@
++
++DerivedSources/InjectedBundle/JS%.cpp: Tools/WebKitTestRunner/InjectedBundle/Bindings/%.idl $(code_generation_dependencies) $(top_builddir)/DerivedSources/InjectedBundle
+ 	$(AM_V_GEN)$(PERL) \
+ 		-I $(srcdir)/Source/WebCore/bindings/scripts \
