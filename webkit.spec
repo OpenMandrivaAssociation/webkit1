@@ -8,6 +8,7 @@
 
 %define _enable_debug_packages %{nil}
 %define debug_package %{nil}
+%define _disable_lto 1
 
 # lib is called libwebkitgtk-%{libver}.so.%{major}
 %define libver  1.0
