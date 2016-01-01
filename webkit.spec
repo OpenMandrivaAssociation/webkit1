@@ -363,8 +363,8 @@ mv .gtk3 gtk3
 %build
 export ac_cv_path_PYTHON=/usr/bin/python2
 # clang doesnt seem to build this
-export CC=gcc
-export CXX=g++
+#export CC=gcc
+#export CXX=g++
 %ifarch %{arm}
 # Use linker flags to reduce memory consumption on low-mem architectures
 %global optflags %(echo %{optflags} | sed -e 's/-g /-g0 /' -e 's/-gdwarf-4//')
@@ -379,7 +379,7 @@ export CXX="g++ -fuse-ld=bfd"
 %ifarch aarch64
 %global optflags %{optflags} -DENABLE_YARR_JIT=0
 %endif
-
+%global optflags %{optflags} -fno-lto
 pushd gtk2
 %configure \
 	--with-gtk=2.0 \
