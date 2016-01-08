@@ -320,6 +320,7 @@ autoreconf  -fiv
 #for i in $(find . -name *.py);do 2to3 -w $i;done
 
 mkdir -p .gtk{2,3}/DerivedSources/{webkit{,2},WebCore,ANGLE,WebKit2,webkitdom,InjectedBundle,Platform} 
+mkdir -p .gtk{2,3}/DerivedSources/WebKit2/webkit2gtk/webkit2
 cp -a * .gtk2
 cp -a * .gtk3
 mv .gtk2 gtk2
@@ -364,12 +365,7 @@ pushd gtk2
 	--enable-accelerated-compositing \
 	--enable-introspection
 
-# parallel build with too many cores fails on arm
-%ifarch %arm
-make -j 8  
-%else
 %make
-%endif
 
 popd
 
@@ -387,12 +383,7 @@ pushd gtk3
 	--enable-accelerated-compositing \
 	--enable-introspection
 
-#parallel build with too many cores fails on arm
-%ifarch %arm
-make -j 8
-%else
 %make 
-%endif
 
 popd
 
