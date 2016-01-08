@@ -24,9 +24,7 @@
 
 %define lib3ver  3.0
 %define major3   0
-%define	major2	25
 %define lib3name	%mklibname webkitgtk %{lib3ver} %{major3}
-%define libwebkit2	%mklibname webkit2gtk %{lib3ver} %{major2}
 %define devname3	%mklibname webkitgtk %{lib3ver} -d
 %define inspector3name	webkit%{lib3ver}-webinspector
 %define girname3	%mklibname %{name}-gir %{lib3ver}
@@ -34,16 +32,14 @@
 %define libjavascriptcoregtk3	%mklibname javascriptcoregtk %{lib3ver} %{major3}
 
 %define libgirname3	%mklibname %{name}-gir %{lib3ver}
-%define libgirname2	%mklibname %{name}2-gir %{lib3ver}
 %define libgitjscore3	%mklibname javascriptcore-gir %{lib3ver}
-%define libgirname2extension %mklibname %{name}2webextension-gir %{lib3ver}
 
 Summary:	Web browser engine
 Name:		webkit
 Epoch:		1
 # 2.6+ is packaged in webkit2 as it is parallel installable with earlier versions but removes webkit1 api
 Version:	2.4.9
-Release:	5
+Release:	6
 License:	BSD and LGPLv2+
 Group:		System/Libraries
 Url:		http://www.webkitgtk.org
@@ -227,18 +223,6 @@ The GTK+3 port of WebKit is intended to provide a browser component
 primarily for users of the portable GTK+3 UI toolkit on platforms like
 Linux.
 
-%package -n %{libwebkit2}
-Summary:        GTK+3 port of WebKit2 web browser engine
-Group:          System/Libraries
-Requires:       %{name}3 = %{epoch}:%{version}
-Requires:	%{name}2gtk = %{epoch}:%{version}
-Provides:       libwebkit2gtk3 = %{version}-%{release}
-
-%description -n %{libwebkit2}
-The GTK+3 port of WebKit2 is intended to provide a browser component
-primarily for users of the portable GTK+3 UI toolkit on platforms like
-Linux.
-
 %package -n %{libjavascriptcoregtk3}
 Summary:        GTK+3 port of WebKit web browser engine
 Group:          System/Libraries
@@ -259,9 +243,6 @@ Requires:       %{lib3name} = %{epoch}:%{version}-%{release}
 Requires:	%{libjavascriptcoregtk3} = %{epoch}:%{version}-%{release}
 Requires:	%{libgitjscore3} = %{epoch}:%{version}-%{release}
 Requires:	%{libgirname3} = %{epoch}:%{version}-%{release}
-Requires:	%{libwebkit2} = %{epoch}:%{version}-%{release}
-Requires:	%{libgirname2} = %{epoch}:%{version}-%{release}
-Requires:	%{libgirname2extension} = %{epoch}:%{version}-%{release}
 
 %description -n %{devname3}
 The GTK+ port of WebKit is intended to provide a browser component
@@ -332,22 +313,6 @@ Conflicts:	%{lib3name} < %epoch:1.5.2-2
 %description -n %{libgirname3}
 GObject Introspection interface description for WebKit.
 
-%package -n %{libgirname2}
-Summary:        GObject Introspection interface description for %name
-Group:          System/Libraries
-Requires:       %{libwebkit2} = %epoch:%{version}-%{release}
-
-%description -n %{libgirname2}
-GObject Introspection interface description for WebKit2.
-
-%package -n %{libgirname2extension}
-Summary:	GObject Introspection interface description for %name
-Group:		System/Libraries
-
-%description -n %{libgirname2extension}
-GObject Introspection interface description for WebKit2.
-
-
 %prep
 %setup -qn %{oname}-%{version}
 %apply_patches
@@ -398,13 +363,20 @@ pushd gtk2
 	--enable-gamepad \
 	--enable-accelerated-compositing \
 	--enable-introspection
+
+# parallel build with too many cores fails on arm
+%ifarch %arm
+make -j 8  
+%else
 %make
+%endif
+
 popd
 
 pushd gtk3
 %configure \
 	--with-gtk=3.0 \
-	--enable-webkit2 \
+	--disable-webkit2 \
 %ifarch %{ix86} x86_64 %arm
 	--enable-jit \
 %endif
@@ -414,7 +386,14 @@ pushd gtk3
 	--enable-gamepad \
 	--enable-accelerated-compositing \
 	--enable-introspection
+
+#parallel build with too many cores fails on arm
+%ifarch %arm
+make -j 8
+%else
 %make 
+%endif
+
 popd
 
 
@@ -478,14 +457,6 @@ rm -rf %{buildroot}%{_libdir}/libtestnetscapeplugin.*
 %{_datadir}/webkitgtk-3.0/images
 %{_datadir}/webkitgtk-3.0/resources
 
-%files -n %{name}2gtk
-%dir %{_libdir}/webkit2gtk-%{lib3ver}
-%dir %{_libdir}/webkit2gtk-%{lib3ver}/injected-bundle
-%{_libdir}/webkit2gtk-%{lib3ver}/injected-bundle/libwebkit2gtkinjectedbundle.so
-%{_libexecdir}/WebKitNetworkProcess
-%{_libexecdir}/WebKitPluginProcess
-%{_libexecdir}/WebKitWebProcess
-
 %files -n %{devname3}
 %doc %{_datadir}/gtk-doc/html/webkitgtk
 %doc %{_datadir}/gtk-doc/html/webkitdomgtk
@@ -505,10 +476,6 @@ rm -rf %{buildroot}%{_libdir}/libtestnetscapeplugin.*
 %files -n %{lib3name}
 %{_libdir}/lib%{name}gtk-%{lib3ver}.so.%{major3}*
 
-%files -n %{libwebkit2}
-%{_libdir}/lib%{name}2gtk-%{lib3ver}.so.%{major2}
-%{_libdir}/lib%{name}2gtk-%{lib3ver}.so.%{major2}.*
-
 %files -n %{libjavascriptcoregtk3}
 %{_libdir}/libjavascriptcoregtk-%{lib3ver}.so.%{major}*
 
@@ -524,8 +491,3 @@ rm -rf %{buildroot}%{_libdir}/libtestnetscapeplugin.*
 %files -n %{libgirname3}
 %{_libdir}/girepository-1.0/WebKit-%{lib3ver}.typelib
 
-%files -n %{libgirname2}
-%{_libdir}/girepository-1.0/WebKit2-%{lib3ver}.typelib
-
-%files -n %{libgirname2extension}
-%{_libdir}/girepository-1.0/WebKit2WebExtension-%{lib3ver}.typelib
