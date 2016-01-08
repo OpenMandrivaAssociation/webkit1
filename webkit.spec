@@ -435,7 +435,6 @@ rm -rf %{buildroot}%{_libdir}/libtestnetscapeplugin.*
 %{_datadir}/webkitgtk-1.0/resources
 
 %files -n %{devname}
-%doc %{_datadir}/gtk-doc/html/webkit2gtk
 %{_libdir}/lib%{name}gtk-%{libver}.so
 %{_libdir}/libjavascriptcoregtk-%{libver}.so
 %{_includedir}/%{name}gtk-%{libver}
@@ -485,16 +484,11 @@ rm -rf %{buildroot}%{_libdir}/libtestnetscapeplugin.*
 %doc %{_datadir}/gtk-doc/html/webkitdomgtk
 %{_libdir}/lib%{name}gtk-%{lib3ver}.so
 %{_libdir}/libjavascriptcoregtk-%{lib3ver}.so
-%{_libdir}/libwebkit2gtk-%{lib3ver}.so
 %{_includedir}/%{name}gtk-%{lib3ver}
 %{_libdir}/pkgconfig/%{name}gtk-%{lib3ver}.pc
 %{_libdir}/pkgconfig/javascriptcoregtk-%{lib3ver}.pc
-%{_libdir}/pkgconfig/%{name}2gtk-%{lib3ver}.pc
-%{_libdir}/pkgconfig/%{name}2gtk-web-extension-%{lib3ver}.pc
 %{_datadir}/gir-1.0/JavaScriptCore-%{lib3ver}.gir
 %{_datadir}/gir-1.0/WebKit-%{lib3ver}.gir
-%{_datadir}/gir-1.0/WebKit2-%{lib3ver}.gir
-%{_datadir}/gir-1.0/WebKit2WebExtension-%{lib3ver}.gir
 
 %files -n %{lib3name}
 %{_libdir}/lib%{name}gtk-%{lib3ver}.so.%{major3}*
