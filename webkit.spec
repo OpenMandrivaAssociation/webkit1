@@ -342,7 +342,7 @@ export CXX="g++ -fuse-ld=bfd"
 %ifarch aarch64
 %global optflags %{optflags} -DENABLE_YARR_JIT=0
 %endif
-%ifarch %{ix86}
+%ifarch %{ix86} x86_64
 # clang wont build this on i586:
 # /bits/atomic_base.h:408:16: error: cannot compile this atomic library call yet
 #      { return __atomic_add_fetch(&_M_i, 1, memory_order_seq_cst); }
