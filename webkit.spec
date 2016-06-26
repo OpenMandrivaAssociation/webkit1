@@ -38,24 +38,18 @@ Summary:	Web browser engine
 Name:		webkit
 Epoch:		1
 # 2.6+ is packaged in webkit2 as it is parallel installable with earlier versions but removes webkit1 api
-Version:	2.4.9
-Release:	7
+Version:	2.4.11
+Release:	1
 License:	BSD and LGPLv2+
 Group:		System/Libraries
 Url:		http://www.webkitgtk.org
 Source0:	http://www.webkitgtk.org/releases/%{oname}-%{version}.tar.xz
 # add support for nspluginwrapper.
 Patch0:         webkit-1.3.10-nspluginwrapper.patch
-# https://bugs.webkit.org/show_bug.cgi?id=103128
-Patch4:         webkit-2.1.90-double2intsPPC32.patch
 Patch5:         webkitgtk-aarch64.patch
-Patch6:         webkitgtk-2.4.1-cloop_fix.patch
-Patch7:		webkitgtk-2.4.1-ppc64_align.patch
 Patch8:		webkitgtk-2.4.3-fix-JavaScriptCore-sharedlib-name.patch
 # https://bugs.webkit.org/show_bug.cgi?id=142074
 Patch9:		webkitgtk-2.4.8-user-agent.patch
-# http://trac.webkit.org/changeset/169665
-Patch10:	webkitgtk-2.4.9-sql_initialize_string.patch
 # https://bugs.webkit.org/show_bug.cgi?id=94488
 Patch11:	missing-dirs-webkit-bug-161808.patch
 
