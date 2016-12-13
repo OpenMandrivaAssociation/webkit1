@@ -52,6 +52,8 @@ Patch8:		webkitgtk-2.4.3-fix-JavaScriptCore-sharedlib-name.patch
 Patch9:		webkitgtk-2.4.8-user-agent.patch
 # https://bugs.webkit.org/show_bug.cgi?id=94488
 Patch11:	missing-dirs-webkit-bug-161808.patch
+# fix from fedora for gcc 6
+Patch12:	webkitgtk-2.4.9-abs.patch
 
 BuildRequires:	bison
 BuildRequires:	flex
