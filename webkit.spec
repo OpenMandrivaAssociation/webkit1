@@ -11,6 +11,9 @@
 %define _disable_lto 1
 %define _disable_rebuild_configure 1
 
+# This code is hopelessly broken... like just about anything gtk
+%global optflags %{optflags} -fpermissive
+
 # lib is called libwebkitgtk-%{libver}.so.%{major}
 %define libver  1.0
 %define major   0
@@ -39,7 +42,7 @@ Name:		webkit
 Epoch:		1
 # 2.6+ is packaged in webkit2 as it is parallel installable with earlier versions but removes webkit1 api
 Version:	2.4.11
-Release:	4
+Release:	5
 License:	BSD and LGPLv2+
 Group:		System/Libraries
 Url:		http://www.webkitgtk.org
