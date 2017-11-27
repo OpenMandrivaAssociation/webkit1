@@ -39,7 +39,7 @@ Name:		webkit
 Epoch:		1
 # 2.6+ is packaged in webkit2 as it is parallel installable with earlier versions but removes webkit1 api
 Version:	2.4.11
-Release:	2
+Release:	3
 License:	BSD and LGPLv2+
 Group:		System/Libraries
 Url:		http://www.webkitgtk.org
@@ -315,7 +315,7 @@ GObject Introspection interface description for WebKit.
 autoreconf  -fiv
 #for i in $(find . -name *.py);do 2to3 -w $i;done
 
-mkdir -p .gtk{2,3}/DerivedSources/{webkit{,2},WebCore,ANGLE,WebKit2,webkitdom,InjectedBundle,Platform} 
+mkdir -p .gtk{2,3}/DerivedSources/{webkit{,2},WebCore,ANGLE,WebKit2,webkitdom,InjectedBundle,Platform}
 mkdir -p .gtk{2,3}/DerivedSources/WebKit2/webkit2gtk/webkit2
 cp -a * .gtk2
 cp -a * .gtk3
@@ -379,7 +379,7 @@ pushd gtk3
 	--enable-accelerated-compositing \
 	--enable-introspection
 
-%make 
+%make
 
 popd
 
