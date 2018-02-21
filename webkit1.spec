@@ -11,9 +11,13 @@
 %define _disable_lto 1
 %define _disable_rebuild_configure 1
 
+# This code is hopelessly broken... like just about anything gtk
+%global optflags %{optflags} -fpermissive
+
 # lib is called libwebkitgtk-%{libver}.so.%{major}
 %define libver  1.0
 %define major   0
+%define uname		webkit
 %define oname		webkitgtk
 %define libname		%mklibname webkitgtk %{libver} %{major}
 %define devname		%mklibname webkitgtk %{libver} -d
@@ -35,11 +39,11 @@
 %define libgitjscore3	%mklibname javascriptcore-gir %{lib3ver}
 
 Summary:	Web browser engine
-Name:		webkit
+Name:		webkit1
 Epoch:		1
 # 2.6+ is packaged in webkit2 as it is parallel installable with earlier versions but removes webkit1 api
 Version:	2.4.11
-Release:	3
+Release:	6
 License:	BSD and LGPLv2+
 Group:		System/Libraries
 Url:		http://www.webkitgtk.org
@@ -91,20 +95,20 @@ BuildRequires:	rubygems
 %description
 WebKit is an open source web browser engine.
 
-%package -n %{name}%{libver}
+%package -n %{uname}%{libver}
 Summary:        GTK+ port of WebKit web browser engine - shared files
 Group:          Development/GNOME and GTK+
 Requires:	%{libname} = %{epoch}:%{version}
 
-%description -n %{name}%{libver}
+%description -n %{uname}%{libver}
 WebKit is an open source web browser engine.
-This package contains the shared files used by %{name}%{libver}
+This package contains the shared files used by %{uname}%{libver}
 
 %package -n %{libname}
 Summary:	GTK+ port of WebKit web browser engine
 Group:		System/Libraries
 Requires:	%{name} = %{epoch}:%{version}
-Requires:	%{name}%{libver} = %{epoch}:%{version}
+Requires:	%{uname}%{libver} = %{epoch}:%{version}
 Obsoletes:	%{mklibname WebKitGdk 0} <= 0-0.30465
 Obsoletes:	%{mklibname WebKitGtk 1} <= 0-0.32877
 Obsoletes:	%{mklibname webkitgtk 1} <= 1.1.1-3mdv
@@ -180,36 +184,36 @@ detailed analysis of any given page's page source, live DOM hierarchy
 and resources. This package contains the data files necessary for Web
 Inspector to work.
 
-%package -n %{name}3
+%package -n %{uname}3
 Summary:        Web browser engine
 Group:          System/Libraries
 Requires:       %{lib3name} = %{epoch}:%{version}
 
-%description -n %{name}3
+%description -n %{uname}3
 WebKit is an open source web browser engine.
 
-%package -n %{name}%{lib3ver}
+%package -n %{uname}%{lib3ver}
 Summary:        GTK+3 port of WebKit web browser engine - shared files
 Group:          Development/GNOME and GTK+
 Requires:       %{lib3name} = %{epoch}:%{version}
 
-%description -n %{name}%{lib3ver}
+%description -n %{uname}%{lib3ver}
 WebKit is an open source web browser engine.
-This package contains the shared files used by %{name}%{lib3ver}
+This package contains the shared files used by %{uname}%{lib3ver}
 
-%package -n %{name}2gtk
+%package -n %{uname}2gtk
 Summary:	GTK+3 port of WebKit2 web browser engine - shared files
 Group:		Development/GNOME and GTK+
 
-%description -n %{name}2gtk
+%description -n %{uname}2gtk
 WebKit is an open source web browser engine.
-This package contains the shared files used by %{name}2gtk%{lib3ver}.
+This package contains the shared files used by %{uname}2gtk%{lib3ver}.
 
 %package -n %{lib3name}
 Summary:        GTK+3 port of WebKit web browser engine
 Group:          System/Libraries
-Requires:       %{name}3 = %{epoch}:%{version}
-Requires:       %{name}%{lib3ver} = %{epoch}:%{version}
+Requires:       %{uname}3 = %{epoch}:%{version}
+Requires:       %{uname}%{lib3ver} = %{epoch}:%{version}
 Provides:       libwebkitgtk3 = %{version}-%{release}
 # Needed for Web Inspector feature to work
 #Suggests:       %{inspector3name} = %{epoch}:%{version}
@@ -388,9 +392,9 @@ popd
 %makeinstall_std -C gtk2
 %makeinstall_std -C gtk3
 
-install -p -m755 gtk2/Programs/GtkLauncher -D %{buildroot}%{_libexecdir}/%{name}/GtkLauncher
+install -p -m755 gtk2/Programs/GtkLauncher -D %{buildroot}%{_libexecdir}/%{uname}/GtkLauncher
 
-install -p -m755 gtk3/Programs/GtkLauncher -D %{buildroot}%{_libexecdir}/%{name}3/GtkLauncher
+install -p -m755 gtk3/Programs/GtkLauncher -D %{buildroot}%{_libexecdir}/%{uname}3/GtkLauncher
 
 # only useful for testing, should not be installed system-wide.
 # reported upstream as 22812 - AdamW 2008/12
@@ -401,22 +405,22 @@ rm -rf %{buildroot}%{_libdir}/libtestnetscapeplugin.*
 
 %files -f WebKitGTK-2.0.lang
 
-%files -n %{name}%{libver}
+%files -n %{uname}%{libver}
 %dir %{_datadir}/webkitgtk-1.0
 %{_datadir}/webkitgtk-1.0/images
 %{_datadir}/webkitgtk-1.0/resources
 
 %files -n %{devname}
-%{_libdir}/lib%{name}gtk-%{libver}.so
+%{_libdir}/lib%{uname}gtk-%{libver}.so
 %{_libdir}/libjavascriptcoregtk-%{libver}.so
-%{_includedir}/%{name}gtk-%{libver}
-%{_libdir}/pkgconfig/%{name}-%{libver}.pc
+%{_includedir}/%{uname}gtk-%{libver}
+%{_libdir}/pkgconfig/%{uname}-%{libver}.pc
 %{_libdir}/pkgconfig/javascriptcoregtk-%{libver}.pc
 %{_datadir}/gir-1.0/JavaScriptCore-%{libver}.gir
 %{_datadir}/gir-1.0/WebKit-%{libver}.gir
 
 %files -n %{libname}
-%{_libdir}/lib%{name}gtk-%{libver}.so.%{major}*
+%{_libdir}/lib%{uname}gtk-%{libver}.so.%{major}*
 
 %files -n %{libjavascriptcoregtk}
 %{_libdir}/libjavascriptcoregtk-%{libver}.so.%{major}*
@@ -428,17 +432,17 @@ rm -rf %{buildroot}%{_libdir}/libtestnetscapeplugin.*
 %_libdir/girepository-1.0/WebKit-%{libver}.typelib
 
 %files gtklauncher
-%{_libexecdir}/%{name}/GtkLauncher
+%{_libexecdir}/%{uname}/GtkLauncher
 
 %files jsc
 %{_bindir}/jsc-1
 
 #files -n %{inspectorname}
-#{_datadir}/%{name}gtk-%{libver}/webinspector
+#{_datadir}/%{uname}gtk-%{libver}/webinspector
 
-%files -n %{name}3 -f WebKitGTK-3.0.lang
+%files -n %{uname}3 -f WebKitGTK-3.0.lang
 
-%files -n %{name}%{lib3ver}
+%files -n %{uname}%{lib3ver}
 %dir %{_datadir}/webkitgtk-3.0
 %{_datadir}/webkitgtk-3.0/images
 %{_datadir}/webkitgtk-3.0/resources
@@ -446,24 +450,24 @@ rm -rf %{buildroot}%{_libdir}/libtestnetscapeplugin.*
 %files -n %{devname3}
 %doc %{_datadir}/gtk-doc/html/webkitgtk
 %doc %{_datadir}/gtk-doc/html/webkitdomgtk
-%{_libdir}/lib%{name}gtk-%{lib3ver}.so
+%{_libdir}/lib%{uname}gtk-%{lib3ver}.so
 %{_libdir}/libjavascriptcoregtk-%{lib3ver}.so
-%{_includedir}/%{name}gtk-%{lib3ver}
-%{_libdir}/pkgconfig/%{name}gtk-%{lib3ver}.pc
+%{_includedir}/%{uname}gtk-%{lib3ver}
+%{_libdir}/pkgconfig/%{uname}gtk-%{lib3ver}.pc
 %{_libdir}/pkgconfig/javascriptcoregtk-%{lib3ver}.pc
 %{_datadir}/gir-1.0/JavaScriptCore-%{lib3ver}.gir
 %{_datadir}/gir-1.0/WebKit-%{lib3ver}.gir
 
 %files -n %{lib3name}
-%{_libdir}/lib%{name}gtk-%{lib3ver}.so.%{major3}*
+%{_libdir}/lib%{uname}gtk-%{lib3ver}.so.%{major3}*
 
 %files -n %{libjavascriptcoregtk3}
 %{_libdir}/libjavascriptcoregtk-%{lib3ver}.so.%{major}*
 
-%files -n %{name}3-gtklauncher
-%{_libexecdir}/%{name}3/GtkLauncher
+%files -n %{uname}3-gtklauncher
+%{_libexecdir}/%{uname}3/GtkLauncher
 
-%files -n %{name}3-jsc
+%files -n %{uname}3-jsc
 %{_bindir}/jsc-3
 
 %files -n %{libgitjscore3}
@@ -471,4 +475,3 @@ rm -rf %{buildroot}%{_libdir}/libtestnetscapeplugin.*
 
 %files -n %{libgirname3}
 %{_libdir}/girepository-1.0/WebKit-%{lib3ver}.typelib
-
