@@ -43,7 +43,7 @@ Name:		webkit1
 Epoch:		1
 # 2.6+ is packaged in webkit2 as it is parallel installable with earlier versions but removes webkit1 api
 Version:	2.4.11
-Release:	6
+Release:	7
 License:	BSD and LGPLv2+
 Group:		System/Libraries
 Url:		http://www.webkitgtk.org
