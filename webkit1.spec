@@ -315,7 +315,7 @@ GObject Introspection interface description for WebKit.
 
 %prep
 %setup -qn %{oname}-%{version}
-%apply_patches
+%autopatch -p1
 autoreconf  -fiv
 #for i in $(find . -name *.py);do 2to3 -w $i;done
 
