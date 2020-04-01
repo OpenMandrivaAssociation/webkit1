@@ -329,7 +329,6 @@ mv .gtk2 gtk2
 mv .gtk3 gtk3
 
 %build
-export ac_cv_path_PYTHON=/usr/bin/python2
 %ifarch %{arm}
 # Use linker flags to reduce memory consumption on low-mem architectures
 %global optflags %(echo %{optflags} | sed -e 's/-g /-g0 /' -e 's/-gdwarf-4//')
