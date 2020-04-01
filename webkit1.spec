@@ -58,6 +58,8 @@ Patch9:		webkitgtk-2.4.8-user-agent.patch
 Patch11:	missing-dirs-webkit-bug-161808.patch
 # fix from fedora for gcc 6
 Patch12:	webkitgtk-2.4.9-abs.patch
+Patch13:	enchant2.patch
+Patch14:	icu59.patch
 
 BuildRequires:	bison
 BuildRequires:	flex
@@ -67,7 +69,7 @@ BuildRequires:	libtool
 BuildRequires:	icu-devel >= 49
 BuildRequires:	jpeg-devel
 BuildRequires:	libstdc++-devel
-BuildRequires:	pkgconfig(enchant)
+BuildRequires:	pkgconfig(enchant-2)
 BuildRequires:	pkgconfig(gail)
 BuildRequires:	pkgconfig(gail-3.0)
 BuildRequires:	pkgconfig(gl)

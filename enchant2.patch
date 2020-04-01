@@ -1,0 +1,26 @@
+diff --git a/Source/WebCore/platform/text/enchant/TextCheckerEnchant.cpp b/Source/WebCore/platform/text/enchant/TextCheckerEnchant.cpp
+index d2d2c6f..905ca5b 100644
+--- a/Source/WebCore/platform/text/enchant/TextCheckerEnchant.cpp
++++ b/Source/WebCore/platform/text/enchant/TextCheckerEnchant.cpp
+@@ -128,7 +128,7 @@ Vector<String> TextCheckerEnchant::getGuessesForWord(const String& word)
+         for (i = 0; i < numberOfSuggestions; i++)
+             guesses.append(String::fromUTF8(suggestions[i]));
+ 
+-        enchant_dict_free_suggestions(*iter, suggestions);
++        enchant_dict_free_string_list(*iter, suggestions);
+     }
+ 
+     return guesses;
+diff --git a/Source/autotools/FindDependencies.m4 b/Source/autotools/FindDependencies.m4
+index 60ee32d..cf1019f 100644
+--- a/Source/autotools/FindDependencies.m4
++++ b/Source/autotools/FindDependencies.m4
+@@ -154,7 +154,7 @@ AC_SUBST(PANGO_CFLAGS)
+ AC_SUBST(PANGO_LIBS)
+ 
+ if test "$enable_spellcheck" = "yes"; then
+-    PKG_CHECK_MODULES(ENCHANT, enchant >= enchant_required_version, [], [enable_spellcheck="no"])
++    PKG_CHECK_MODULES(ENCHANT, enchant-2 >= enchant_required_version, [], [enable_spellcheck="no"])
+     AC_SUBST(ENCHANT_CFLAGS)
+     AC_SUBST(ENCHANT_LIBS)
+ fi
