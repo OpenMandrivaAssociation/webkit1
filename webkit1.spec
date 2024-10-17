@@ -46,7 +46,7 @@ Version:	2.4.11
 Release:	9
 License:	BSD and LGPLv2+
 Group:		System/Libraries
-Url:		http://www.webkitgtk.org
+Url:		https://www.webkitgtk.org
 Source0:	http://www.webkitgtk.org/releases/%{oname}-%{version}.tar.xz
 # add support for nspluginwrapper.
 Patch0:         webkit-1.3.10-nspluginwrapper.patch
