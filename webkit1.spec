@@ -61,6 +61,11 @@ Patch12:	webkitgtk-2.4.9-abs.patch
 Patch13:	enchant2.patch
 Patch14:	icu59.patch
 
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	gperf
