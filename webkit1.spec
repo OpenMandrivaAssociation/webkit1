@@ -97,6 +97,7 @@ BuildRequires:	pkgconfig(xft)
 BuildRequires:	pkgconfig(xt)
 BuildRequires:	pkgconfig(libwebp)
 BuildRequires:	pkgconfig(libsecret-1)
+BuildRequires:	pkgconfig(harfbuzz-icu)
 BuildRequires:	rubygems
 
 %description
