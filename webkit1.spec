@@ -398,6 +398,10 @@ export CXX="$PWD/omv-cxx"
 export ac_cv_prog_cc_c23=
 
 %global optflags %{optflags} -fno-lto
+# glib's C++11 glib_typeof expands to typename inside a cast. This tree
+# is built as C++11, so that is a hard error. The macro is only defined
+# when the minimum glib version is 2.68 or newer.
+export CXXFLAGS="%{build_cxxflags} -DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_66"
 pushd gtk2
 %configure \
 	--with-gtk=2.0 \
