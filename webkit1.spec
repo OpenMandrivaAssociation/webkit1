@@ -364,9 +364,10 @@ export CXX="g++ -fuse-ld=bfd"
 export CC=gcc
 export CXX=g++
 %endif
-# Autoconf appends -std=gnu23 to CC. Generated C++ is compiled with $(CC),
-# and that flag is rejected for C++.
-export ac_cv_prog_cc_c23='none needed'
+# Autoconf appends -std=gnu23 to clang, and generated C++ is compiled with
+# $(CC). An empty cache value means "none needed" and is not appended.
+# The words "none needed" are appended literally.
+export ac_cv_prog_cc_c23=
 
 %global optflags %{optflags} -fno-lto
 pushd gtk2
