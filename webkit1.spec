@@ -328,6 +328,9 @@ mkdir -p %{_tmppath}/omv-gtkdocize
 printf '#!/bin/sh\nexit 0\n' > %{_tmppath}/omv-gtkdocize/gtkdocize
 chmod +x %{_tmppath}/omv-gtkdocize/gtkdocize
 export PATH="%{_tmppath}/omv-gtkdocize:$PATH"
+# slibtool.m4 has AC_CONFIG_FILES([slibtool.cfg:Makefile]). Automake requires
+# that input to exist. WebKit has no top-level Makefile until configure.
+touch Makefile
 autoreconf  -fiv
 #for i in $(find . -name *.py);do 2to3 -w $i;done
 
