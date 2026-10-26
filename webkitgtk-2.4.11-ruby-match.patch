@@ -1,0 +1,50 @@
+--- a/Source/JavaScriptCore/offlineasm/parser.rb
++++ b/Source/JavaScriptCore/offlineasm/parser.rb
+@@ -208,7 +208,7 @@
+     
+     def consume(regexp)
+         if regexp
+-            parseError unless @tokens[@idx] =~ regexp
++            parseError unless @tokens[@idx].respond_to?(:=~) and @tokens[@idx] =~ regexp
+         else
+             parseError unless @idx == @tokens.length
+         end
+@@ -498,12 +498,19 @@
+         }
+         variables
+     end
++
++    # Ruby 3.2 removed Object#=~. Annotation tokens are not strings.
++    def matchesFinal(final)
++        return false unless final
++        token = @tokens[@idx]
++        token.respond_to?(:=~) and token =~ final
++    end
+     
+     def parseSequence(final, comment)
+         firstCodeOrigin = @tokens[@idx].codeOrigin
+         list = []
+         loop {
+-            if (@idx == @tokens.length and not final) or (final and @tokens[@idx] =~ final)
++            if (@idx == @tokens.length and not final) or matchesFinal(final)
+                 break
+             elsif @tokens[@idx].is_a? Annotation
+                 # This is the only place where we can encounter a global
+@@ -577,7 +584,7 @@
+                 codeOrigin = @tokens[@idx].codeOrigin
+                 name = @tokens[@idx].string
+                 @idx += 1
+-                if (not final and @idx == @tokens.size) or (final and @tokens[@idx] =~ final)
++                if (not final and @idx == @tokens.size) or matchesFinal(final)
+                     # Zero operand instruction, and it's the last one.
+                     list << Instruction.new(codeOrigin, name, [], @annotation)
+                     @annotation = nil
+@@ -597,7 +604,7 @@
+                     endOfSequence = false
+                     loop {
+                         operands << parseOperand("while inside of instruction #{name}")
+-                        if (not final and @idx == @tokens.size) or (final and @tokens[@idx] =~ final)
++                        if (not final and @idx == @tokens.size) or matchesFinal(final)
+                             # The end of the instruction and of the sequence.
+                             endOfSequence = true
+                             break

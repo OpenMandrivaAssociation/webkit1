@@ -60,6 +60,8 @@ Patch11:	missing-dirs-webkit-bug-161808.patch
 Patch12:	webkitgtk-2.4.9-abs.patch
 Patch13:	enchant2.patch
 Patch14:	icu59.patch
+# Ruby 3.2 removed Object#=~, so annotation tokens no longer match as nil.
+Patch15:	webkitgtk-2.4.11-ruby-match.patch
 
 BuildRequires:	autoconf
 BuildRequires:	automake
