@@ -338,15 +338,57 @@ touch Makefile
 autoreconf  -fiv
 #for i in $(find . -name *.py);do 2to3 -w $i;done
 
-# CollatorICU.cpp is built as C++17. These polyfills inject make_unique
-# and index_sequence into namespace std and collide with the standard
-# library. C++11 translation units still need them. Patch before the
-# gtk copies below.
+# These polyfills inject make_unique and index_sequence into namespace
+# std. Keep them for C++11, and skip them if a unit is built as C++14
+# or newer. Patch before the gtk copies below.
 awk '
 /^\/\/ MSVC 2013 supports std::make_unique already\./ { print "#if __cplusplus < 201402L" }
 /^#if COMPILER_SUPPORTS\(CXX_USER_LITERALS\)/ && !done { print "#endif"; done=1 }
 { print }
 ' Source/WTF/wtf/StdLibExtras.h > StdLibExtras.h.new && mv StdLibExtras.h.new Source/WTF/wtf/StdLibExtras.h
+
+# normlzr.h only declares unorm_normalize inside the C++ API, which this
+# C++11 build hides. One HarfBuzz caller used the C++ normalizer.
+sed -i 's|#include <unicode/normlzr.h>|#include <unicode/unorm.h>|' \
+	Source/WebCore/platform/graphics/freetype/SimpleFontDataFreeType.cpp \
+	Source/WebCore/platform/graphics/harfbuzz/HarfBuzzShaper.cpp
+python << 'PY'
+from pathlib import Path
+p = Path("Source/WebCore/platform/graphics/harfbuzz/HarfBuzzShaper.cpp")
+text = p.read_text()
+old = """    icu::UnicodeString normalizedString;
+    UErrorCode error = U_ZERO_ERROR;
+"""
+new = """    Vector<UChar> normalizedString;
+    UErrorCode error = U_ZERO_ERROR;
+"""
+old2 = """            icu::Normalizer::normalize(icu::UnicodeString(runCharacters,
+                m_run.length()), UNORM_NFC, 0 /* no options */,
+                normalizedString, error);
+            if (U_FAILURE(error))
+                normalizedString.remove();
+"""
+new2 = """            int32_t normalizedLength = unorm_normalize(runCharacters, m_run.length(), UNORM_NFC, 0, 0, 0, &error);
+            if (error == U_BUFFER_OVERFLOW_ERROR && normalizedLength > 0) {
+                error = U_ZERO_ERROR;
+                normalizedString.resize(normalizedLength);
+                unorm_normalize(runCharacters, m_run.length(), UNORM_NFC, 0, normalizedString.data(), normalizedLength, &error);
+            }
+            if (U_FAILURE(error))
+                normalizedString.clear();
+"""
+old3 = """        m_normalizedBufferLength = normalizedString.length();
+        sourceText = normalizedString.getBuffer();
+"""
+new3 = """        m_normalizedBufferLength = normalizedString.size();
+        sourceText = normalizedString.data();
+"""
+for a, b in ((old, new), (old2, new2), (old3, new3)):
+    if a not in text:
+        raise SystemExit("HarfBuzzShaper.cpp pattern not found")
+    text = text.replace(a, b, 1)
+p.write_text(text)
+PY
 
 # Bison 3 names its header after the parser, and the parser includes that
 # name. makegrammar.pl copies the header to .h and deletes the original.
@@ -404,21 +446,6 @@ export CXX="g++ -fuse-ld=bfd"
 export CC=gcc
 export CXX=g++
 %endif
-# ICU's C++ headers need C++17. This tree still uses register, so the
-# rest stays at C++11. Only CollatorICU.cpp includes unicode/ucol.h.
-real_cxx=${CXX:-c++}
-sed "s|@CXX@|$real_cxx|" << 'EOF' > omv-cxx
-#!/bin/sh
-extra=
-for arg do
-  case $arg in
-    *CollatorICU.cpp) extra=-std=gnu++17 ;;
-  esac
-done
-exec @CXX@ "$@" $extra
-EOF
-chmod +x omv-cxx
-export CXX="$PWD/omv-cxx"
 # Autoconf appends -std=gnu23 to clang, and generated C++ is compiled with
 # $(CC). An empty cache value means "none needed" and is not appended.
 # The words "none needed" are appended literally.
@@ -428,7 +455,8 @@ export ac_cv_prog_cc_c23=
 # glib's C++11 glib_typeof expands to typename inside a cast. This tree
 # is built as C++11, so that is a hard error. The macro is only defined
 # when the minimum glib version is 2.68 or newer.
-export CXXFLAGS="%{build_cxxflags} -DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_66"
+# ICU's C++ headers need C++17. The callers use the C API.
+export CXXFLAGS="%{build_cxxflags} -DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_66 -DU_SHOW_CPLUSPLUS_API=0 -DU_SHOW_CPLUSPLUS_HEADER_API=0"
 pushd gtk2
 %configure \
 	--with-gtk=2.0 \
