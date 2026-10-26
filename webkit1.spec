@@ -337,6 +337,16 @@ touch Makefile
 autoreconf  -fiv
 #for i in $(find . -name *.py);do 2to3 -w $i;done
 
+# CollatorICU.cpp is built as C++17. These polyfills inject make_unique
+# and index_sequence into namespace std and collide with the standard
+# library. C++11 translation units still need them. Patch before the
+# gtk copies below.
+awk '
+/^\/\/ MSVC 2013 supports std::make_unique already\./ { print "#if __cplusplus < 201402L" }
+/^#if COMPILER_SUPPORTS\(CXX_USER_LITERALS\)/ && !done { print "#endif"; done=1 }
+{ print }
+' Source/WTF/wtf/StdLibExtras.h > StdLibExtras.h.new && mv StdLibExtras.h.new Source/WTF/wtf/StdLibExtras.h
+
 mkdir -p .gtk{2,3}/DerivedSources/{webkit{,2},WebCore,ANGLE,WebKit2,webkitdom,InjectedBundle,Platform} 
 mkdir -p .gtk{2,3}/DerivedSources/WebKit2/webkit2gtk/webkit2
 cp -a * .gtk2
