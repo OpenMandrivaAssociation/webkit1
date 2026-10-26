@@ -366,6 +366,21 @@ export CXX="g++ -fuse-ld=bfd"
 export CC=gcc
 export CXX=g++
 %endif
+# ICU's C++ headers need C++17. This tree still uses register, so the
+# rest stays at C++11. Only CollatorICU.cpp includes unicode/ucol.h.
+real_cxx=${CXX:-c++}
+sed "s|@CXX@|$real_cxx|" << 'EOF' > omv-cxx
+#!/bin/sh
+extra=
+for arg do
+  case $arg in
+    *CollatorICU.cpp) extra=-std=gnu++17 ;;
+  esac
+done
+exec @CXX@ "$@" $extra
+EOF
+chmod +x omv-cxx
+export CXX="$PWD/omv-cxx"
 # Autoconf appends -std=gnu23 to clang, and generated C++ is compiled with
 # $(CC). An empty cache value means "none needed" and is not appended.
 # The words "none needed" are appended literally.
