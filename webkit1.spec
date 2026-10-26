@@ -357,13 +357,16 @@ export CXX="g++ -fuse-ld=bfd"
 %ifarch aarch64
 %global optflags %{optflags} -DENABLE_YARR_JIT=0
 %endif
-%ifarch %{ix86} x86_64
+%ifarch %{ix86} x86_64 znver1
 # clang wont build this on i586:
 # /bits/atomic_base.h:408:16: error: cannot compile this atomic library call yet
 #      { return __atomic_add_fetch(&_M_i, 1, memory_order_seq_cst); }
 export CC=gcc
 export CXX=g++
 %endif
+# Autoconf appends -std=gnu23 to CC. Generated C++ is compiled with $(CC),
+# and that flag is rejected for C++.
+export ac_cv_prog_cc_c23='none needed'
 
 %global optflags %{optflags} -fno-lto
 pushd gtk2
