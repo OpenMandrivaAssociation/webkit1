@@ -348,6 +348,33 @@ awk '
 { print }
 ' Source/WTF/wtf/StdLibExtras.h > StdLibExtras.h.new && mv StdLibExtras.h.new Source/WTF/wtf/StdLibExtras.h
 
+# Bison 3 names its header after the parser, and the parser includes that
+# name. makegrammar.pl copies the header to .h and deletes the original.
+python << 'PY'
+from pathlib import Path
+p = Path("Source/WebCore/css/makegrammar.pl")
+text = p.read_text()
+old = 'unlink("$fileBase.cpp.h");\nunlink("$fileBase.hpp");\n'
+new = r'''# Bison 3's parser includes the header this script deletes.
+{
+    my $parser = "$fileBase.cpp";
+    open PARSER, "<$parser" or die;
+    my $body = do { local $/; <PARSER> };
+    close PARSER;
+    $body =~ s/\Q$filename.hpp\E/$filename.h/g;
+    $body =~ s/\Q$filename.cpp.h\E/$filename.h/g;
+    open PARSER, ">$parser" or die;
+    print PARSER $body;
+    close PARSER;
+}
+unlink("$fileBase.cpp.h");
+unlink("$fileBase.hpp");
+'''
+if old not in text:
+    raise SystemExit("makegrammar.pl unlink block not found")
+p.write_text(text.replace(old, new, 1))
+PY
+
 mkdir -p .gtk{2,3}/DerivedSources/{webkit{,2},WebCore,ANGLE,WebKit2,webkitdom,InjectedBundle,Platform} 
 mkdir -p .gtk{2,3}/DerivedSources/WebKit2/webkit2gtk/webkit2
 cp -a * .gtk2
