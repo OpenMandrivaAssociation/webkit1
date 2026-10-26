@@ -323,6 +323,11 @@ GObject Introspection interface description for WebKit.
 %prep
 %setup -qn %{oname}-%{version}
 %autopatch -p1
+# Current gtkdocize errors when configure.ac does not call GTK_DOC_CHECK.
+mkdir -p %{_tmppath}/omv-gtkdocize
+printf '#!/bin/sh\nexit 0\n' > %{_tmppath}/omv-gtkdocize/gtkdocize
+chmod +x %{_tmppath}/omv-gtkdocize/gtkdocize
+export PATH="%{_tmppath}/omv-gtkdocize:$PATH"
 autoreconf  -fiv
 #for i in $(find . -name *.py);do 2to3 -w $i;done
 
