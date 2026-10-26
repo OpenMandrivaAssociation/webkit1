@@ -71,6 +71,7 @@ BuildRequires:	make
 BuildRequires:	bison
 BuildRequires:	flex
 BuildRequires:	gperf
+BuildRequires:	gettext
 BuildRequires:	gtk-doc
 BuildRequires:	libtool
 BuildRequires:	icu-devel >= 49
