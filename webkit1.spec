@@ -62,6 +62,8 @@ Patch13:	enchant2.patch
 Patch14:	icu59.patch
 # Ruby 3.2 removed Object#=~, so annotation tokens no longer match as nil.
 Patch15:	webkitgtk-2.4.11-ruby-match.patch
+# slibtool's -no-install wrapper hides the LLInt offset table.
+Patch16:	webkitgtk-2.4.11-slibtool-llint.patch
 
 BuildRequires:	autoconf
 BuildRequires:	automake

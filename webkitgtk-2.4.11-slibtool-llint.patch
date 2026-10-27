@@ -1,0 +1,14 @@
+--- a/Source/JavaScriptCore/offlineasm/offsets.rb
++++ b/Source/JavaScriptCore/offlineasm/offsets.rb
+@@ -67,6 +67,11 @@
+ #
+ 
+ def offsetsAndConfigurationIndex(file)
++    # slibtool writes the executable under .libs and leaves a shell
++    # wrapper at the -o path, even for -no-install. The wrapper has
++    # no offset table, so read the real binary when it is there.
++    libs = File.join(File.dirname(file), ".libs", File.basename(file))
++    file = libs if File.file?(libs)
+     endiannessMarkerBytes = nil
+     result = {}
+     
