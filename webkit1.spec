@@ -109,6 +109,10 @@ BuildRequires:	pkgconfig(xt)
 BuildRequires:	pkgconfig(libwebp)
 BuildRequires:	pkgconfig(libsecret-1)
 BuildRequires:	pkgconfig(harfbuzz-icu)
+# HarfBuzz-0.0.gir lists this package. g-ir-scanner queries every
+# included package in one pkg-config call, and a missing one drops
+# the glib include path.
+BuildRequires:	pkgconfig(harfbuzz-gobject)
 BuildRequires:	rubygems
 
 %description
