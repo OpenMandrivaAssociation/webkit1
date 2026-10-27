@@ -64,6 +64,8 @@ Patch14:	icu59.patch
 Patch15:	webkitgtk-2.4.11-ruby-match.patch
 # slibtool's -no-install wrapper hides the LLInt offset table.
 Patch16:	webkitgtk-2.4.11-slibtool-llint.patch
+# libxml2 2.15's structured error callback takes a const xmlError.
+Patch17:	webkitgtk-2.4.11-libxml2-const-error.patch
 
 BuildRequires:	autoconf
 BuildRequires:	automake
