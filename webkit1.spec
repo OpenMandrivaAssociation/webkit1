@@ -456,7 +456,8 @@ export ac_cv_prog_cc_c23=
 # is built as C++11, so that is a hard error. The macro is only defined
 # when the minimum glib version is 2.68 or newer.
 # ICU's C++ headers need C++17. The callers use the C API.
-export CXXFLAGS="%{build_cxxflags} -DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_66 -DU_SHOW_CPLUSPLUS_API=0 -DU_SHOW_CPLUSPLUS_HEADER_API=0"
+# ICU 68 no longer defines TRUE and FALSE unless asked. This tree still uses them.
+export CXXFLAGS="%{build_cxxflags} -DGLIB_VERSION_MIN_REQUIRED=GLIB_VERSION_2_66 -DU_SHOW_CPLUSPLUS_API=0 -DU_SHOW_CPLUSPLUS_HEADER_API=0 -DU_DEFINE_FALSE_AND_TRUE=1"
 pushd gtk2
 %configure \
 	--with-gtk=2.0 \
