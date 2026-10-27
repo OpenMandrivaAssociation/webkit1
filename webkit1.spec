@@ -6,7 +6,11 @@
 # - CHECK THAT MCC STILL RUNS
 #
 
-%define _enable_debug_packages %{nil}
+# debugcflags is tied to _enable_debug_packages with a presence test, so
+# defining that macro empty still injects -g3. libWebCore.a then passes
+# 4GB, ar writes a /SYM64/ index, and slibtool cannot import that archive.
+# Debuginfo is not packaged.
+%global debugcflags %{nil}
 %define debug_package %{nil}
 %define _disable_lto 1
 %define _disable_rebuild_configure 1
